@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./App.css";
+import Error from "./pages/Error";
 import Home from "./pages/Home";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
     <Router>
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/*" element={<Error />} />
       </Routes>
     </Router>
   );
