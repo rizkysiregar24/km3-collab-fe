@@ -17,9 +17,9 @@ function Navbar() {
             <Logo size={36} />
             Terbang Tinggi
           </Link>
-          <h1 className="font-bold text-2xl md:hidden inline-flex items-center gap-2">
+          <Link className="font-bold text-2xl md:hidden inline-flex items-center gap-2">
             <Logo />
-          </h1>
+          </Link>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link

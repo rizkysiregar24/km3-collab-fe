@@ -3,4 +3,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   padding: 3px 5px;
   width: 28px;
+  cursor: pointer;
 }

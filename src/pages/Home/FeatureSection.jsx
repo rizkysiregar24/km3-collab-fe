@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
 const FEATURES_DATA = [
   {
     icon: <WalletIcon />,
-    title: 'Various Payment Methods',
+    title: "Various Payment Methods",
     content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, adipisci!',
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, adipisci!",
   },
   {
     icon: <DollarIcon />,
-    title: 'No Hidden Fee',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
+    title: "No Hidden Fee",
+    content: "Lorem ipsum dolor sit amet consectetur adipisicing.",
   },
   {
     icon: <RefundIcon />,
-    title: 'Refundable',
+    title: "Refundable",
     content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis molestiae.',
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis molestiae.",
   },
 ];
 
@@ -24,7 +24,7 @@ function FeatureSection() {
   return (
     <section className="container mx-auto my-8">
       <div className="xl:h-[700px] flex flex-col justify-center">
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center mx-4">
           <h2 className="text-3xl font-bold my-8">Why Terbang Tinggi?</h2>
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -55,7 +55,7 @@ export function WalletIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="dodgerblue"
       className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
     >
       <path
@@ -74,7 +74,7 @@ export function DollarIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="orange"
       className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
     >
       <path
@@ -93,7 +93,7 @@ export function RefundIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="limegreen"
       className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
     >
       <path
@@ -107,7 +107,7 @@ export function RefundIcon() {
 
 export function FeatureCard({ icon, title, content }) {
   return (
-    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md shadow-indigo-100">
       {icon}
       <h3 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900">
         {title}
