@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,19 +18,22 @@ function Navbar() {
           </h1>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a
-                href="#d"
-                className=" hover:bg-[#7E56DA] hover:text-white px-3 py-2 rounded-md text-sm font-medium border-[#7E56DA] border-solid border-2"
-              >
-                Login
-              </a>
+              <Link to="/Login">
+                <button
+                  className=" hover:bg-[#7E56DA] hover:text-white px-3 py-2 rounded-md text-sm font-medium border-[#7E56DA] border-solid border-2"
+                >
+                  Login
+                </button>
+              </Link >
 
-              <a
-                href="#s"
-                className=" hover:bg-[#7348da] px-3 py-2 rounded-md text-sm font-medium bg-[#7E56DA] text-white border-[#7E56DA] border-solid border-2"
-              >
-                Register
-              </a>
+              <Link to="/Register">
+                <button
+                  
+                  className=" hover:bg-[#7348da] px-3 py-2 rounded-md text-sm font-medium bg-[#7E56DA] text-white border-[#7E56DA] border-solid border-2"
+                >
+                  Register
+                </button>
+              </Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
