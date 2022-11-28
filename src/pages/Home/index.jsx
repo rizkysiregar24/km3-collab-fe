@@ -3,6 +3,7 @@ import Select from "react-select";
 
 import "./Home.css";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import FeatureSection from "./FeatureSection";
 
 const options = [
@@ -33,6 +34,15 @@ const SEAT_CLASS = [
 function Home() {
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
+  const [tripType, setTripType] = useState("one_way");
+
+  const handleRoundTrip = () => {
+    setTripType("round_trip");
+  };
+
+  const handleOneWay = () => {
+    setTripType("one_way");
+  };
 
   // Get date from startDate and add 1 day
   const minDateReturnDate = new Date(startDate).getDate() + 1;
@@ -49,41 +59,31 @@ function Home() {
   const [returnDate, setReturnDate] = useState(minReturnDate);
 
   return (
-    <div className=" mx-auto">
+    <div className="mx-auto">
       <Navbar />
-      {/* Hero Section Start */}
-      <div className="flex flex-col justify-center items-center object-cover object-center bg-cover bg-no-repeat bg-slate-200 py-24">
+      <div className="flex flex-col justify-center items-center object-cover object-center bg-cover bg-no-repeat bg-slate-100 py-24">
         {/* <div className="flex justify-center items-center object-cover object-center bg-cover bg-no-repeat sm:bg-[url(https://res.cloudinary.com/dmgrxm78p/image/upload/v1669166478/terbangtinggi/hero-image-1.jpg)] bg-blue-600 h-screen"> */}
-        <h1 className="text-4xl font-bold text-start mx-4">
+        <h1 className="font-bold mx-4 text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr from-indigo-500 to-blue-500 p-2">
           Find best ticket price for your next journey
         </h1>
-        <div className="bg-slate-50 rounded-md shadow-md sm:w-auto w-11/12 my-8 p-8">
+        <div className="bg-slate-50 rounded-md shadow-md shadow-indigo-200 sm:w-auto w-11/12 my-8 p-8">
           <form>
             <fieldset>
               <div className="flex gap-8">
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="radio"
-                    id="tripChoice1"
-                    name="trip"
-                    value="oneway"
-                    defaultChecked
-                  />
-                  <label className="font-semibold" htmlFor="tripChoice1">
-                    One way
-                  </label>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="radio"
-                    id="tripChoice2"
-                    name="trip"
-                    value="roundtrip"
-                  />
-                  <label className="font-semibold" htmlFor="tripChoice2">
-                    Round trip
-                  </label>
-                </div>
+                <RadioButton
+                  id="tripChoice1"
+                  name="trip"
+                  label="One way"
+                  onChange={handleOneWay}
+                  value={tripType === "one_way"}
+                />
+                <RadioButton
+                  id="tripChoice2"
+                  name="trip"
+                  label="Round trip"
+                  onChange={handleRoundTrip}
+                  value={tripType === "round_trip"}
+                />
               </div>
             </fieldset>
             <div className="flex gap-4 mt-4 flex-wrap flex-col sm:flex-row sm:justify-start justify-center">
@@ -117,10 +117,16 @@ function Home() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col sm:w-[170px] w-full">
+              <div
+                className={`flex flex-col sm:w-[170px] w-full ${
+                  tripType === "one_way"
+                    ? "hidden sm:block sm:invisible"
+                    : "visible"
+                }`}
+              >
                 <label className="font-semibold">Return Date</label>
                 <div className="relative mb-6">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 cursor-pointer">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <CalendarIcon />
                   </div>
                   <input
@@ -131,6 +137,7 @@ function Home() {
                     }}
                     min={minReturnDate}
                     required
+                    disabled={tripType === "one_way"}
                     className="rounded-[4px] border-[#cccccc] bg-gray-50 border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                   />
                 </div>
@@ -160,8 +167,8 @@ function Home() {
           </form>
         </div>
       </div>
-      {/* Hero Section End  */}
       <FeatureSection />
+      <Footer />
     </div>
   );
 }
@@ -210,5 +217,22 @@ function SeatIcon() {
     <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
       <path d="M14 13q-.825 0-1.412-.588Q12 11.825 12 11V6q0-.825.588-1.412Q13.175 4 14 4h2q.825 0 1.413.588Q18 5.175 18 6v5q0 .825-.587 1.412Q16.825 13 16 13Zm0-2h2V6h-2v5Zm-4.5 7q-.675 0-1.2-.387-.525-.388-.725-1.038L5 8V4h2v4l2.5 8H18v2ZM8 21v-2h10v2Zm6-15h2-2Z" />
     </svg>
+  );
+}
+
+function RadioButton({ label, value, onChange, id, name }) {
+  return (
+    <div className="flex gap-2 items-center">
+      <input
+        type="radio"
+        id={id}
+        name={name}
+        checked={value}
+        onChange={onChange}
+      />
+      <label className="font-semibold" htmlFor={id}>
+        {label}
+      </label>
+    </div>
   );
 }
