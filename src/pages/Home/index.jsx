@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 
 import "./Home.css";
@@ -47,10 +47,6 @@ function Home() {
   const minReturnDate = [+startYear, +startMonth, minDateReturnDate].join("-");
 
   const [returnDate, setReturnDate] = useState(minReturnDate);
-
-  useEffect(() => {
-    document.title = "Terbang Tinggi | Best Price for Flights";
-  }, []);
 
   return (
     <div className=" mx-auto">
