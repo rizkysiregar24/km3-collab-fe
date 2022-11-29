@@ -2,11 +2,30 @@ import { MdFlightTakeoff} from "react-icons/md"
 import { Link } from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { useState, } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 export default function Login(){
-
+    const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
     const [type,setType] =useState("password")
     const [icon,setIcon] =useState(FaEyeSlash)
+    const navigate=useNavigate()
+
+    const authy=()=>{
+        axios.post(`https://terbangtinggi-api-staging.km3ggwp.com/auth/login`,{
+            email:email,password:password
+        })
+        .then((resp)=>{
+            localStorage.setItem("token",resp.token)
+            window.location.reload()
+
+        })
+        .catch((err)=>{
+            console.log ("ini error :" +err)
+            alert(err.response.data.message);
+        })
+    }
 
     const handleToogle=()=>{
         if(type === "password"){
@@ -20,6 +39,7 @@ export default function Login(){
         }
     }
 
+
     return(
         <>
         
@@ -31,11 +51,13 @@ export default function Login(){
 
                         <form action="" className="flex flex-col w-80 " >
                             <div className=" mt-5 ">Email</div>
-                            <input type="email" className=" focus:outline-0 border rounded-md px-9 placeholder:text-sm"  placeholder="Enter your Email" />
+                            <input type="email" className=" focus:outline-0 border rounded-md px-9 placeholder:text-sm"  placeholder="Enter your Email"  onChange={function(e){
+                                setEmail(e.target.value)}}/>
 
                             <div className=" mt-5 ">Password</div>
                             <div className=" flex flex-wrap">
-                                <input  type={type} className=" w-full focus:outline-0 border px-9 rounded-md placeholder:text-sm"  placeholder="Enter your Password"/>
+                                <input  type={type} className=" w-full focus:outline-0 border px-9 rounded-md placeholder:text-sm"  placeholder="Enter your Password"  onChange={function(e){
+                                setPassword(e.target.value)}}/>
                                 
                                 <div className="absolute my-3 ml-72  "  onClick={handleToogle}>
                                     {icon} 
@@ -43,7 +65,10 @@ export default function Login(){
                             </div>
                             
                             <button className=" text-xs ml-auto mt-2 text-[#7E56DA] "> Forgot Password </button>
-                            <button className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-7">Sign in</button>
+                            <button className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-7" onClick={()=>{
+                                authy() 
+                                navigate('/')
+                            }}>Sign in</button>
                             <button  className=" hover:bg-[#7E56DA] hover:text-white rounded-md text-sm flex mt-5 border-[#7E56DA] border-solid border-2 h-7">
                                 <svg class="mr-3 ml-20 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="23px">
                                     <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
