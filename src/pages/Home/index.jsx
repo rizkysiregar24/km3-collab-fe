@@ -4,6 +4,7 @@ import Select from "react-select";
 import "./Home.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import Footer from "../../components/Footer";
 import FeatureSection from "./FeatureSection";
 
 const options = [
@@ -253,6 +254,7 @@ function Home() {
         </div>
       </div>
       <FeatureSection />
+      <Footer />
       <Footer />
     </div>
   );
