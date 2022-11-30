@@ -6,7 +6,7 @@ import Login from "./pages/Home/Login";
 import Register from "./pages/Home/Register";
 import User from "./pages/User";
 
-function App() {  
+function App() {
   return (
     <Router>
       <Routes>
