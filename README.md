@@ -23,4 +23,5 @@ Contribution guide
 
 ## Live preview
 
-[Terbang Tinggi App](https://terbangtinggi.km3ggwp.com)
+[Terbang Tinggi Production](https://terbangtinggi.km3ggwp.com)
+[Terbang Tinggi Staging](https://terbangtinggi-staging.km3ggwp.com)
