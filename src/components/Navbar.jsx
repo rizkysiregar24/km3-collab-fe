@@ -24,14 +24,14 @@ function Navbar() {
             <div className="ml-10 flex items-baseline space-x-4">
               <Link
                 to="/login"
-                className=" hover:bg-[#7E56DA] hover:text-white px-3 py-2 rounded-md text-sm font-medium border-[#7E56DA] border-solid border-2"
+                className=" hover:bg-brand-hover hover:text-white px-3 py-2 rounded-md text-sm font-medium border-brand border-solid border-2"
               >
                 Login
               </Link>
 
               <Link
                 to="/register"
-                className=" hover:bg-[#7348da] px-3 py-2 rounded-md text-sm font-medium bg-[#7E56DA] text-white border-[#7E56DA] border-solid border-2"
+                className=" hover:bg-brand-hover px-3 py-2 rounded-md text-sm font-medium bg-brand text-white border-brand border-solid border-2"
               >
                 Register
               </Link>
@@ -41,7 +41,7 @@ function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="bg-[#7E56DA] text-white hover:bg-[#7348da] inline-flex items-center justify-center p-2 rounded-md  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#7E56DA] focus:ring-white"
+              className="bg-brand text-white hover:bg-brand-hover inline-flex items-center justify-center p-2 rounded-md  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-hover focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >

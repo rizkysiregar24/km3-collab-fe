@@ -35,14 +35,8 @@ function Home() {
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [tripType, setTripType] = useState("one_way");
-
-  const handleRoundTrip = () => {
-    setTripType("round_trip");
-  };
-
-  const handleOneWay = () => {
-    setTripType("one_way");
-  };
+  const [adult, setAdult] = useState(1);
+  const [child, setChild] = useState(0);
 
   // Get date from startDate and add 1 day
   const minDateReturnDate = new Date(startDate).getDate() + 1;
@@ -58,15 +52,56 @@ function Home() {
 
   const [returnDate, setReturnDate] = useState(minReturnDate);
 
+  // Function definition
+
+  const handleRoundTrip = () => {
+    setTripType("round_trip");
+  };
+
+  const handleOneWay = () => {
+    setTripType("one_way");
+  };
+
+  const incrementAdultPassenger = (e) => {
+    e.preventDefault();
+    if (adult + child === 7) {
+      return;
+    }
+    setAdult(adult + 1);
+  };
+
+  const incrementChildPassenger = (e) => {
+    e.preventDefault();
+    if (adult + child === 7) {
+      return;
+    }
+    setChild(child + 1);
+  };
+
+  const decrementChildPassenger = (e) => {
+    e.preventDefault();
+    if (child === 0) {
+      return;
+    }
+    setChild(child - 1);
+  };
+
+  const decrementAdultPassenger = (e) => {
+    e.preventDefault();
+    if (adult === 0) {
+      return;
+    }
+    setAdult(adult - 1);
+  };
+
   return (
     <div className="mx-auto">
       <Navbar />
-      <div className="flex flex-col justify-center items-center object-cover object-center bg-cover bg-no-repeat bg-slate-100 py-24">
-        {/* <div className="flex justify-center items-center object-cover object-center bg-cover bg-no-repeat sm:bg-[url(https://res.cloudinary.com/dmgrxm78p/image/upload/v1669166478/terbangtinggi/hero-image-1.jpg)] bg-blue-600 h-screen"> */}
+      <div className="flex flex-col items-center object-cover object-center bg-cover bg-no-repeat bg-slate-100 md:py-20 py-8">
         <h1 className="font-bold mx-4 text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr from-indigo-500 to-blue-500 p-2">
           Find best ticket price for your next journey
         </h1>
-        <div className="bg-slate-50 rounded-md shadow-md shadow-indigo-200 sm:w-auto w-11/12 my-8 p-8">
+        <div className="bg-white rounded-md shadow-md shadow-indigo-200 sm:w-auto w-11/12 my-8 p-8">
           <form>
             <fieldset>
               <div className="flex gap-8">
@@ -97,7 +132,57 @@ function Home() {
               </div>
               <div className="sm:w-[200px] w-full">
                 <label className="font-semibold">No. of Passengers</label>
-                <Select options={options} />
+                <div className="dropdown sm:w-[200px] w-full">
+                  <p
+                    tabIndex={0}
+                    className="input flex items-center h-10 border-[#cccccc] border text-gray-900 sm:w-52 w-full"
+                  >
+                    {adult} Adult, {child} Children
+                  </p>
+                  <div
+                    tabIndex={0}
+                    className="dropdown-content card card-compact w-64 p-2 bg-slate-100 text-black mt-1 rounded-[4px] shadow-md shadow-indigo-200"
+                  >
+                    <div className="card-body">
+                      <div className="flex items-center justify-between">
+                        <div>Adult</div>
+                        <div className="flex gap-4 items-center">
+                          <button
+                            className="btn btn-circle btn-sm"
+                            onClick={incrementAdultPassenger}
+                          >
+                            +
+                          </button>
+                          {adult}
+                          <button
+                            className="btn btn-circle btn-sm"
+                            onClick={decrementAdultPassenger}
+                          >
+                            -
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>Children</div>
+                        <div className="flex gap-4 items-center">
+                          <button
+                            className="btn btn-circle btn-sm"
+                            onClick={incrementChildPassenger}
+                          >
+                            +
+                          </button>
+                          {child}
+                          <button
+                            className="btn btn-circle btn-sm"
+                            onClick={decrementChildPassenger}
+                          >
+                            -
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex gap-4 mt-8 flex-wrap sm:flex-row flex-col ">
@@ -113,7 +198,7 @@ function Home() {
                     onChange={(e) => setStartDate(e.target.value)}
                     min={today}
                     required
-                    className="rounded-[4px] border-[#cccccc] bg-gray-50 border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                    className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                   />
                 </div>
               </div>
@@ -125,7 +210,7 @@ function Home() {
                 }`}
               >
                 <label className="font-semibold">Return Date</label>
-                <div className="relative mb-6">
+                <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <CalendarIcon />
                   </div>
@@ -138,17 +223,17 @@ function Home() {
                     min={minReturnDate}
                     required
                     disabled={tripType === "one_way"}
-                    className="rounded-[4px] border-[#cccccc] bg-gray-50 border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                    className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                   />
                 </div>
               </div>
               <div className="flex flex-col sm:w-[200px] w-full">
                 <label className="font-semibold">Seat Class</label>
-                <div className="relative mb-6">
+                <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <SeatIcon />
                   </div>
-                  <select className="rounded-[4px] border-[#cccccc] bg-gray-50 border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5">
+                  <select className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5">
                     {SEAT_CLASS.map((item) => (
                       <option value={item.value} key={item.value}>
                         {item.label}
@@ -159,7 +244,7 @@ function Home() {
               </div>
             </div>
             <div className="mt-4 flex justify-end">
-              <button className="py-2 px-4 rounded-[4px] w-full sm:w-auto bg-[#7E56DA] text-white hover:bg-[#7348da] font-semibold text-center inline-flex items-center">
+              <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover">
                 <SearchIcon />
                 Search Flights
               </button>
@@ -200,7 +285,7 @@ function CalendarIcon() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="w-6 h-6"
+      className="w-6 h-6 "
     >
       <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
       <path
@@ -214,7 +299,12 @@ function CalendarIcon() {
 
 function SeatIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24"
+      width="24"
+      fill="currentColor"
+    >
       <path d="M14 13q-.825 0-1.412-.588Q12 11.825 12 11V6q0-.825.588-1.412Q13.175 4 14 4h2q.825 0 1.413.588Q18 5.175 18 6v5q0 .825-.587 1.412Q16.825 13 16 13Zm0-2h2V6h-2v5Zm-4.5 7q-.675 0-1.2-.387-.525-.388-.725-1.038L5 8V4h2v4l2.5 8H18v2ZM8 21v-2h10v2Zm6-15h2-2Z" />
     </svg>
   );
@@ -229,8 +319,9 @@ function RadioButton({ label, value, onChange, id, name }) {
         name={name}
         checked={value}
         onChange={onChange}
+        className="radio"
       />
-      <label className="font-semibold" htmlFor={id}>
+      <label className="font-semibold cursor-pointer" htmlFor={id}>
         {label}
       </label>
     </div>
