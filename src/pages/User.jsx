@@ -1,29 +1,24 @@
 import React, { useState } from "react";
 
-import RadioButton from '../components/Input/RadioButton'
-
 function User() {
   const [formData, setFormData] = useState({
-    fullname: '',
-    phonenumber: '',
-    emergencynumber: '',
-    gender: '',
-    month: '',
-    day: '',
-    year: '',
+    fullname: "",
+    phonenumber: "",
+    emergencynumber: "",
+    gender: "",
+    month: "",
+    day: "",
+    year: "",
   });
 
   const onChangeHandler = (event) => {
-    console.log(event);
     if (event.target.name === "languages") {
       const copy = { ...formData };
 
       if (event.target.checked) {
         copy.languages.push(event.target.value);
       } else {
-        copy.languages = copy.languages.filter(
-          (el) => el !== event.target.value
-        );
+        copy.languages = copy.languages.filter((el) => el !== event.target.value);
       }
 
       setFormData(copy);
@@ -37,7 +32,6 @@ function User() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formData);
   };
   return (
     <div className="mx-auto">
@@ -71,16 +65,16 @@ function User() {
           <div className="form-group">
             <h1 className="font-bold">Gender</h1>
             <fieldset className="flex flex-col gap-2">
-             <div>
-            <div>
-              <input type="radio" name="gender" value="male" onChange={onChangeHandler} checked={formData.gender === "male"} />
-              <label htmlFor="male">Male</label>
-            </div>
-            <div>
-              <input type="radio" name="gender" value="female" onChange={onChangeHandler} checked={formData.gender === "female"} />
-              <label htmlFor="female">Female</label>
-            </div>
-            </div>
+              <div>
+                <div>
+                  <input type="radio" name="gender" value="male" onChange={onChangeHandler} checked={formData.gender === "male"} />
+                  <label htmlFor="male">Male</label>
+                </div>
+                <div>
+                  <input type="radio" name="gender" value="female" onChange={onChangeHandler} checked={formData.gender === "female"} />
+                  <label htmlFor="female">Female</label>
+                </div>
+              </div>
             </fieldset>
           </div>
 
