@@ -1,7 +1,4 @@
-import "./User.css";
 import React, { useState } from "react";
-
-import RadioButton from '../components/Input/RadioButton'
 
 function User() {
   const [formData, setFormData] = useState({
