@@ -1,69 +1,74 @@
-import React, { useState } from 'react';
-import Select from 'react-select';
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+import React, { useState } from "react";
+import Select from "react-select";
 
-import './Home.css';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import FeatureSection from './FeatureSection';
-import SeatIcon from '../../components/Icons/SeatIcon';
-import SearchIcon from '../../components/Icons/SearchIcon';
-import CalendarIcon from '../../components/Icons/CalendarIcon';
-import RadioButton from '../../components/Input/RadioButton';
+import "./Home.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import FeatureSection from "./FeatureSection";
+import SeatIcon from "../../components/Icons/SeatIcon";
+import SearchIcon from "../../components/Icons/SearchIcon";
+import CalendarIcon from "../../components/Icons/CalendarIcon";
+import RadioButton from "../../components/Input/RadioButton";
 
 const options = [
-  { value: 'jakarta', label: 'Jakarta (JKTA)' },
-  { value: 'surabaya', label: 'Surabaya (SUB)' },
-  { value: 'tokyo', label: 'Tokyo (TYOA)' },
+  { value: "jakarta", label: "Jakarta (JKTA)" },
+  { value: "surabaya", label: "Surabaya (SUB)" },
+  { value: "tokyo", label: "Tokyo (TYOA)" },
 ];
 
 const SEAT_CLASS = [
   {
-    value: 'economy',
-    label: 'Economy',
+    value: "economy",
+    label: "Economy",
   },
   {
-    value: 'premium_economy',
-    label: 'Premium Economy',
+    value: "premium_economy",
+    label: "Premium Economy",
   },
   {
-    value: 'bussiness',
-    label: 'Bussiness',
+    value: "bussiness",
+    label: "Bussiness",
   },
   {
-    value: 'first_class',
-    label: 'First Class',
+    value: "first_class",
+    label: "First Class",
   },
 ];
 
 export function Home() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
-  const [tripType, setTripType] = useState('one_way');
+  const [tripType, setTripType] = useState("one_way");
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
 
   // Get date from startDate and add 1 day
   const minDateReturnDate = new Date(startDate).getDate() + 1;
+  const minDateReturn =
+    minDateReturnDate.toString().split("").length === 1
+      ? `0${minDateReturnDate}`
+      : minDateReturnDate;
   // Get array of date year, month, day format
   const arrStartDate = new Date(startDate)
     .toISOString()
-    .split('T')[0]
-    .split('-');
+    .split("T")[0]
+    .split("-");
   // get year and month from arrStartDate
   const [startYear, startMonth] = arrStartDate;
   // Now we get the min return date, so it's gonna be startDate + 1 day
-  const minReturnDate = [+startYear, +startMonth, minDateReturnDate].join('-');
+  const minReturnDate = [+startYear, +startMonth, minDateReturn].join("-");
 
   const [returnDate, setReturnDate] = useState(minReturnDate);
 
   // Function definition
 
   const handleRoundTrip = () => {
-    setTripType('round_trip');
+    setTripType("round_trip");
   };
 
   const handleOneWay = () => {
-    setTripType('one_way');
+    setTripType("one_way");
   };
 
   const incrementAdultPassenger = (e) => {
@@ -114,14 +119,14 @@ export function Home() {
                   name="trip"
                   label="One way"
                   onChange={handleOneWay}
-                  value={tripType === 'one_way'}
+                  value={tripType === "one_way"}
                 />
                 <RadioButton
                   id="tripChoice2"
                   name="trip"
                   label="Round trip"
                   onChange={handleRoundTrip}
-                  value={tripType === 'round_trip'}
+                  value={tripType === "round_trip"}
                 />
               </div>
             </fieldset>
@@ -136,7 +141,7 @@ export function Home() {
               </div>
               <div className="sm:w-[200px] w-full">
                 <label className="font-semibold">No. of Passengers</label>
-                <div className="dropdown sm:w-[200px] w-full">
+                <div className="dropdown sm:w-[200px] w-full cursor-pointer">
                   <p
                     tabIndex={0}
                     className="input flex items-center h-10 border-[#cccccc] border text-gray-900 sm:w-52 w-full"
@@ -154,6 +159,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={incrementAdultPassenger}
+                            type="button"
                           >
                             +
                           </button>
@@ -161,6 +167,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={decrementAdultPassenger}
+                            type="button"
                           >
                             -
                           </button>
@@ -172,6 +179,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={incrementChildPassenger}
+                            type="button"
                           >
                             +
                           </button>
@@ -179,6 +187,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={decrementChildPassenger}
+                            type="button"
                           >
                             -
                           </button>
@@ -208,9 +217,9 @@ export function Home() {
               </div>
               <div
                 className={`flex flex-col sm:w-[170px] w-full ${
-                  tripType === 'one_way'
-                    ? 'hidden sm:block sm:invisible'
-                    : 'visible'
+                  tripType === "one_way"
+                    ? "hidden sm:block sm:invisible"
+                    : "visible"
                 }`}
               >
                 <label className="font-semibold">Return Date</label>
@@ -226,7 +235,7 @@ export function Home() {
                     }}
                     min={minReturnDate}
                     required
-                    disabled={tripType === 'one_way'}
+                    disabled={tripType === "one_way"}
                     className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 h-10"
                   />
                 </div>
@@ -248,7 +257,10 @@ export function Home() {
               </div>
             </div>
             <div className="mt-4 flex justify-end">
-              <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover">
+              <button
+                className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn bg-purple-primary hover:bg-purple-primary-darker"
+                type="button"
+              >
                 <SearchIcon />
                 Search Flights
               </button>
