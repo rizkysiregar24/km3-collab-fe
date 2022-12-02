@@ -2,7 +2,15 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "purple-primary": "#512bd4",
+        "purple-primary-darker": "#4122aa",
+      },
+    },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("daisyui")],
+  daisyui: {
+    darkTheme: "light",
+  },
 };
