@@ -1,13 +1,17 @@
 import "./User.css";
 import React, { useState } from "react";
 
+import RadioButton from '../components/Input/RadioButton'
+
 function User() {
   const [formData, setFormData] = useState({
-    fullname: "",
-    phonenumber: "",
-    emergencycontact: "",
-    gender: "",
-    birthday: "",
+    fullname: '',
+    phonenumber: '',
+    emergencynumber: '',
+    gender: '',
+    month: '',
+    day: '',
+    year: '',
   });
 
   const onChangeHandler = (event) => {
@@ -37,91 +41,75 @@ function User() {
     console.log(formData);
   };
   return (
-    <div className="App">
-      <form onSubmit={onSubmitHandler}>
-        <h1>Person Detail</h1>
-        <div className="form-group">
-          <label htmlFor="fullname" className="form-label">
-            Full Name
-          </label>
-          <input
-            className="form-control"
-            name="fullname"
-            onChange={onChangeHandler}
-            value={formData.fullname}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="phonenumber" className="form-label">
-            Phone Number
-          </label>
-          <input
-            className="form-control"
-            name="phonenumber"
-            onChange={onChangeHandler}
-            value={formData.phonenumber}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="emergencycontact" className="form-label">
-            Emergency Contact
-          </label>
-          <input
-            className="form-control"
-            name="emergencycontact"
-            onChange={onChangeHandler}
-            value={formData.emergencycontact}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="gender" className="form-label">
-            Gender
-          </label>
+    <div className="mx-auto">
+      <div className="flex flex-col items-center object-cover object-center bg-cover bg-no-repeat bg-slate-100 md:py-20 py-8 px-5">
+        <form className="w-full" onSubmit={onSubmitHandler}>
           <div>
-            <div>
+            <h1 className="font-bold">Person Detail</h1>
+            <div className="form-group flex flex-col">
+              <label htmlFor="fullname">Full Name</label>
+              <input id="fullname" type="text" name="fullname" className="border rounded px-2 py-1 border-slate-500 required:red-border-500" placeholder="Full Name" onChange={onChangeHandler} value={formData.fullname} required />
+            </div>
+            <div className="form-group flex flex-col">
+              <label htmlFor="phonenumber">Phone Number</label>
+              <input id="phonenumber" type="text" name="phonenumber" className="border rounded px-2 py-1 border-slate-500" placeholder="Phone Number" onChange={onChangeHandler} value={formData.phonenumber} />
+            </div>
+            <div className="form-group flex flex-col">
+              <label htmlFor="emergencynumber">Emergency Number</label>
               <input
-                type="radio"
-                name="gender"
-                value="male"
+                id="emergencynumber"
+                type="text"
+                name="emergencynumber"
+                className="border rounded px-2 py-1 border-slate-500 focus:border-red-500 required:red-border-500"
+                placeholder="Emergency Number"
                 onChange={onChangeHandler}
-                checked={formData.gender === "male"}
+                value={formData.emergencynumber}
+                required
               />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <h1 className="font-bold">Gender</h1>
+            <fieldset className="flex flex-col gap-2">
+             <div>
+            <div>
+              <input type="radio" name="gender" value="male" onChange={onChangeHandler} checked={formData.gender === "male"} />
               <label htmlFor="male">Male</label>
             </div>
             <div>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                onChange={onChangeHandler}
-                checked={formData.gender === "female"}
-              />
+              <input type="radio" name="gender" value="female" onChange={onChangeHandler} checked={formData.gender === "female"} />
               <label htmlFor="female">Female</label>
             </div>
-            <div>
-              <input
-                type="radio"
-                name="gender"
-                value="other"
-                onChange={onChangeHandler}
-                checked={formData.gender === "other"}
-              />
-              <label htmlFor="other">Other</label>
+            </div>
+            </fieldset>
+          </div>
+
+          <div>
+            <h1 className="font-bold">Date of Birth</h1>
+            <div className="flex flex-col gap-3 lg:flex-row">
+              <div className="form-group flex flex-col">
+                <label htmlFor="month">Month</label>
+                <input id="month" type="text" name="month" className="border rounded px-2 py-1 border-slate-500 required:red-border-500" placeholder="MM" onChange={onChangeHandler} value={formData.month} required />
+              </div>
+              <div className="form-group flex flex-col">
+                <label htmlFor="day">Day</label>
+                <input id="day" type="text" name="day" className="border rounded px-2 py-1 border-slate-500" placeholder="DD" onChange={onChangeHandler} value={formData.day} />
+              </div>
+              <div className="form-group flex flex-col">
+                <label htmlFor="year">Year</label>
+                <input id="year" type="text" name="year" className="border rounded px-2 py-1 border-slate-500 focus:border-red-500 required:red-border-500" placeholder="YYYY" onChange={onChangeHandler} value={formData.year} required />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="birthday" className="form-label">
-            Day of Birth
-          </label>
-        </div>
-        <input type="date" required className="form-control" />
-        <div className="form-group">
-          <button className="btn bg-brand hover:bg-brand-hover" type="submit">
-            Save
-          </button>
-        </div>
-      </form>
+
+          <div className="form-group mt-5">
+            <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover" type="submit">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
