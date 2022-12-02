@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import "./User.css";
+import React, { useState } from "react";
 
 import RadioButton from '../components/Input/RadioButton'
 
@@ -15,8 +16,8 @@ function User() {
 
   const onChangeHandler = (event) => {
     console.log(event);
-    if (event.target.name === 'languages') {
-      let copy = { ...formData };
+    if (event.target.name === "languages") {
+      const copy = { ...formData };
 
       if (event.target.checked) {
         copy.languages.push(event.target.value);
