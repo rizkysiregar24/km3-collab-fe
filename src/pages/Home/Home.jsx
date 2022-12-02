@@ -137,16 +137,10 @@ export function Home() {
               <div className="sm:w-[200px] w-full">
                 <label className="font-semibold">No. of Passengers</label>
                 <div className="dropdown sm:w-[200px] w-full">
-                  <p
-                    tabIndex={0}
-                    className="input flex items-center h-10 border-[#cccccc] border text-gray-900 sm:w-52 w-full"
-                  >
+                  <p className="input flex items-center h-10 border-[#cccccc] border text-gray-900 sm:w-52 w-full">
                     {adult} Adult, {child} Children
                   </p>
-                  <div
-                    tabIndex={0}
-                    className="dropdown-content card card-compact w-64 p-2 bg-slate-100 text-black mt-1 rounded-[4px] shadow-md shadow-indigo-200"
-                  >
+                  <div className="dropdown-content card card-compact w-64 p-2 bg-slate-100 text-black mt-1 rounded-[4px] shadow-md shadow-indigo-200">
                     <div className="card-body">
                       <div className="flex items-center justify-between">
                         <div>Adult</div>
@@ -154,6 +148,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={incrementAdultPassenger}
+                            type="button"
                           >
                             +
                           </button>
@@ -161,6 +156,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={decrementAdultPassenger}
+                            type="button"
                           >
                             -
                           </button>
@@ -172,6 +168,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={incrementChildPassenger}
+                            type="button"
                           >
                             +
                           </button>
@@ -179,6 +176,7 @@ export function Home() {
                           <button
                             className="btn btn-circle btn-sm"
                             onClick={decrementChildPassenger}
+                            type="button"
                           >
                             -
                           </button>
@@ -248,11 +246,16 @@ export function Home() {
               </div>
             </div>
             <div className="mt-4 flex justify-end">
-              <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover border-brand">
+              <button
+                className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover border-brand"
+                type="button"
+              >
                 <SearchIcon />
                 Search Flights
               </button>
-              <button className="btn btn-primary">Hello</button>
+              <button className="btn btn-primary" type="button">
+                Hello
+              </button>
             </div>
           </form>
         </div>

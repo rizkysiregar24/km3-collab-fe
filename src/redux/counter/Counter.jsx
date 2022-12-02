@@ -10,11 +10,19 @@ function Counter() {
 
   return (
     <div className="flex justify-center items-center gap-4 p-4">
-      <button className="btn btn-circle" onClick={() => dispatch(increment())}>
+      <button
+        className="btn btn-circle"
+        onClick={() => dispatch(increment())}
+        type="button"
+      >
         +
       </button>{" "}
       <p className="text-2xl">Value {value}</p>
-      <button className="btn btn-circle" onClick={() => dispatch(decrement())}>
+      <button
+        className="btn btn-circle"
+        onClick={() => dispatch(decrement())}
+        type="button"
+      >
         -
       </button>
     </div>
