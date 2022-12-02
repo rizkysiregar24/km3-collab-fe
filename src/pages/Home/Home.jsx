@@ -248,10 +248,11 @@ export function Home() {
               </div>
             </div>
             <div className="mt-4 flex justify-end">
-              <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover">
+              <button className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn btn-primary bg-brand hover:bg-brand-hover border-brand">
                 <SearchIcon />
                 Search Flights
               </button>
+              <button className="btn btn-primary">Hello</button>
             </div>
           </form>
         </div>
