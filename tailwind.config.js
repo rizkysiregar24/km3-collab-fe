@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         "purple-primary": "#512bd4",
-        "brand-hover": "#714dc4",
+        "purple-primary-darker": "#4122aa",
       },
     },
   },
