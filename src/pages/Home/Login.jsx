@@ -1,11 +1,32 @@
 import { MdFlightTakeoff } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(FaEyeSlash);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    axios
+      .post(`${process.env.REACT_APP_AUTH_API}/auth/login`, {
+        email,
+        password,
+      })
+      .then((resp) => {
+        if (resp.data.data.token) {
+          localStorage.setItem("token", resp.data.data.token);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  };
 
   const handleToogle = () => {
     if (type === "password") {
@@ -26,12 +47,15 @@ export default function Login() {
             Welcome back! Please enter your details
           </p>
 
-          <form action="" className="flex flex-col w-80 ">
+          <form className="flex flex-col w-80 ">
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
               className=" focus:outline-0 border rounded-md px-9 placeholder:text-sm"
               placeholder="Enter your Email"
+              onChange={function (e) {
+                setEmail(e.target.value);
+              }}
             />
 
             <div className=" mt-5 ">Password</div>
@@ -40,32 +64,41 @@ export default function Login() {
                 type={type}
                 className=" w-full focus:outline-0 border px-9 rounded-md placeholder:text-sm"
                 placeholder="Enter your Password"
+                onChange={function (e) {
+                  setPassword(e.target.value);
+                }}
               />
 
               <button
-                className="absolute my-3 ml-72"
-                onClick={handleToogle}
+                className="absolute my-3 ml-72  "
                 type="button"
+                onClick={handleToogle}
               >
                 {icon}
               </button>
             </div>
 
             <button
-              className="text-xs ml-auto mt-2 text-[#7E56DA]"
+              className=" text-xs ml-auto mt-2 text-[#7E56DA]  "
               type="button"
             >
               {" "}
               Forgot Password{" "}
             </button>
+
             <button
               className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-7"
               type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
             >
               Sign in
             </button>
+
             <button
-              className="hover:bg-[#7E56DA] hover:text-white rounded-md text-sm flex mt-5 border-[#7E56DA] border-solid border-2 h-7"
+              className=" hover:bg-[#7E56DA] hover:text-white rounded-md text-sm flex mt-5 border-[#7E56DA] border-solid border-2 h-7"
               type="button"
             >
               <svg
@@ -108,7 +141,13 @@ export default function Login() {
         </div>
         <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic ">
           {" "}
-          <MdFlightTakeoff className="text-[#7E56DA]  mt-20" size={200} />{" "}
+          <MdFlightTakeoff
+            className="text-[#7E56DA] hover:cursor-pointer  mt-20"
+            size={200}
+            onClick={() => {
+              navigate("/");
+            }}
+          />{" "}
           Terbang Tinggi App
         </div>
       </div>

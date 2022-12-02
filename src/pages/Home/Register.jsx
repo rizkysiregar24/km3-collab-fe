@@ -1,17 +1,66 @@
 import { MdFlightLand } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPasswordEye, setConfirmPasswordEye] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
 
   const handleToogle = () => {
     setPasswordEye(!passwordEye);
   };
   const handleConfirmToogle = () => {
     setConfirmPasswordEye(!confirmPasswordEye);
+  };
+
+  const handleRegister = () => {
+    if (username === "") {
+      alert(" first Name is required");
+      return;
+    }
+
+    if (email === "") {
+      alert("Email is required");
+      return;
+    }
+    if (password === "") {
+      alert("Password is required");
+      return;
+    }
+    if (confirmPassword === "") {
+      alert("Password Confirmation is required");
+      return;
+    }
+
+    if (confirmPassword === password) {
+      axios
+        .post(`${process.env.REACT_APP_AUTH_API}/auth/register`, {
+          email,
+          password,
+          confirmPassword,
+          username,
+        })
+        .then((resp) => {
+          console.log(resp);
+          if (resp.data.data) {
+            localStorage.setItem("data", resp.data.data);
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err.response.data.message);
+        });
+    } else {
+      alert("Confirmation password tidak sama!");
+    }
   };
 
   return (
@@ -23,18 +72,24 @@ export default function Register() {
             Get Started! Please enter your details
           </p>
 
-          <form action="" className="flex flex-col w-80">
-            <div className=" mt-5 ">Full Name</div>
+          <form className="flex flex-col w-80">
+            <div className=" mt-5 ">Username</div>
             <input
               type="text"
               className=" focus:outline-0 border-1  border-gray px-9 rounded-md pl-5 placeholder:text-sm"
               placeholder="Enter your Full Name"
+              onChange={function (e) {
+                setUsername(e.target.value);
+              }}
             />
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
               className=" focus:outline-0 border-1  border-gray px-9 rounded-md pl-5 placeholder:text-sm"
               placeholder="Enter your Email"
+              onChange={function (e) {
+                setEmail(e.target.value);
+              }}
             />
 
             <div className=" mt-5 ">Password</div>
@@ -43,6 +98,9 @@ export default function Register() {
                 className="  w-full focus:outline-0 border-1 px-9 border-gray  pl-5 rounded-md placeholder:text-sm"
                 type={passwordEye === false ? "password" : "text"}
                 placeholder="Enter your Password"
+                onChange={function (e) {
+                  setPassword(e.target.value);
+                }}
               />
               <span className="absolute ml-72 my-3">
                 {passwordEye === false ? (
@@ -59,6 +117,9 @@ export default function Register() {
                 className=" w-full focus:outline-0 border-1 px-9 border-gray  pl-5 rounded-md placeholder:text-sm "
                 type={confirmPasswordEye === false ? "password" : "text"}
                 placeholder="Enter your Password Confirmation"
+                onChange={function (e) {
+                  setconfirmPassword(e.target.value);
+                }}
               />
               <span className="absolute ml-72 my-3">
                 {confirmPasswordEye === false ? (
@@ -79,6 +140,10 @@ export default function Register() {
             <button
               className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-7"
               type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
             >
               Sign up
             </button>
@@ -98,8 +163,14 @@ export default function Register() {
         </div>
         <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic ">
           {" "}
-          <MdFlightLand className="text-[#7E56DA]  mt-20" size={200} /> Terbang
-          Tinggi App
+          <MdFlightLand
+            className="hover:cursor-pointer text-[#7E56DA]  mt-20"
+            size={200}
+            onClick={() => {
+              navigate("/");
+            }}
+          />{" "}
+          Terbang Tinggi App
         </div>
       </div>
     </section>
