@@ -12,7 +12,7 @@ export default function Googlelogin() {
           access_token: response.access_token,
         };
         const result = await axios.post(
-          `https://terbangtinggi-api-staging.km3ggwp.com/auth/google`,
+          `${process.env.REACT_APP_AUTH_API}/auth/google`,
           data
         );
         if (result.data.token) {
