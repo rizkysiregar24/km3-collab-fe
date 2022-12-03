@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+import { IoMdSwap } from "react-icons/io";
 
 import "./Home.css";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import FeatureSection from "./FeatureSection";
 import SeatIcon from "../../components/Icons/SeatIcon";
 import SearchIcon from "../../components/Icons/SearchIcon";
 import CalendarIcon from "../../components/Icons/CalendarIcon";
 import RadioButton from "../../components/Input/RadioButton";
+import { Layout } from "../../components/Layout/Layout";
 
 const options = [
   { value: "jakarta", label: "Jakarta (JKTA)" },
@@ -42,6 +43,11 @@ export function Home() {
   const [tripType, setTripType] = useState("one_way");
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
+  const [departure, setDeparture] = useState(null);
+  const [arrival, setArrival] = useState(null);
+  const [seatClass, setSeatClass] = useState("economy");
+
+  const navigate = useNavigate();
 
   // Get date from startDate and add 1 day
   const minDateReturnDate = new Date(startDate).getDate() + 1;
@@ -63,12 +69,28 @@ export function Home() {
 
   // Function definition
 
+  const handleSearchFlight = () => {
+    navigate(
+      `/search?from=${departure.value}&to=${
+        arrival.value
+      }&passengers=${adult}.${child}&tripType=${tripType}&sc=${seatClass}&fromDate=${startDate}&returnDate=${
+        tripType === "one_way" ? "" : returnDate
+      }`
+    );
+  };
+
   const handleRoundTrip = () => {
     setTripType("round_trip");
   };
 
   const handleOneWay = () => {
     setTripType("one_way");
+  };
+
+  const handleSwapDestination = (e) => {
+    e.preventDefault();
+    setDeparture(arrival);
+    setArrival(departure);
   };
 
   const incrementAdultPassenger = (e) => {
@@ -108,16 +130,15 @@ export function Home() {
   }, []);
 
   return (
-    <div className="mx-auto">
-      <Navbar />
+    <Layout>
       <div className="flex flex-col items-center object-cover object-center bg-cover bg-no-repeat bg-slate-100 md:py-20 py-8">
-        <h1 className="font-bold mx-4 text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr from-indigo-500 to-blue-500 p-2">
+        <h1 className="font-bold mx-4 text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr from-[#0b6cff] to-[#512bd4] p-2">
           Find best ticket price for your next journey
         </h1>
         <div className="bg-white rounded-md shadow-md shadow-indigo-200 sm:w-auto w-11/12 my-8 p-8">
           <form>
             <fieldset>
-              <div className="flex gap-8">
+              <div className="flex gap-8 items-center flex-wrap">
                 <RadioButton
                   id="tripChoice1"
                   name="trip"
@@ -132,36 +153,93 @@ export function Home() {
                   onChange={handleRoundTrip}
                   value={tripType === "round_trip"}
                 />
+                <button
+                  type="button"
+                  onClick={handleSwapDestination}
+                  title="Swap Airports"
+                  className="btn btn-primary text-purple-primary hover:bg-purple-primary-darker btn-sm btn-outline flex items-center gap-2 font-semibold w-full md:w-auto"
+                >
+                  <IoMdSwap size={24} />
+                  <p>Swap Airports</p>
+                </button>
               </div>
             </fieldset>
             <div className="flex gap-4 mt-4 flex-wrap flex-col sm:flex-row sm:justify-start justify-center">
               <div className="sm:w-[170px] w-full">
                 <label className="font-semibold">From</label>
-                <Select options={options} />
+                <Select
+                  options={options}
+                  value={departure}
+                  onChange={(choice) => setDeparture(choice)}
+                  required
+                  components={{
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null,
+                  }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      height: "48px",
+                      outline: state.isFocused ? "2px solid #512bd4" : null,
+                      outlineOffset: state.isFocused ? "2px" : null,
+                      boxShadow: "none",
+                      border: "1px solid #cccccc",
+                      "&:hover": {
+                        border: state.isFocused
+                          ? "1px solid #cccccc"
+                          : "1px solid #cccccc",
+                      },
+                    }),
+                  }}
+                />
               </div>
               <div className="sm:w-[170px] w-full">
                 <label className="font-semibold">To</label>
-                <Select options={options} />
+                <Select
+                  options={options}
+                  value={arrival}
+                  onChange={(choice) => setArrival(choice)}
+                  required
+                  components={{
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null,
+                  }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      height: "48px",
+                      outline: state.isFocused ? "2px solid #512bd4" : null,
+                      outlineOffset: state.isFocused ? "2px" : null,
+                      boxShadow: "none",
+                      border: "1px solid #cccccc",
+                      "&:hover": {
+                        border: state.isFocused
+                          ? "1px solid #cccccc"
+                          : "1px solid #cccccc",
+                      },
+                    }),
+                  }}
+                />
               </div>
               <div className="sm:w-[200px] w-full">
                 <label className="font-semibold">No. of Passengers</label>
                 <div className="dropdown sm:w-[200px] w-full cursor-pointer">
                   <p
                     tabIndex={0}
-                    className="input flex items-center h-10 border-[#cccccc] border text-gray-900 sm:w-52 w-full"
+                    className="input input-primary flex items-center border-[#cccccc] border text-gray-900 sm:w-52 w-full rounded-[4px] select-none"
                   >
                     {adult} Adult, {child} Children
                   </p>
                   <div
                     tabIndex={0}
-                    className="dropdown-content card card-compact w-64 p-2 bg-slate-100 text-black mt-1 rounded-[4px] shadow-md shadow-indigo-200"
+                    className="dropdown-content card card-compact w-64 p-2 bg-white text-black mt-1 rounded-[4px] shadow-md shadow-indigo-200"
                   >
                     <div className="card-body">
                       <div className="flex items-center justify-between">
                         <div>Adult</div>
                         <div className="flex gap-4 items-center">
                           <button
-                            className="btn btn-circle btn-sm"
+                            className="btn btn-outline btn-sm"
                             onClick={incrementAdultPassenger}
                             type="button"
                           >
@@ -169,7 +247,7 @@ export function Home() {
                           </button>
                           {adult}
                           <button
-                            className="btn btn-circle btn-sm"
+                            className="btn btn-outline btn-sm"
                             onClick={decrementAdultPassenger}
                             type="button"
                           >
@@ -181,7 +259,7 @@ export function Home() {
                         <div>Children</div>
                         <div className="flex gap-4 items-center">
                           <button
-                            className="btn btn-circle btn-sm"
+                            className="btn btn-outline btn-sm"
                             onClick={incrementChildPassenger}
                             type="button"
                           >
@@ -189,7 +267,7 @@ export function Home() {
                           </button>
                           {child}
                           <button
-                            className="btn btn-circle btn-sm"
+                            className="btn btn-outline btn-sm"
                             onClick={decrementChildPassenger}
                             type="button"
                           >
@@ -202,10 +280,10 @@ export function Home() {
                 </div>
               </div>
             </div>
-            <div className="flex gap-4 mt-8 flex-wrap sm:flex-row flex-col ">
+            <div className="flex gap-4 mt-4 md:mt-8 flex-wrap sm:flex-row flex-col ">
               <div className="flex flex-col sm:w-[170px] w-full">
                 <label className="font-semibold">Departure Date</label>
-                <div className="relative mb-6">
+                <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <CalendarIcon />
                   </div>
@@ -215,7 +293,7 @@ export function Home() {
                     onChange={(e) => setStartDate(e.target.value)}
                     min={today}
                     required
-                    className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 h-10"
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center"
                   />
                 </div>
               </div>
@@ -240,7 +318,7 @@ export function Home() {
                     min={minReturnDate}
                     required
                     disabled={tripType === "one_way"}
-                    className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 h-10"
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center"
                   />
                 </div>
               </div>
@@ -250,7 +328,11 @@ export function Home() {
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <SeatIcon />
                   </div>
-                  <select className="input rounded-[4px] border-[#cccccc] border text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 h-10">
+                  <select
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm block w-full pl-10 p-2.5 appearance-none"
+                    value={seatClass}
+                    onChange={(e) => setSeatClass(e.target.value)}
+                  >
                     {SEAT_CLASS.map((item) => (
                       <option value={item.value} key={item.value}>
                         {item.label}
@@ -264,6 +346,8 @@ export function Home() {
               <button
                 className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn bg-purple-primary hover:bg-purple-primary-darker"
                 type="button"
+                onClick={handleSearchFlight}
+                disabled={!departure || !arrival}
               >
                 <SearchIcon />
                 Search Flights
@@ -273,7 +357,6 @@ export function Home() {
         </div>
       </div>
       <FeatureSection />
-      <Footer />
-    </div>
+    </Layout>
   );
 }

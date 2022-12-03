@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Layout/Footer";
 import { EMAIL } from "../../utils/regex";
 
 export function ForgotPassword() {

@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Layout/Footer";
 
 export function ResetPassword() {
   const [password, setPassword] = useState("");
