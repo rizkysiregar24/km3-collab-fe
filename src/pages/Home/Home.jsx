@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
 import "./Home.css";
@@ -102,6 +102,10 @@ export function Home() {
     }
     setAdult(adult - 1);
   };
+
+  useEffect(() => {
+    document.title = "Terbang Tinggi | Best Price for Flights";
+  }, []);
 
   return (
     <div className="mx-auto">
