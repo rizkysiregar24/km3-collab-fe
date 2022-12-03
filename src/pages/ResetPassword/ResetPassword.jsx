@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
@@ -49,6 +49,12 @@ export function ResetPassword() {
     e.preventDefault();
     handleResetPassword();
   };
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <section className="bg-gray-50 ">
