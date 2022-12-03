@@ -22,7 +22,7 @@ const FEATURES_DATA = [
 
 function FeatureSection() {
   return (
-    <section className="container mx-auto my-8">
+    <section className="container mx-auto my-8 max-w-[1280px]">
       <div className="xl:h-[700px] flex flex-col justify-center">
         <div className="mb-8 text-center mx-4">
           <h2 className="text-3xl font-bold my-8">Why Terbang Tinggi?</h2>
