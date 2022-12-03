@@ -51,6 +51,11 @@ export function ResetPassword() {
   };
 
   useEffect(() => {
+    if (token !== null) {
+      if (token.length !== 116) {
+        navigate("/");
+      }
+    }
     if (token === null) {
       navigate("/");
     }
