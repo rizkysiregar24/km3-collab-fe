@@ -129,14 +129,6 @@ export default function Register() {
                 )}
               </span>
             </div>
-
-            <button
-              className=" text-xs ml-auto mt-2 text-[#7E56DA]"
-              type="button"
-            >
-              {" "}
-              Forgot Password{" "}
-            </button>
             <button
               className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8"
               type="button"
