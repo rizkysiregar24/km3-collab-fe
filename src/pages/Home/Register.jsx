@@ -66,7 +66,7 @@ export default function Register() {
   return (
     <section className="bg-gray-400 min-h-screen flex items-center justify-center">
       <div className="bg-white flex rounded-2xl shadow-lg  px-0 ">
-        <div className=" sm:w-9/12   p-28 rounded-2xl">
+        <div className=" sm:w-9/12 p-20 rounded-2xl">
           <h1 className="font-bold text-2xl">Register</h1>
           <p className="text-sm mt-5  ">
             Get Started! Please enter your details
@@ -76,26 +76,26 @@ export default function Register() {
             <div className=" mt-5 ">Username</div>
             <input
               type="text"
-              className=" focus:outline-0 border-1  border-gray px-9 rounded-md pl-5 placeholder:text-sm"
+              className=" focus:outline-0 border border-[#7E56DA] px-9 rounded-md pl-5 h-10 placeholder:text-sm"
               placeholder="Enter your Full Name"
               onChange={function (e) {
                 setUsername(e.target.value);
               }}
             />
-            <div className=" mt-5 ">Email</div>
+            <div className=" mt-3 ">Email</div>
             <input
               type="email"
-              className=" focus:outline-0 border-1  border-gray px-9 rounded-md pl-5 placeholder:text-sm"
+              className=" focus:outline-0 border  border-[#7E56DA] px-9 rounded-md h-10 pl-5 placeholder:text-sm"
               placeholder="Enter your Email"
               onChange={function (e) {
                 setEmail(e.target.value);
               }}
             />
 
-            <div className=" mt-5 ">Password</div>
+            <div className=" mt-3 ">Password</div>
             <div className="flex">
               <input
-                className="  w-full focus:outline-0 border-1 px-9 border-gray  pl-5 rounded-md placeholder:text-sm"
+                className="  w-full focus:outline-0 border px-9 border-[#7E56DA] h-10 pl-5 rounded-md placeholder:text-sm"
                 type={passwordEye === false ? "password" : "text"}
                 placeholder="Enter your Password"
                 onChange={function (e) {
@@ -111,10 +111,10 @@ export default function Register() {
               </span>
             </div>
 
-            <div className=" mt-5 ">Password Confirmation</div>
+            <div className=" mt-3 ">Password Confirmation</div>
             <div className="flex">
               <input
-                className=" w-full focus:outline-0 border-1 px-9 border-gray  pl-5 rounded-md placeholder:text-sm "
+                className=" w-full focus:outline-0 border border-[#7E56DA] px-9 pl-5 rounded-md h-10 placeholder:text-sm "
                 type={confirmPasswordEye === false ? "password" : "text"}
                 placeholder="Enter your Password Confirmation"
                 onChange={function (e) {
@@ -129,16 +129,8 @@ export default function Register() {
                 )}
               </span>
             </div>
-
             <button
-              className=" text-xs ml-auto mt-2 text-[#7E56DA]"
-              type="button"
-            >
-              {" "}
-              Forgot Password{" "}
-            </button>
-            <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-7"
+              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8"
               type="button"
               onClick={(e) => {
                 e.preventDefault();
@@ -147,7 +139,7 @@ export default function Register() {
             >
               Sign up
             </button>
-            <div className=" text-sm text-center mt-5">
+            <div className=" text-sm text-center mt-3">
               Already Have An Account?{" "}
               <Link to="/Login">
                 <button
