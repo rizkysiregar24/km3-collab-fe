@@ -3,30 +3,54 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
+import Footer from "../../components/Footer";
+import { EMAIL } from "../../utils/regex";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isSent, setIsSent] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSendEmail = async () => {
-    const response = await axios.post(
-      `${process.env.REACT_APP_AUTH_API}/auth/forgot-password`,
-      {
-        email,
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post(
+        `${process.env.REACT_APP_AUTH_API}/auth/forgot-password`,
+        {
+          email,
+        }
+      );
+
+      const statusCode = response.status;
+
+      if (statusCode !== 200) {
+        setIsSent(false);
+        setIsError(true);
       }
-    );
-    if (response.status === 200) {
       setIsSent(true);
-    } else {
-      setIsSent(false);
+      setIsError(false);
+      setIsSubmitting(false);
+    } catch (error) {
+      if (error) {
+        setIsError(true);
+        setIsSubmitting(false);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSendEmail();
   };
 
   return (
     <section className="bg-gray-50 ">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
         <Link
-          className="font-bold text-2xl hidden md:inline-flex items-center gap-2 mb-8"
+          className="font-bold text-2xl inline-flex items-center gap-2 mb-8"
           to="/"
         >
           <Logo size={36} />
@@ -36,8 +60,8 @@ export function ForgotPassword() {
           {isSent ? (
             <div>
               <img
-                src="https://media3.giphy.com/media/ah7KwjMNJlhtK/giphy.gif?cid=ecf05e47ot9zobs958fixs1o1sc6hqu6lcll8ilwe55dnqcz&rid=giphy.gif&ct=g"
-                alt="email"
+                src="https://res.cloudinary.com/dmgrxm78p/image/upload/v1670025142/terbangtinggi/email_sent_image.webp"
+                alt="email sent successfully"
               />
               <p className="text-center mt-4 text-2xl font-semibold">
                 Email sent, check your inbox
@@ -60,10 +84,13 @@ export function ForgotPassword() {
                 Don&apos;t fret! Just type in your email and we will send you a
                 code to reset your password!
               </p>
-              <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+              <form
+                className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
+                onSubmit={handleSubmit}
+              >
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="emailAddress"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Your email
@@ -71,29 +98,33 @@ export function ForgotPassword() {
                   <input
                     type="email"
                     name="email"
-                    id="email"
-                    className="input input-primary w-full"
-                    placeholder="jhondoe@mail.com"
+                    id="emailAddress"
+                    className={`w-full input ${
+                      isError ? "input-error" : "input-primary"
+                    }`}
+                    placeholder="example@mail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
+                  {!isError ? null : (
+                    <small className="text-error">Something wrong</small>
+                  )}
                 </div>
                 <button
                   type="submit"
                   className="btn bg-purple-primary w-full hover:bg-purple-primary-darker"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleSendEmail();
-                  }}
-                  disabled={!email}
+                  onClick={handleSubmit}
+                  disabled={!email || !EMAIL.test(email) || isSubmitting}
                 >
-                  Send Email
+                  {isSubmitting ? "Submitting" : "Send Email"}
                 </button>
               </form>
             </>
           )}
         </div>
       </div>
+      <Footer />
     </section>
   );
 }
