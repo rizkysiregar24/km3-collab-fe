@@ -112,14 +112,14 @@ function Navbar() {
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
-                to="/register"
+                to="/login"
                 className="hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Login
               </Link>
 
               <Link
-                to="/login"
+                to="/register"
                 className=" hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Register
@@ -136,7 +136,7 @@ export default Navbar;
 
 export function AuthRightElementNavbar({ handleLogout }) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-2">
       <Link to="/notifications">
         <button
           className="btn btn-ghost btn-circle"
@@ -165,10 +165,15 @@ export function AuthRightElementNavbar({ handleLogout }) {
       <div className="dropdown dropdown-end">
         <label
           tabIndex={0}
-          className="btn btn-sm btn-circle avatar placeholder"
+          className="btn btn-outline btn-primary btn-sm btn-circle avatar placeholder"
           title="Profile Menu"
         >
+          {/* if there is no avatar img show their first letter of their name */}
           <span>TT</span>
+          {/* if there is avatar, show the avatar instead */}
+          {/* <div className="w-10 rounded-full">
+            <img src="https://placekitten.com/80/80" alt="Kitten" />
+          </div> */}
         </label>
         <ul
           tabIndex={0}
