@@ -8,6 +8,7 @@ import User from "./pages/User";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import { SearchResult } from "./pages/SearchResult";
+import { Notifications } from "./pages/Notifications";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path="/notifications" element={<Notifications />} />`
       </Routes>
     </Router>
   );

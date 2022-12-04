@@ -119,7 +119,7 @@ export function Home() {
 
   const decrementAdultPassenger = (e) => {
     e.preventDefault();
-    if (adult === 0) {
+    if (adult === 1) {
       return;
     }
     setAdult(adult - 1);
