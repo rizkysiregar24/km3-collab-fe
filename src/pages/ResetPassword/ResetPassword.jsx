@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Layout/Footer";
 
 export function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -66,7 +66,7 @@ export function ResetPassword() {
   }, []);
 
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-slate-100 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
         <Link
           className="font-bold text-2xl inline-flex items-center gap-2 mb-8"
@@ -129,6 +129,11 @@ export function ResetPassword() {
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   required
                 />
+                <p className="text-sm text-error mt-2">
+                  {isPasswordMatch || !password || !passwordConfirmation
+                    ? null
+                    : "Password do not match"}
+                </p>
               </div>
               <button
                 type="submit"

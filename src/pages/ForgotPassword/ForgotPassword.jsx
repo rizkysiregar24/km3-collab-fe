@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Layout/Footer";
 import { EMAIL } from "../../utils/regex";
 
 export function ForgotPassword() {
@@ -51,7 +51,7 @@ export function ForgotPassword() {
   }, []);
 
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-slate-100 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
         <Link
           className="font-bold text-2xl inline-flex items-center gap-2 mb-8"
@@ -112,7 +112,9 @@ export function ForgotPassword() {
                     required
                   />
                   {!isError ? null : (
-                    <small className="text-error">Something wrong</small>
+                    <p className="text-error text-sm mt-1 mb-0 animate-pulse">
+                      Email not found
+                    </p>
                   )}
                 </div>
                 <button
