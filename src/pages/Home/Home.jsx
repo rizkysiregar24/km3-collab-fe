@@ -157,7 +157,7 @@ export function Home() {
                   type="button"
                   onClick={handleSwapDestination}
                   title="Swap Airports"
-                  className="btn btn-primary text-purple-primary hover:bg-purple-primary-darker btn-sm btn-outline flex items-center gap-2 font-semibold w-full md:w-auto"
+                  className="btn btn-primary text-brand hover:bg-brand-darker-800 btn-sm btn-outline flex items-center gap-2 font-semibold w-full md:w-auto outline-brand border-brand"
                 >
                   <IoMdSwap size={24} />
                   <p>Swap Airports</p>
@@ -344,7 +344,7 @@ export function Home() {
             </div>
             <div className="mt-4 flex justify-end">
               <button
-                className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn bg-purple-primary hover:bg-purple-primary-darker"
+                className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn bg-brand hover:bg-brand-darker-800"
                 type="button"
                 onClick={handleSearchFlight}
                 disabled={!departure || !arrival}

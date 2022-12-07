@@ -37,14 +37,14 @@ function Navbar() {
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
                   to="/login"
-                  className=" hover:bg-purple-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium border-brand border-purple-primary border-2"
+                  className=" hover:bg-brand-darker-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-brand border-2"
                 >
                   Login
                 </Link>
 
                 <Link
                   to="/register"
-                  className="hover:bg-purple-primary-darker  px-3 py-2 rounded-md text-sm font-medium bg-purple-primary text-white border-purple-primary border-solid border-2"
+                  className="hover:bg-brand-darker-800  px-3 py-2 rounded-md text-sm font-medium bg-brand text-white border-brand border-solid border-2"
                 >
                   Register
                 </Link>
@@ -62,7 +62,7 @@ function Navbar() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="bg-purple-primary text-white hover:bg-purple-primary-hover inline-flex items-center justify-center p-2 rounded-md  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-hover focus:ring-white"
+                className="bg-brand text-white hover:bg-brand-darker-800 inline-flex items-center justify-center p-2 rounded-md  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -158,6 +158,7 @@ export function AuthRightElementNavbar({ handleLogout }) {
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               />
             </svg>
+            {/* if there is notification, display this span right below this comment */}
             <span className="badge badge-xs badge-primary indicator-item" />
           </div>
         </button>
