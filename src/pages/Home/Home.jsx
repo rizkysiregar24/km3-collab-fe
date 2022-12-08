@@ -145,6 +145,7 @@ export function Home() {
                   label="One way"
                   onChange={handleOneWay}
                   value={tripType === "one_way"}
+                  title="One way"
                 />
                 <RadioButton
                   id="tripChoice2"
@@ -152,6 +153,7 @@ export function Home() {
                   label="Round trip"
                   onChange={handleRoundTrip}
                   value={tripType === "round_trip"}
+                  title="Round trip"
                 />
                 <button
                   type="button"
@@ -293,7 +295,8 @@ export function Home() {
                     onChange={(e) => setStartDate(e.target.value)}
                     min={today}
                     required
-                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center"
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center cursor-pointer"
+                    title="Departure date"
                   />
                 </div>
               </div>
@@ -318,7 +321,8 @@ export function Home() {
                     min={minReturnDate}
                     required
                     disabled={tripType === "one_way"}
-                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center"
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm w-full pl-10 p-2.5 appearance-none inline-flex items-center cursor-pointer"
+                    title="Return date"
                   />
                 </div>
               </div>
@@ -329,9 +333,10 @@ export function Home() {
                     <SeatIcon />
                   </div>
                   <select
-                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm block w-full pl-10 p-2.5 appearance-none"
+                    className="input input-primary rounded-[4px] border-[#cccccc] border text-gray-900 text-sm block w-full pl-10 p-2.5 appearance-none cursor-pointer"
                     value={seatClass}
                     onChange={(e) => setSeatClass(e.target.value)}
+                    title="Seat class"
                   >
                     {SEAT_CLASS.map((item) => (
                       <option value={item.value} key={item.value}>

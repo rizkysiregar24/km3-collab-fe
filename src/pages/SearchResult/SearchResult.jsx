@@ -1,6 +1,7 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { ExpediaCard } from "../../components/Cards";
 import { Layout } from "../../components/Layout";
 
 export function SearchResult() {
@@ -16,7 +17,7 @@ export function SearchResult() {
 
   return (
     <Layout>
-      <div className="h-screen text-center">
+      <div className="text-center">
         <h1>Search Result for</h1>
         <p>Departure = {departure}</p>
         <p>Arrival = {arrival}</p>
@@ -28,6 +29,11 @@ export function SearchResult() {
 
         <br />
         <br />
+        <div className="w-full mx-auto">
+          <div className="flex justify-center items-center max-w-3xl flex-col gap-4 mx-4">
+            <ExpediaCard />
+          </div>
+        </div>
         <br />
 
         <h2>Sample</h2>

@@ -5,8 +5,8 @@ import Protected from "./components/Routes/Protected";
 
 import Error from "./pages/Error";
 import { Home } from "./pages/Home";
-import Login from "./pages/Home/Login";
-import Register from "./pages/Home/Register";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 import User from "./pages/User";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
