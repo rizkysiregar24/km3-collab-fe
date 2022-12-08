@@ -1,17 +1,24 @@
+import React, { useState } from "react";
 import { MdFlightLand } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Register() {
-  const navigate = useNavigate();
+import { setError } from "../../redux/user/user.slice";
+
+export function Register() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPasswordEye, setConfirmPasswordEye] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
+
+  const { error } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleToogle = () => {
     setPasswordEye(!passwordEye);
@@ -21,24 +28,6 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    if (username === "") {
-      alert(" first Name is required");
-      return;
-    }
-
-    if (email === "") {
-      alert("Email is required");
-      return;
-    }
-    if (password === "") {
-      alert("Password is required");
-      return;
-    }
-    if (confirmPassword === "") {
-      alert("Password Confirmation is required");
-      return;
-    }
-
     if (confirmPassword === password) {
       axios
         .post(`${process.env.REACT_APP_AUTH_API}/auth/register`, {
@@ -48,18 +37,15 @@ export default function Register() {
           username,
         })
         .then((resp) => {
-          console.log(resp);
-          if (resp.data.data) {
-            localStorage.setItem("data", resp.data.data);
-            navigate("/");
+          if (resp.status === 201) {
+            navigate("/login");
           }
         })
         .catch((err) => {
-          console.log(err);
-          alert(err.response.data.message);
+          dispatch(setError({ error: err.message }));
         });
     } else {
-      alert("Confirmation password tidak sama!");
+      dispatch(setError({ error: "Password tidak sama" }));
     }
   };
 
@@ -78,7 +64,7 @@ export default function Register() {
               type="text"
               className=" focus:outline-0 border border-[#7E56DA] px-9 rounded-md pl-5 h-10 placeholder:text-sm"
               placeholder="Enter your Full Name"
-              onChange={function (e) {
+              onChange={(e) => {
                 setUsername(e.target.value);
               }}
             />
@@ -87,7 +73,7 @@ export default function Register() {
               type="email"
               className=" focus:outline-0 border  border-[#7E56DA] px-9 rounded-md h-10 pl-5 placeholder:text-sm"
               placeholder="Enter your Email"
-              onChange={function (e) {
+              onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
@@ -98,7 +84,7 @@ export default function Register() {
                 className="  w-full focus:outline-0 border px-9 border-[#7E56DA] h-10 pl-5 rounded-md placeholder:text-sm"
                 type={passwordEye === false ? "password" : "text"}
                 placeholder="Enter your Password"
-                onChange={function (e) {
+                onChange={(e) => {
                   setPassword(e.target.value);
                 }}
               />
@@ -111,13 +97,13 @@ export default function Register() {
               </span>
             </div>
 
-            <div className=" mt-3 ">Password Confirmation</div>
+            <div className=" mt-3">Password Confirmation</div>
             <div className="flex">
               <input
                 className=" w-full focus:outline-0 border border-[#7E56DA] px-9 pl-5 rounded-md h-10 placeholder:text-sm "
                 type={confirmPasswordEye === false ? "password" : "text"}
                 placeholder="Enter your Password Confirmation"
-                onChange={function (e) {
+                onChange={(e) => {
                   setconfirmPassword(e.target.value);
                 }}
               />
@@ -129,13 +115,15 @@ export default function Register() {
                 )}
               </span>
             </div>
+            {error ? <small>{error}</small> : null}
             <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8"
+              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed"
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 handleRegister();
               }}
+              disabled={!username || !email || !password || !confirmPassword}
             >
               Sign up
             </button>

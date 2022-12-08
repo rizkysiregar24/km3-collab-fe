@@ -1,10 +1,11 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Protected({ children }) {
-  const token = localStorage.getItem("token");
+  const data = useSelector((state) => state.user);
 
-  if (!token) {
+  if (!data) {
     return <Navigate to="/login" />;
   }
 

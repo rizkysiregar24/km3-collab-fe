@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React from "react";
@@ -20,12 +21,10 @@ export default function Googlelogin() {
           navigate("/");
         }
       } catch (error) {
-        alert(error.response.data.message);
+        return error;
       }
     },
-    onError: (error) => {
-      alert(error);
-    },
+    onError: (error) => error,
   });
 
   return (
