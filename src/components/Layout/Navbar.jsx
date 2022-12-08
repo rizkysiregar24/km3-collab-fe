@@ -9,7 +9,6 @@ import Logo from "../Icons/Logo";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // const userData = useSelector((state) => state.user);
   const userData = localStorage.getItem("user");
 
   const dispatch = useDispatch();
