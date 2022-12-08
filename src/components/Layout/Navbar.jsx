@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { _logout } from "../../redux/user/user.slice";
 import Logo from "../Icons/Logo";
@@ -9,7 +9,16 @@ import Logo from "../Icons/Logo";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userData = localStorage.getItem("user");
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
 
   const dispatch = useDispatch();
 
@@ -37,7 +46,7 @@ function Navbar() {
             <Logo />
           </Link>
           <div className="hidden md:block">
-            {userData ? (
+            {isValidUser ? (
               <AuthRightElementNavbar handleLogout={handleLogout} />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
@@ -59,7 +68,7 @@ function Navbar() {
           </div>
 
           {/* Show or hide hamburger button on mobile */}
-          {userData ? (
+          {isValidUser ? (
             <div className="md:hidden">
               <AuthRightElementNavbar handleLogout={handleLogout} />
             </div>
@@ -113,7 +122,7 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu Navbar */}
-      {userData ? null : (
+      {isValidUser ? null : (
         <div className={isOpen ? "block" : "hidden"}>
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
