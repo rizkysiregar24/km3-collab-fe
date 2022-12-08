@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { _logout } from "../../redux/user/user.slice";
 import Logo from "../Icons/Logo";
@@ -9,7 +9,7 @@ import Logo from "../Icons/Logo";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userData = useSelector((state) => state.user);
+  const userData = localStorage.getItem("user");
 
   const dispatch = useDispatch();
 
