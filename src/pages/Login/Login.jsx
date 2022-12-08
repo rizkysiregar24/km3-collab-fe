@@ -1,33 +1,74 @@
+import React, { useState } from "react";
 import { MdFlightTakeoff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import React, { useState } from "react";
-import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import { _login, whoami } from "../../redux/user/user.slice";
 import Googlelogin from "./Googlelogin";
 
-export default function Login() {
+const API_URL = process.env.REACT_APP_AUTH_API;
+
+export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(FaEyeSlash);
+
+  const { error: isError } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    axios
-      .post(`${process.env.REACT_APP_AUTH_API}/auth/login`, {
+  const handleLogin = async () => {
+    try {
+      const responseLogin = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
-      })
-      .then((resp) => {
-        if (resp.data.data.token) {
-          localStorage.setItem("token", resp.data.data.token);
-          navigate("/");
-        }
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
       });
+
+      const dataLogin = await responseLogin.data;
+      const statusLogin = await responseLogin.status;
+
+      dispatch(_login({ token: dataLogin.data.token }));
+
+      if (statusLogin === 200) {
+        localStorage.setItem("token", dataLogin.data.token);
+      }
+
+      const authToken = await axios.get(`${API_URL}/auth/me`, {
+        headers: {
+          Authorization: dataLogin.data.token,
+        },
+      });
+
+      const authResponse = await authToken.data;
+      const authStatus = await authToken.status;
+
+      if (authStatus === 200) {
+        dispatch(
+          whoami({
+            name: authResponse.data.username,
+            email: authResponse.data.email,
+            role: authResponse.data.role,
+          })
+        );
+        localStorage.setItem("user", JSON.stringify(authResponse.data));
+        navigate("/");
+      }
+    } catch (error) {
+      dispatch(
+        _login({
+          error: error.response.data.message,
+          token: null,
+          name: null,
+          email: null,
+          role: null,
+        })
+      );
+    }
   };
 
   const handleToogle = () => {
@@ -53,24 +94,23 @@ export default function Login() {
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
-              className=" focus:outline-0 border rounded-md border-[#7E56DA] px-9 h-10 placeholder:text-sm"
+              className={`border rounded-md px-9 h-10 placeholder:text-sm ${
+                isError ? "input-error" : "input border-[#7E56DA]"
+              }`}
               placeholder="Enter your Email"
-              onChange={function (e) {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <div className=" mt-5 ">Password</div>
             <div className=" flex flex-wrap">
               <input
                 type={type}
-                className=" w-full focus:outline-0 border border-[#7E56DA] h-10 px-9 rounded-md placeholder:text-sm"
+                className={`w-full border h-10 px-9 rounded-md placeholder:text-sm ${
+                  isError ? "input-error" : "input border-[#7E56DA]"
+                }`}
                 placeholder="Enter your Password"
-                onChange={function (e) {
-                  setPassword(e.target.value);
-                }}
+                onChange={(e) => setPassword(e.target.value)}
               />
-
               <button
                 className="absolute my-3 ml-72  "
                 type="button"
@@ -79,6 +119,7 @@ export default function Login() {
                 {icon}
               </button>
             </div>
+            {isError ? <small>{isError}</small> : null}
 
             <button
               className=" text-xs ml-auto mt-2 text-[#7E56DA]  "
@@ -91,12 +132,13 @@ export default function Login() {
             </button>
 
             <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8"
+              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed"
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 handleLogin();
               }}
+              disabled={!email || !password}
             >
               Sign in
             </button>
