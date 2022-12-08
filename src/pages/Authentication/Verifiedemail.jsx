@@ -125,7 +125,7 @@ export default function Verifiedemail() {
               navigate("/login");
             }}
           >
-            Kembali Ke login
+            Back To Login
           </button>
         </div>
       </div>
