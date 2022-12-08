@@ -7,6 +7,7 @@ import Register from "./pages/Home/Register";
 import User from "./pages/User";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
+import Verifiedemail from "./pages/Authentication/Verifiedemail";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verified-email" element={<Verifiedemail />} />
       </Routes>
     </Router>
   );
