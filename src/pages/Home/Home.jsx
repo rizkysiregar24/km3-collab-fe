@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import { useNavigate } from "react-router-dom";
 import { IoMdSwap } from "react-icons/io";
+import axios from "axios";
 
 import "./Home.css";
 import FeatureSection from "./FeatureSection";
@@ -11,12 +12,7 @@ import SearchIcon from "../../components/Icons/SearchIcon";
 import CalendarIcon from "../../components/Icons/CalendarIcon";
 import RadioButton from "../../components/Input/RadioButton";
 import { Layout } from "../../components/Layout/Layout";
-
-const options = [
-  { value: "jakarta", label: "Jakarta (JKTA)" },
-  { value: "surabaya", label: "Surabaya (SUB)" },
-  { value: "tokyo", label: "Tokyo (TYOA)" },
-];
+import { defaultOptionsAirportData } from "../../utils/airports";
 
 const SEAT_CLASS = [
   {
@@ -37,6 +33,9 @@ const SEAT_CLASS = [
   },
 ];
 
+const allAirpotsApiUrl =
+  "https://gist.githubusercontent.com/aroyan/b79307e2092f2c370b41977088de5fd4/raw/50aca41ae350fe89034f48ccf83ba42d6ca45938/allAirportsData.json";
+
 export function Home() {
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
@@ -46,6 +45,9 @@ export function Home() {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [seatClass, setSeatClass] = useState("economy");
+  const [allAirports, setAllAirports] = useState(
+    JSON.parse(localStorage.getItem("allAirportsData")) || []
+  );
 
   const navigate = useNavigate();
 
@@ -66,6 +68,33 @@ export function Home() {
   const minReturnDate = [+startYear, +startMonth, minDateReturn].join("-");
 
   const [returnDate, setReturnDate] = useState(minReturnDate);
+
+  // Renamed key name of airportCode to value and airportName to label for react-select
+  const optionsAllAirports = allAirports?.map(
+    ({ airportCode: value, airportName: label, cityName: city, ...rest }) => ({
+      value,
+      label: `${label} (${value}) - ${city}`,
+      airportName: label,
+      cityName: city,
+      ...rest,
+    })
+  );
+
+  // Filter airports based on their label and alias
+  const filterAirports = (inputValue) =>
+    optionsAllAirports.filter((airport) =>
+      airport.label
+        .concat(airport.alias.join(" "))
+        .toLowerCase()
+        .includes(inputValue.toLowerCase())
+    );
+
+  const promiseOptions = (inputValue) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(filterAirports(inputValue));
+      }, 150);
+    });
 
   // Function definition
 
@@ -125,6 +154,22 @@ export function Home() {
     setAdult(adult - 1);
   };
 
+  // If there is allAirportsData in localStorage, don't fetch allAirportsData again from API
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem("allAirportsData"))) {
+      (async () => {
+        const resAllAirpots = await axios.get(allAirpotsApiUrl);
+        const allAirportsData = await resAllAirpots.data;
+        setAllAirports(allAirportsData);
+        localStorage.setItem(
+          "allAirportsData",
+          JSON.stringify(allAirportsData)
+        );
+      })();
+    }
+  }, []);
+
+  // Set document title
   useEffect(() => {
     document.title = "Terbang Tinggi | Best Price for Flights";
   }, []);
@@ -167,12 +212,15 @@ export function Home() {
               </div>
             </fieldset>
             <div className="flex gap-4 mt-4 flex-wrap flex-col sm:flex-row sm:justify-start justify-center">
-              <div className="sm:w-[170px] w-full">
+              <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">From</label>
-                <Select
-                  options={options}
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions={defaultOptionsAirportData}
+                  loadOptions={promiseOptions}
                   value={departure}
                   onChange={(choice) => setDeparture(choice)}
+                  placeholder="Where from?"
                   required
                   components={{
                     DropdownIndicator: () => null,
@@ -195,12 +243,15 @@ export function Home() {
                   }}
                 />
               </div>
-              <div className="sm:w-[170px] w-full">
+              <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">To</label>
-                <Select
-                  options={options}
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions={defaultOptionsAirportData}
+                  loadOptions={promiseOptions}
                   value={arrival}
                   onChange={(choice) => setArrival(choice)}
+                  placeholder="Where to?"
                   required
                   components={{
                     DropdownIndicator: () => null,
@@ -283,7 +334,7 @@ export function Home() {
               </div>
             </div>
             <div className="flex gap-4 mt-4 md:mt-8 flex-wrap sm:flex-row flex-col ">
-              <div className="flex flex-col sm:w-[170px] w-full">
+              <div className="flex flex-col sm:w-[250px] w-full">
                 <label className="font-semibold">Departure Date</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -301,7 +352,7 @@ export function Home() {
                 </div>
               </div>
               <div
-                className={`flex flex-col sm:w-[170px] w-full ${
+                className={`flex flex-col sm:w-[250px] w-full ${
                   tripType === "one_way"
                     ? "hidden sm:block sm:invisible"
                     : "visible"
