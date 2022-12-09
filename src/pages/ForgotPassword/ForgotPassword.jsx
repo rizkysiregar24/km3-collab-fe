@@ -73,7 +73,7 @@ export function ForgotPassword() {
               <Link to="/">
                 <button
                   type="button"
-                  className="btn bg-purple-primary w-full hover:bg-purple-primary-darker mt-4"
+                  className="btn bg-brand w-full hover:bg-brand-darker-800 mt-4"
                 >
                   Go to Home
                 </button>
@@ -119,7 +119,7 @@ export function ForgotPassword() {
                 </div>
                 <button
                   type="submit"
-                  className="btn bg-purple-primary w-full hover:bg-purple-primary-darker"
+                  className="btn bg-brand w-full hover:bg-brand-darker-800"
                   onClick={handleSubmit}
                   disabled={!email || !EMAIL.test(email) || isSubmitting}
                 >

@@ -137,7 +137,7 @@ export function ResetPassword() {
               </div>
               <button
                 type="submit"
-                className="btn bg-purple-primary w-full hover:bg-purple-primary-darker"
+                className="btn bg-brand w-full hover:bg-brand-darker-800"
                 onClick={handleSubmit}
                 disabled={
                   !password ||
