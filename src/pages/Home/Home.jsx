@@ -51,6 +51,9 @@ export function Home() {
 
   const navigate = useNavigate();
 
+  const isSameAirpot = departure === arrival;
+  const isSameAirportEqualNull = departure === null && arrival === null;
+
   // Get date from startDate and add 1 day
   const minDateReturnDate = new Date(startDate).getDate() + 1;
   const minDateReturn =
@@ -222,6 +225,7 @@ export function Home() {
                   onChange={(choice) => setDeparture(choice)}
                   placeholder="Where from?"
                   required
+                  noOptionsMessage={() => "Airport not found"}
                   components={{
                     DropdownIndicator: () => null,
                     IndicatorSeparator: () => null,
@@ -230,6 +234,7 @@ export function Home() {
                     control: (baseStyles, state) => ({
                       ...baseStyles,
                       height: "48px",
+                      cursor: "pointer",
                       outline: state.isFocused ? "2px solid #512bd4" : null,
                       outlineOffset: state.isFocused ? "2px" : null,
                       boxShadow: "none",
@@ -240,8 +245,15 @@ export function Home() {
                           : "1px solid #cccccc",
                       },
                     }),
+                    option: (baseStyles) => ({
+                      ...baseStyles,
+                      cursor: "pointer",
+                    }),
                   }}
                 />
+                {isSameAirpot && !isSameAirportEqualNull ? (
+                  <small className="text-error">Airpot cannot be same</small>
+                ) : null}
               </div>
               <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">To</label>
@@ -253,6 +265,7 @@ export function Home() {
                   onChange={(choice) => setArrival(choice)}
                   placeholder="Where to?"
                   required
+                  noOptionsMessage={() => "Airport not found"}
                   components={{
                     DropdownIndicator: () => null,
                     IndicatorSeparator: () => null,
@@ -261,6 +274,7 @@ export function Home() {
                     control: (baseStyles, state) => ({
                       ...baseStyles,
                       height: "48px",
+                      cursor: "pointer",
                       outline: state.isFocused ? "2px solid #512bd4" : null,
                       outlineOffset: state.isFocused ? "2px" : null,
                       boxShadow: "none",
@@ -403,7 +417,7 @@ export function Home() {
                 className="w-full sm:w-auto font-semibold inline-flex items-center justify-center md:justify-start btn bg-brand hover:bg-brand-darker-800"
                 type="button"
                 onClick={handleSearchFlight}
-                disabled={!departure || !arrival}
+                disabled={!departure || !arrival || isSameAirpot}
               >
                 <SearchIcon />
                 Search Flights
