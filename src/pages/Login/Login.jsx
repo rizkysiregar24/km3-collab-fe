@@ -94,7 +94,7 @@ export function Login() {
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
-              className={`border rounded-md px-9 h-10 placeholder:text-sm ${
+              className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
                 isError ? "input-error" : "input border-[#7E56DA]"
               }`}
               placeholder="Enter your Email"
@@ -105,8 +105,8 @@ export function Login() {
             <div className=" flex flex-wrap">
               <input
                 type={type}
-                className={`w-full border h-10 px-9 rounded-md placeholder:text-sm ${
-                  isError ? "input-error" : "input border-[#7E56DA]"
+                className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
+                  isError ? "input-error" : "input border-[#7E56DA] "
                 }`}
                 placeholder="Enter your Password"
                 onChange={(e) => setPassword(e.target.value)}
