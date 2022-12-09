@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { _login } from "./user.slice";
+import { _login, _logout } from "./user.slice";
 
 const API_URL = process.env.REACT_APP_AUTH_API;
 
@@ -17,4 +17,14 @@ export const login = (email, password) => async (dispatch) => {
     return error;
   }
   return null;
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  dispatch(_logout());
+};
+
+export const loginGoogle = () => () => {
+  //
 };
