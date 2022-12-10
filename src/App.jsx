@@ -11,6 +11,8 @@ import User from "./pages/User";
 import Verifiedemail from "./pages/Authentication/Verifiedemail";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
+import Userpage from "./pages/Admin page/Userpage";
+import Pageadmin from "./pages/Admin page/Pageadmin";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="/search" element={<SearchResult />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/verified-email" element={<Verifiedemail />} />
+        <Route path="/admin-page" element={<Pageadmin />} />
+        <Route path="/user-page" element={<Userpage />} />
       </Routes>
     </Router>
   );

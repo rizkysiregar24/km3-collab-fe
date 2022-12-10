@@ -102,7 +102,10 @@ export function Login() {
     <section className="bg-gray-400 min-h-screen flex items-center justify-center">
       <div className="bg-white flex rounded-2xl shadow-lg  px-0 ">
         <div className=" sm:w-9/12 p-28 rounded-2xl">
-          <h1 className="font-bold text-2xl">Login</h1>
+          <Link to="/">
+            <h1 className="font-bold text-2xl">Login</h1>
+          </Link>
+
           <p className="text-sm mt-5  ">
             Welcome back! Please enter your details
           </p>
