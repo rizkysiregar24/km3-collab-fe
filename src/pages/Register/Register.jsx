@@ -53,7 +53,10 @@ export function Register() {
     <section className="bg-gray-400 min-h-screen flex items-center justify-center">
       <div className="bg-white flex rounded-2xl shadow-lg  px-0 ">
         <div className=" sm:w-9/12 p-20 rounded-2xl">
-          <h1 className="font-bold text-2xl">Register</h1>
+          <Link to="/">
+            <h1 className="font-bold text-2xl">Register</h1>
+          </Link>
+
           <p className="text-sm mt-5  ">
             Get Started! Please enter your details
           </p>

@@ -103,7 +103,7 @@ export function ForgotPassword() {
                     type="email"
                     name="email"
                     id="emailAddress"
-                    className={`w-full input focus:outline-0  ${
+                    className={`w-full input   ${
                       isError ? "input-error" : "input-primary"
                     }`}
                     placeholder="example@mail.com"

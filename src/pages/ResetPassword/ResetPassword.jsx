@@ -106,7 +106,7 @@ export function ResetPassword() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="input focus:outline-0 input-primary w-full"
+                  className="input  input-primary w-full"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -124,7 +124,7 @@ export function ResetPassword() {
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="••••••••"
-                  className="input focus:outline-0 input-primary w-full"
+                  className="input input-primary w-full"
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   required
