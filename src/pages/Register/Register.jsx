@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdFlightLand } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -20,12 +20,29 @@ export function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
+
   const handleToogle = () => {
     setPasswordEye(!passwordEye);
   };
   const handleConfirmToogle = () => {
     setConfirmPasswordEye(!confirmPasswordEye);
   };
+
+  useEffect(() => {
+    if (isValidUser) {
+      navigate("/");
+    }
+  }, []);
 
   const handleRegister = () => {
     if (confirmPassword === password) {

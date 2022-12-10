@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdFlightTakeoff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -21,6 +21,17 @@ export function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
 
   const handleLogin = async () => {
     try {
@@ -80,6 +91,12 @@ export function Login() {
       setType("password");
     }
   };
+
+  useEffect(() => {
+    if (isValidUser) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <section className="bg-gray-400 min-h-screen flex items-center justify-center">
