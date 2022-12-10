@@ -64,38 +64,39 @@ function User() {
                   </div>
                 </div>
               </div>
-              <div className="form-group flex flex-col mt-2">
+              <div className="form-group flex flex-col mt-5">
                 <label htmlFor="phonenumber">Phone Number</label>
-                <div className="flex relative  ">
+                <div className="relative flex ">
                   <input
                     id="phonenumber"
                     type="text"
                     name="phonenumber"
-                    className="px-20 border w-full focus:outline-0 rounded px-2 py-1 border-slate-500 required:red-border-500"
+                    className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
                     placeholder="Phone Number"
                     onChange={onChangeHandler}
                     value={formData.phonenumber}
+                    required
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
-                    <AiOutlinePhone className="mx-5 mt-2" size={20} />
+                    <AiOutlinePhone className=" mx-5 mt-2" size={20} />
                   </div>
                 </div>
               </div>
-              <div className="form-group flex flex-col mt-2">
+              <div className="form-group flex flex-col mt-5">
                 <label htmlFor="emergencynumber">Emergency Number</label>
-                <div className="flex relative">
+                <div className="relative flex ">
                   <input
                     id="emergencynumber"
                     type="text"
                     name="emergencynumber"
-                    className="px-20 border w-full focus:outline-0 rounded px-2 py-1 border-slate-500 required:red-border-500"
+                    className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
                     placeholder="Emergency Number"
                     onChange={onChangeHandler}
                     value={formData.emergencynumber}
                     required
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
-                    <BiPhoneCall className="mx-5 mt-2" size={20} />
+                    <BiPhoneCall className=" mx-5 mt-2" size={20} />
                   </div>
                 </div>
               </div>
