@@ -106,16 +106,36 @@ export function ResetPassword() {
                 >
                   New Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="input input-primary w-full"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative mb-6">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className={`input w-full ${
+                      isError ? "input-error" : "input-primary"
+                    }`}
+                    value={password}
+                    onChange={(e) => {
+                      setIsError("");
+                      setPassword(e.target.value);
+                    }}
+                    required
+                  />
+                  <button
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                    tabIndex={-1}
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="Show password"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                </div>
               </div>
               <div>
                 <label
