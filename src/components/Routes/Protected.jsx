@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 function Protected({ children }) {
   const data = useSelector((state) => state.user);
 
-  if (!data) {
+  const isValid =
+    Boolean(data?.name) && Boolean(data?.email) && Boolean(data?.role);
+
+  if (!isValid) {
     return <Navigate to="/login" />;
   }
 

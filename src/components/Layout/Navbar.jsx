@@ -1,21 +1,31 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { _logout } from "../../redux/user/user.slice";
+import { logout } from "../../redux/user/user.actions";
 import Logo from "../Icons/Logo";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userData = localStorage.getItem("user");
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isAdmin = userDataRedux.role === "Admin";
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
 
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    dispatch(_logout());
+    dispatch(logout());
   };
 
   return (
@@ -37,8 +47,12 @@ function Navbar() {
             <Logo />
           </Link>
           <div className="hidden md:block">
-            {userData ? (
-              <AuthRightElementNavbar handleLogout={handleLogout} />
+            {isValidUser ? (
+              <AuthRightElementNavbar
+                handleLogout={handleLogout}
+                isAdmin={isAdmin}
+                username={userDataRedux.name}
+              />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
@@ -59,9 +73,13 @@ function Navbar() {
           </div>
 
           {/* Show or hide hamburger button on mobile */}
-          {userData ? (
+          {isValidUser ? (
             <div className="md:hidden">
-              <AuthRightElementNavbar handleLogout={handleLogout} />
+              <AuthRightElementNavbar
+                handleLogout={handleLogout}
+                isAdmin={isAdmin}
+                username={userDataRedux.name}
+              />
             </div>
           ) : (
             <div className="-mr-2 flex md:hidden">
@@ -113,7 +131,7 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu Navbar */}
-      {userData ? null : (
+      {isValidUser ? null : (
         <div className={isOpen ? "block" : "hidden"}>
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -140,7 +158,7 @@ function Navbar() {
 
 export default Navbar;
 
-export function AuthRightElementNavbar({ handleLogout }) {
+export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
   return (
     <div className="flex items-center gap-2">
       <Link to="/notifications">
@@ -175,17 +193,21 @@ export function AuthRightElementNavbar({ handleLogout }) {
           className="btn btn-outline btn-primary btn-sm btn-circle avatar placeholder"
           title="Profile Menu"
         >
-          {/* if there is no avatar img show their first letter of their name */}
-          <span>TT</span>
-          {/* if there is avatar, show the avatar instead */}
-          {/* <div className="w-10 rounded-full">
-            <img src="https://placekitten.com/80/80" alt="Kitten" />
-          </div> */}
+          {username ? (
+            <span>{username[0].toUpperCase()}</span>
+          ) : (
+            <span>TT</span>
+          )}
         </label>
         <ul
           tabIndex={0}
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
+          {isAdmin ? (
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+          ) : null}
           <li>
             <Link to="/user">Profile</Link>
           </li>

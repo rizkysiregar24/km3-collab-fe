@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import Logo from "../../components/Icons/Logo";
 import Footer from "../../components/Layout/Footer";
@@ -10,6 +11,8 @@ export function ResetPassword() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isError, setIsError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -29,16 +32,23 @@ export function ResetPassword() {
         }
       );
       if (response.status === 200) {
+        setIsError("");
         setIsSuccess(true);
         setTimeout(() => {
           navigate("/login");
         }, 3000);
         setIsSubmitting(false);
       } else {
+        setIsError(
+          "Link is experied, request a link again from Forgot password page"
+        );
         setIsSuccess(false);
         setIsSubmitting(false);
       }
     } catch (error) {
+      setIsError(
+        "Link is experied, request a link again from Forgot password page"
+      );
       setIsSuccess(false);
     } finally {
       setIsSubmitting(false);
@@ -51,11 +61,6 @@ export function ResetPassword() {
   };
 
   useEffect(() => {
-    if (token !== null) {
-      if (token.length !== 116) {
-        navigate("/");
-      }
-    }
     if (token === null) {
       navigate("/");
     }
@@ -101,16 +106,36 @@ export function ResetPassword() {
                 >
                   New Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="input focus:outline-0 input-primary w-full"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative mb-6">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className={`input w-full ${
+                      isError ? "input-error" : "input-primary"
+                    }`}
+                    value={password}
+                    onChange={(e) => {
+                      setIsError("");
+                      setPassword(e.target.value);
+                    }}
+                    required
+                  />
+                  <button
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                    tabIndex={-1}
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="Show password"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                </div>
               </div>
               <div>
                 <label
@@ -120,24 +145,33 @@ export function ResetPassword() {
                   Confirm password
                 </label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="••••••••"
-                  className="input focus:outline-0 input-primary w-full"
+                  className={`input w-full ${
+                    isError ? "input-error" : "input-primary"
+                  }`}
                   value={passwordConfirmation}
-                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  onChange={(e) => {
+                    setIsError("");
+                    setPasswordConfirmation(e.target.value);
+                  }}
                   required
                 />
-                <p className="text-sm text-error mt-2">
+                <small className="text-sm text-error mt-2">
                   {isPasswordMatch || !password || !passwordConfirmation
                     ? null
                     : "Password do not match"}
-                </p>
+                </small>
+                {isError ? (
+                  <small className="text-sm text-error mt-2">{isError}</small>
+                ) : null}
               </div>
+
               <button
                 type="submit"
-                className="btn bg-purple-primary w-full hover:bg-purple-primary-darker"
+                className="btn bg-brand w-full hover:bg-brand-darker-800"
                 onClick={handleSubmit}
                 disabled={
                   !password ||
