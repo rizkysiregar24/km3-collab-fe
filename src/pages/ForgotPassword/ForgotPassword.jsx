@@ -123,7 +123,7 @@ export function ForgotPassword() {
                     type="email"
                     name="email"
                     id="emailAddress"
-                    className={`w-full input ${
+                    className={`w-full input focus:outline-0  ${
                       isError ? "input-error" : "input-primary"
                     }`}
                     placeholder="example@mail.com"
