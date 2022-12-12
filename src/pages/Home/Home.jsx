@@ -103,10 +103,10 @@ export function Home() {
 
   const handleSearchFlight = () => {
     navigate(
-      `/search?from=${departure.value}&to=${
+      `/search?departure=${departure.value}&arrival=${
         arrival.value
-      }&passengers=${adult}.${child}&tripType=${tripType}&sc=${seatClass}&fromDate=${startDate}&returnDate=${
-        tripType === "one_way" ? "" : returnDate
+      }&adult=${adult}&children=${child}&tripType=${tripType}&sc=${seatClass}&date=${startDate}${
+        tripType === "round_trip" ? `&returnDate=${returnDate}` : ""
       }`
     );
   };
