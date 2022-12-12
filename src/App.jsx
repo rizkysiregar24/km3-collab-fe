@@ -14,6 +14,7 @@ import { ResetPassword } from "./pages/ResetPassword";
 import Userpage from "./pages/Admin page/Userpage";
 import Pageadmin from "./pages/Admin page/Pageadmin";
 import Transaction from "./pages/transaction page/Transaction";
+import Ticket from "./pages/Admin page/Ticket";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/admin-page" element={<Pageadmin />} />
         <Route path="/user-page" element={<Userpage />} />
         <Route path="/transaction" element={<Transaction />} />
+        <Route path="/create-ticket" element={<Ticket />} />
       </Routes>
     </Router>
   );
