@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import Logo from "../../components/Icons/Logo";
@@ -11,6 +12,19 @@ export function ForgotPassword() {
   const [isSent, setIsSent] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate();
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
 
   const handleSendEmail = async () => {
     try {
@@ -47,6 +61,12 @@ export function ForgotPassword() {
   };
 
   useEffect(() => {
+    if (isValidUser) {
+      navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
     document.title = "Forgot Password | Terbang Tinggi";
   }, []);
 
@@ -73,7 +93,7 @@ export function ForgotPassword() {
               <Link to="/">
                 <button
                   type="button"
-                  className="btn bg-purple-primary w-full hover:bg-purple-primary-darker mt-4"
+                  className="btn bg-brand w-full hover:bg-brand-darker-800 mt-4"
                 >
                   Go to Home
                 </button>
@@ -103,7 +123,7 @@ export function ForgotPassword() {
                     type="email"
                     name="email"
                     id="emailAddress"
-                    className={`w-full input ${
+                    className={`w-full input   ${
                       isError ? "input-error" : "input-primary"
                     }`}
                     placeholder="example@mail.com"
@@ -119,7 +139,7 @@ export function ForgotPassword() {
                 </div>
                 <button
                   type="submit"
-                  className="btn bg-purple-primary w-full hover:bg-purple-primary-darker"
+                  className="btn bg-brand w-full hover:bg-brand-darker-800"
                   onClick={handleSubmit}
                   disabled={!email || !EMAIL.test(email) || isSubmitting}
                 >

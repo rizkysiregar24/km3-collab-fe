@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdFlightTakeoff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -21,6 +21,17 @@ export function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userDataRedux = useSelector((state) => state.user);
+
+  const isValidUser =
+    Boolean(userData?.username) &&
+    Boolean(userData?.email) &&
+    Boolean(userData?.role) &&
+    Boolean(userDataRedux?.name) &&
+    Boolean(userDataRedux?.email) &&
+    Boolean(userDataRedux?.role);
 
   const handleLogin = async () => {
     try {
@@ -81,11 +92,20 @@ export function Login() {
     }
   };
 
+  useEffect(() => {
+    if (isValidUser) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <section className="bg-gray-400 min-h-screen flex items-center justify-center">
       <div className="bg-white flex rounded-2xl shadow-lg  px-0 ">
         <div className=" sm:w-9/12 p-28 rounded-2xl">
-          <h1 className="font-bold text-2xl">Login</h1>
+          <Link to="/">
+            <h1 className="font-bold text-2xl">Login</h1>
+          </Link>
+
           <p className="text-sm mt-5  ">
             Welcome back! Please enter your details
           </p>
@@ -94,7 +114,7 @@ export function Login() {
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
-              className={`border rounded-md px-9 h-10 placeholder:text-sm ${
+              className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
                 isError ? "input-error" : "input border-[#7E56DA]"
               }`}
               placeholder="Enter your Email"
@@ -105,8 +125,8 @@ export function Login() {
             <div className=" flex flex-wrap">
               <input
                 type={type}
-                className={`w-full border h-10 px-9 rounded-md placeholder:text-sm ${
-                  isError ? "input-error" : "input border-[#7E56DA]"
+                className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
+                  isError ? "input-error" : "input border-[#7E56DA] "
                 }`}
                 placeholder="Enter your Password"
                 onChange={(e) => setPassword(e.target.value)}

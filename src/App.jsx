@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import Protected from "./components/Routes/Protected";
-
+import { SearchResult } from "./pages/SearchResult";
+import { Notifications } from "./pages/Notifications";
 import Error from "./pages/Error";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import User from "./pages/User";
+import Verifiedemail from "./pages/Authentication/Verifiedemail";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
-import { SearchResult } from "./pages/SearchResult";
-import { Notifications } from "./pages/Notifications";
-import Transaction from "./pages/History/Transactionpage";
+import Userpage from "./pages/Admin page/Userpage";
+import Pageadmin from "./pages/Admin page/Pageadmin";
 
 function App() {
   return (
@@ -33,8 +33,10 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/search" element={<SearchResult />} />
-        <Route path="/notifications" element={<Notifications />} />`
-        <Route path="/transaction" element={<Transaction />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/verified-email" element={<Verifiedemail />} />
+        <Route path="/admin-page" element={<Pageadmin />} />
+        <Route path="/user-page" element={<Userpage />} />
       </Routes>
     </Router>
   );

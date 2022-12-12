@@ -17,11 +17,12 @@ How to run this project locally
 
 Contribution guide
 
-1. Before push your branch to GitHub, make sure to run `git fetch` on main branch first
+1. Before push your branch to GitHub, make sure to run `git fetch and git pull` on main branch first
 2. If there's any changes on main branch, don't forget to merge in your development branch
 3. After that, you're good to go to open pull request
 
 ## Live preview
 
 [Terbang Tinggi Production](https://terbangtinggi.km3ggwp.com)
+<br>
 [Terbang Tinggi Staging](https://terbangtinggi-staging.km3ggwp.com)

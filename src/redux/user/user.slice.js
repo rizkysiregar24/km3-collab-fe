@@ -21,10 +21,10 @@ const userSlice = createSlice({
       state.error = error || null;
     },
     _logout: (state) => {
-      state.email = null;
-      state.role = null;
-      state.name = null;
-      state.token = null;
+      state.email = "";
+      state.role = "";
+      state.name = "";
+      state.token = "";
     },
     whoami: (state, action) => {
       const { name, email, role } = action.payload;
