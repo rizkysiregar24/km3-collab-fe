@@ -1,6 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Pageuser() {
+  const [user, setUser] = useState([]);
+  const API_URL = process.env.REACT_APP_AUTH_API;
+
+  useEffect(() => {
+    const config = {
+      method: "get",
+      url: `${API_URL}/user/data/`,
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+
+    axios(config)
+      .then((resp) => {
+        setUser(resp.data.data.user);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  }, []);
+
+  const handleDelete = (id) => {
+    const config = {
+      method: "delete",
+      url: `${API_URL}/user/data/${id}`,
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="px-5 mt-10">
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg border-2">
@@ -25,146 +66,29 @@ export default function Pageuser() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  type="button"
-                  href="/#"
-                  className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+            {user.map((x) => (
+              <tr key={x.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {x.username}
+                </th>
+
+                <td className="py-4 px-6">{x.email}</td>
+                <td className="py-4 px-6">{x.createdAt}</td>
+                <td className="py-4 px-6">{x.updatedAt}</td>
+                <td className="py-4 px-6 text-right">
+                  <button
+                    type="button"
+                    href="/#"
+                    className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                    onClick={() => {
+                      handleDelete(x.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

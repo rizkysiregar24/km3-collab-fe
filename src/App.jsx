@@ -13,6 +13,7 @@ import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import Userpage from "./pages/Admin page/Userpage";
 import Pageadmin from "./pages/Admin page/Pageadmin";
+import Transaction from "./pages/transaction page/Transaction";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/verified-email" element={<Verifiedemail />} />
         <Route path="/admin-page" element={<Pageadmin />} />
         <Route path="/user-page" element={<Userpage />} />
+        <Route path="/transaction" element={<Transaction />} />
       </Routes>
     </Router>
   );
