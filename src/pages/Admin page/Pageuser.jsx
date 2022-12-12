@@ -67,7 +67,10 @@ export default function Pageuser() {
           </thead>
           <tbody>
             {user.map((x) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <tr
+                key={x.id}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
                 <th
                   scope="row"
                   className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
