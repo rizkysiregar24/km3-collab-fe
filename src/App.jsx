@@ -15,6 +15,7 @@ import Userpage from "./pages/Admin page/Userpage";
 import Pageadmin from "./pages/Admin page/Pageadmin";
 import Transaction from "./pages/transaction page/Transaction";
 import Ticket from "./pages/Admin page/Ticket";
+import ListTicket from "./pages/Admin page/ListTicket";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/user-page" element={<Userpage />} />
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/create-ticket" element={<Ticket />} />
+        <Route path="/ticket" element={<ListTicket />} />
       </Routes>
     </Router>
   );

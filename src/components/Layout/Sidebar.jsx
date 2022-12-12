@@ -15,7 +15,7 @@ export default function Sidebar() {
           <li className="border-b-4">
             <Link
               to="/user-page"
-              className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-600 dark:hover:bg-slate-100"
+              className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-600 "
             >
               <svg
                 aria-hidden="true"
@@ -38,11 +38,22 @@ export default function Sidebar() {
           <li className="border-b-4">
             <Link
               to="/create-ticket"
-              className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-600 dark:hover:bg-slate-100"
+              className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-600 "
             >
               <RiTicket2Line className="w-6 h-6 text-white" />
               <span className="flex-1 ml-3 whitespace-nowrap text-white">
                 Create Ticket
+              </span>
+            </Link>
+          </li>
+          <li className="border-b-4">
+            <Link
+              to="/ticket"
+              className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-600 "
+            >
+              <RiTicket2Line className="w-6 h-6 text-white" />
+              <span className="flex-1 ml-3 whitespace-nowrap text-white">
+                List Ticket
               </span>
             </Link>
           </li>
