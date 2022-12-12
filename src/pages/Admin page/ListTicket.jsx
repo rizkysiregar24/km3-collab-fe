@@ -19,6 +19,12 @@ function ListTicket() {
     })();
   }, []);
 
+  const handleDeleteTicket = async (id) => {
+    const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}}`);
+    const responseDeleteData = await responseDelete.data;
+    alert(responseDeleteData.data.message);
+  };
+
   return (
     <Dashboard>
       <section className="my-4 mx-2">
@@ -37,11 +43,12 @@ function ListTicket() {
                 <th>Departure Time</th>
                 <th>Arrival Time</th>
                 <th>Price</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {data?.map((ticket) => (
-                <tr key={ticket.id}>
+                <tr key={ticket.id} className="py-2">
                   <th>{ticket.id}</th>
                   <td>{ticket.airlineName}</td>
                   <td>{ticket.departureAirport}</td>
@@ -53,6 +60,15 @@ function ListTicket() {
                   <td>{ticket.arrivalTime}</td>
                   <td>
                     Rp. {new Intl.NumberFormat("ID-id").format(ticket.price)}
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={handleDeleteTicket(ticket.id)}
+                      type="button"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
