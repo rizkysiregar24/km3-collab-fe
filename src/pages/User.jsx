@@ -100,40 +100,36 @@ function User() {
               </div>
             </div>
 
-            <div className="form-group mt-5">
-              <h1 className="font-bold text-2xl">Gender</h1>
+            <div className="form-group">
+              <h1 className="font-bold">Gender</h1>
               <fieldset className="flex flex-col gap-2">
-                <div className="flex">
-                  <div className="mt-1">
+                <div>
+                  <div>
                     <input type="radio" name="gender" value="male" onChange={onChangeHandler} checked={formData.gender === "male"} />
-                    <label htmlFor="male" className="ml-1">
-                      Male
-                    </label>
+                    <label htmlFor="male">Male</label>
                   </div>
-                  <div className="ml-10 mt-1">
+                  <div>
                     <input type="radio" name="gender" value="female" onChange={onChangeHandler} checked={formData.gender === "female"} />
-                    <label htmlFor="female" className="ml-1">
-                      Female
-                    </label>
+                    <label htmlFor="female">Female</label>
                   </div>
                 </div>
               </fieldset>
             </div>
 
-            <div className="mt-5">
-              <h1 className="font-bold text-2xl">Date of Birth</h1>
+            <div>
+              <h1 className="font-bold">Date of Birth</h1>
               <div className="flex flex-col gap-3 lg:flex-row">
                 <div className="form-group flex flex-col">
                   <label htmlFor="month">Month</label>
-                  <input id="month" type="text" name="month" className="border focus:outline-0 rounded px-2 py-1 border-slate-500 required:red-border-500" placeholder="MM" onChange={onChangeHandler} value={formData.month} required />
+                  <input id="month" type="text" name="month" className="border rounded px-2 py-1 border-slate-500 required:red-border-500" placeholder="MM" onChange={onChangeHandler} value={formData.month} required />
                 </div>
                 <div className="form-group flex flex-col">
                   <label htmlFor="day">Day</label>
-                  <input id="day" type="text" name="day" className="border focus:outline-0 rounded px-2 py-1 border-slate-500" placeholder="DD" onChange={onChangeHandler} value={formData.day} />
+                  <input id="day" type="text" name="day" className="border rounded px-2 py-1 border-slate-500" placeholder="DD" onChange={onChangeHandler} value={formData.day} />
                 </div>
                 <div className="form-group flex flex-col">
                   <label htmlFor="year">Year</label>
-                  <input id="year" type="text" name="year" className="border focus:outline-0 rounded px-2 py-1 border-slate-500 required:red-border-500" placeholder="YYYY" onChange={onChangeHandler} value={formData.year} required />
+                  <input id="year" type="text" name="year" className="border rounded px-2 py-1 border-slate-500 focus:border-red-500 required:red-border-500" placeholder="YYYY" onChange={onChangeHandler} value={formData.year} required />
                 </div>
               </div>
             </div>
