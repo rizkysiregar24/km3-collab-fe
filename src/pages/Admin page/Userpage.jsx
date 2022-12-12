@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { RiTicket2Line } from "react-icons/ri";
-import Navbar from "../../components/Layout/Navbar";
 import Pageuser from "./Pageuser";
+import Navbar from "../../components/Layout/Navbar";
 
 export default function Adminpage() {
   return (
