@@ -4,7 +4,6 @@ import axios from "axios";
 export default function Pageuser() {
   const [user, setUser] = useState([]);
   const API_URL = process.env.REACT_APP_AUTH_API;
-  console.log(user);
 
   useEffect(() => {
     const config = {
@@ -29,14 +28,14 @@ export default function Pageuser() {
       method: "delete",
       url: `${API_URL}/user/data/${id}`,
       headers: {
-        Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODEsInVzZXJuYW1lIjoiVGVyYmFuZyBUaW5nZ2kiLCJlbWFpbCI6InRlcmJhbmd0aW5nZ2lhcHBAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIiwidXNlcl90eXBlIjoiQmFzaWMiLCJpc192ZXJpZmllZCI6MSwiaWF0IjoxNjcwMjY0MzYxfQ.hoL4JZeqnNHmogVykv7nMZ1fVYPZYup0fIRLpYwymeA",
+        Authorization: localStorage.getItem("token"),
       },
     };
 
     axios(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -86,7 +85,6 @@ export default function Pageuser() {
                     className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
                       handleDelete(x.id);
-                      window.location.reload();
                     }}
                   >
                     Delete
