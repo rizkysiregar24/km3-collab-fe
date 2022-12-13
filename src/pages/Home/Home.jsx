@@ -1,18 +1,16 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useEffect, useState } from "react";
-import AsyncSelect from "react-select/async";
 import { useNavigate } from "react-router-dom";
 import { IoMdSwap } from "react-icons/io";
-import axios from "axios";
 
 import "./Home.css";
+import { Layout } from "../../components/Layout/Layout";
 import FeatureSection from "./FeatureSection";
 import SeatIcon from "../../components/Icons/SeatIcon";
 import SearchIcon from "../../components/Icons/SearchIcon";
 import CalendarIcon from "../../components/Icons/CalendarIcon";
 import RadioButton from "../../components/Input/RadioButton";
-import { Layout } from "../../components/Layout/Layout";
-import { defaultOptionsAirportData } from "../../utils/airports";
+import AirportSelect from "../../components/Input/AirportSelect";
 
 const SEAT_CLASS = [
   {
@@ -25,9 +23,6 @@ const SEAT_CLASS = [
   },
 ];
 
-const allAirpotsApiUrl =
-  "https://gist.githubusercontent.com/aroyan/b79307e2092f2c370b41977088de5fd4/raw/50aca41ae350fe89034f48ccf83ba42d6ca45938/allAirportsData.json";
-
 export function Home() {
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
@@ -36,9 +31,6 @@ export function Home() {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [seatClass, setSeatClass] = useState("economy");
-  const [allAirports, setAllAirports] = useState(
-    JSON.parse(localStorage.getItem("allAirportsData")) || []
-  );
 
   const navigate = useNavigate();
 
@@ -62,33 +54,6 @@ export function Home() {
   const minReturnDate = [+startYear, +startMonth, minDateReturn].join("-");
 
   const [returnDate, setReturnDate] = useState(minReturnDate);
-
-  // Renamed key name of airportCode to value and airportName to label for react-select
-  const optionsAllAirports = allAirports?.map(
-    ({ airportCode: value, airportName: label, cityName: city, ...rest }) => ({
-      value,
-      label: `${label} (${value}) - ${city}`,
-      airportName: label,
-      cityName: city,
-      ...rest,
-    })
-  );
-
-  // Filter airports based on their label and alias
-  const filterAirports = (inputValue) =>
-    optionsAllAirports.filter((airport) =>
-      airport.label
-        .concat(airport.alias.join(" "))
-        .toLowerCase()
-        .includes(inputValue.toLowerCase())
-    );
-
-  const promiseOptions = (inputValue) =>
-    new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(filterAirports(inputValue));
-      }, 150);
-    });
 
   // Function definition
 
@@ -131,21 +96,6 @@ export function Home() {
     }
     setAdult(adult - 1);
   };
-
-  // If there is allAirportsData in localStorage, don't fetch allAirportsData again from API
-  useEffect(() => {
-    if (!JSON.parse(localStorage.getItem("allAirportsData"))) {
-      (async () => {
-        const resAllAirpots = await axios.get(allAirpotsApiUrl);
-        const allAirportsData = await resAllAirpots.data;
-        setAllAirports(allAirportsData);
-        localStorage.setItem(
-          "allAirportsData",
-          JSON.stringify(allAirportsData)
-        );
-      })();
-    }
-  }, []);
 
   // Set document title
   useEffect(() => {
@@ -192,39 +142,10 @@ export function Home() {
             <div className="flex gap-4 mt-4 flex-wrap flex-col sm:flex-row sm:justify-start justify-center">
               <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">From</label>
-                <AsyncSelect
-                  cacheOptions
-                  defaultOptions={defaultOptionsAirportData}
-                  loadOptions={promiseOptions}
-                  value={departure}
-                  onChange={(choice) => setDeparture(choice)}
+                <AirportSelect
                   placeholder="Where from?"
-                  required
-                  noOptionsMessage={() => "Airport not found"}
-                  components={{
-                    DropdownIndicator: () => null,
-                    IndicatorSeparator: () => null,
-                  }}
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      height: "48px",
-                      cursor: "pointer",
-                      outline: state.isFocused ? "2px solid #512bd4" : null,
-                      outlineOffset: state.isFocused ? "2px" : null,
-                      boxShadow: "none",
-                      border: "1px solid #cccccc",
-                      "&:hover": {
-                        border: state.isFocused
-                          ? "1px solid #cccccc"
-                          : "1px solid #cccccc",
-                      },
-                    }),
-                    option: (baseStyles) => ({
-                      ...baseStyles,
-                      cursor: "pointer",
-                    }),
-                  }}
+                  value={departure}
+                  onChange={setDeparture}
                 />
                 {isSameAirpot && !isSameAirportEqualNull ? (
                   <small className="text-error">Airpot cannot be same</small>
@@ -232,35 +153,10 @@ export function Home() {
               </div>
               <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">To</label>
-                <AsyncSelect
-                  cacheOptions
-                  defaultOptions={defaultOptionsAirportData}
-                  loadOptions={promiseOptions}
-                  value={arrival}
-                  onChange={(choice) => setArrival(choice)}
+                <AirportSelect
                   placeholder="Where to?"
-                  required
-                  noOptionsMessage={() => "Airport not found"}
-                  components={{
-                    DropdownIndicator: () => null,
-                    IndicatorSeparator: () => null,
-                  }}
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      height: "48px",
-                      cursor: "pointer",
-                      outline: state.isFocused ? "2px solid #512bd4" : null,
-                      outlineOffset: state.isFocused ? "2px" : null,
-                      boxShadow: "none",
-                      border: "1px solid #cccccc",
-                      "&:hover": {
-                        border: state.isFocused
-                          ? "1px solid #cccccc"
-                          : "1px solid #cccccc",
-                      },
-                    }),
-                  }}
+                  value={arrival}
+                  onChange={setArrival}
                 />
               </div>
               <div className="sm:w-[200px] w-full">
