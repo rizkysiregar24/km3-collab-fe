@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { Dashboard } from "../../components/Layout";
+import { Dashboard } from "../../../components/Layout";
 
 const initialData = {
   code: "",

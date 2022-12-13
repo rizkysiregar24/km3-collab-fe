@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import { Dashboard } from "../../components/Layout";
+import { Dashboard } from "../../../components/Layout";
+import { setTicketData, resetData } from "../../../redux/ticket/ticket.actions";
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 const token = localStorage.getItem("token");
 
 function ListTicket() {
   const [data, setData] = useState(null);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -20,10 +26,16 @@ function ListTicket() {
   }, []);
 
   const handleDeleteTicket = async (id) => {
-    const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}}`);
+    const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
+      headers: { Authorization: token },
+    });
     const responseDeleteData = await responseDelete.data;
-    alert(responseDeleteData.data.message);
+    alert(responseDeleteData.message);
   };
+
+  useEffect(() => {
+    dispatch(resetData());
+  }, []);
 
   return (
     <Dashboard>
@@ -63,8 +75,33 @@ function ListTicket() {
                   </td>
                   <td>
                     <button
+                      className="btn btn-warning btn-xs mr-2"
+                      onClick={() => {
+                        dispatch(
+                          setTicketData({
+                            code: ticket.code,
+                            airlineName: ticket.airlineName,
+                            departureAirport: ticket.departureAirport,
+                            departure: ticket.departure,
+                            arrivalAirport: ticket.arrivalAirport,
+                            arrival: ticket.arrival,
+                            date: ticket.date,
+                            departureTime: ticket.departureTime,
+                            arrivalTime: ticket.arrivalTime,
+                            price: ticket.price,
+                          })
+                        );
+                        navigate(`/ticket/${ticket.id}`);
+                      }}
+                      type="button"
+                    >
+                      Update
+                    </button>
+                    <button
                       className="btn btn-error btn-xs"
-                      onClick={handleDeleteTicket(ticket.id)}
+                      onClick={() => {
+                        handleDeleteTicket(ticket.id);
+                      }}
                       type="button"
                     >
                       Delete

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Protected from "./components/Routes/Protected";
 import { SearchResult } from "./pages/SearchResult";
 import { Notifications } from "./pages/Notifications";
@@ -14,8 +15,9 @@ import { ResetPassword } from "./pages/ResetPassword";
 import Userpage from "./pages/Admin page/Userpage";
 import Pageadmin from "./pages/Admin page/Pageadmin";
 import Transaction from "./pages/transaction page/Transaction";
-import Ticket from "./pages/Admin page/Ticket";
-import ListTicket from "./pages/Admin page/ListTicket";
+import Ticket from "./pages/Admin page/Ticket/Ticket";
+import ListTicket from "./pages/Admin page/Ticket/ListTicket";
+import UpdateTicket from "./pages/Admin page/Ticket/UpdateTicket";
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/create-ticket" element={<Ticket />} />
         <Route path="/ticket" element={<ListTicket />} />
+        <Route path="/ticket/:id" element={<UpdateTicket />} />
       </Routes>
     </Router>
   );
