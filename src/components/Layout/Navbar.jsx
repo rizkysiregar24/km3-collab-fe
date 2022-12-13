@@ -205,7 +205,7 @@ export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
         >
           {isAdmin ? (
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/admin-page">Dashboard</Link>
             </li>
           ) : null}
           <li>
