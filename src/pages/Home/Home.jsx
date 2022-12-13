@@ -20,16 +20,8 @@ const SEAT_CLASS = [
     label: "Economy",
   },
   {
-    value: "premium_economy",
-    label: "Premium Economy",
-  },
-  {
     value: "bussiness",
     label: "Bussiness",
-  },
-  {
-    value: "first_class",
-    label: "First Class",
   },
 ];
 
@@ -41,7 +33,6 @@ export function Home() {
   const [startDate, setStartDate] = useState(today);
   const [tripType, setTripType] = useState("one_way");
   const [adult, setAdult] = useState(1);
-  const [child, setChild] = useState(0);
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [seatClass, setSeatClass] = useState("economy");
@@ -105,7 +96,7 @@ export function Home() {
     navigate(
       `/search?departure=${departure.value}&arrival=${
         arrival.value
-      }&adult=${adult}&children=${child}&tripType=${tripType}&sc=${seatClass}&date=${startDate}${
+      }&passengers=${adult}&tripType=${tripType}&sc=${seatClass}&date=${startDate}${
         tripType === "round_trip" ? `&returnDate=${returnDate}` : ""
       }`
     );
@@ -127,26 +118,10 @@ export function Home() {
 
   const incrementAdultPassenger = (e) => {
     e.preventDefault();
-    if (adult + child === 7) {
+    if (adult === 7) {
       return;
     }
     setAdult(adult + 1);
-  };
-
-  const incrementChildPassenger = (e) => {
-    e.preventDefault();
-    if (adult + child === 7) {
-      return;
-    }
-    setChild(child + 1);
-  };
-
-  const decrementChildPassenger = (e) => {
-    e.preventDefault();
-    if (child === 0) {
-      return;
-    }
-    setChild(child - 1);
   };
 
   const decrementAdultPassenger = (e) => {
@@ -295,7 +270,7 @@ export function Home() {
                     tabIndex={0}
                     className="input input-primary flex items-center border-[#cccccc] border text-gray-900 sm:w-52 w-full rounded-[4px] select-none"
                   >
-                    {adult} Adult, {child} Children
+                    {adult} Passengers
                   </p>
                   <div
                     tabIndex={0}
@@ -303,7 +278,7 @@ export function Home() {
                   >
                     <div className="card-body">
                       <div className="flex items-center justify-between">
-                        <div>Adult</div>
+                        <div>Passengers</div>
                         <div className="flex gap-4 items-center">
                           <button
                             className="btn btn-outline btn-sm"
@@ -316,26 +291,6 @@ export function Home() {
                           <button
                             className="btn btn-outline btn-sm"
                             onClick={decrementAdultPassenger}
-                            type="button"
-                          >
-                            -
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>Children</div>
-                        <div className="flex gap-4 items-center">
-                          <button
-                            className="btn btn-outline btn-sm"
-                            onClick={incrementChildPassenger}
-                            type="button"
-                          >
-                            +
-                          </button>
-                          {child}
-                          <button
-                            className="btn btn-outline btn-sm"
-                            onClick={decrementChildPassenger}
                             type="button"
                           >
                             -
