@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { Dashboard } from "../../../components/Layout";
 import AirportSelect from "../../../components/Input/AirportSelect";
@@ -12,6 +13,7 @@ const initialData = {
   arrivalAirport: "",
   arrival: "",
   date: "",
+  returnDate: "",
   departureTime: "",
   arrivalTime: "",
   price: +"",
@@ -24,6 +26,9 @@ export default function Ticket() {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [airline, setAirline] = useState("Garuda Indonesia");
+  const [seatClass, setSeatClass] = useState("economy");
+  const [tripType, setTripType] = useState("one_way");
+  const [passengers, setPassengers] = useState(1);
 
   const reqBody = {
     code: data.code,
@@ -36,7 +41,20 @@ export default function Ticket() {
     departureTime: data.departureTime,
     arrivalTime: data.arrivalTime,
     price: data.price,
+    sc: seatClass,
+    tripType,
+    passengers,
   };
+
+  const body =
+    tripType === "one_way"
+      ? {
+          ...reqBody,
+        }
+      : {
+          ...reqBody,
+          returnDate: data.returnDate,
+        };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +66,7 @@ export default function Ticket() {
     const response = await axios.post(
       `${process.env.REACT_APP_AUTH_API}/flight/data`,
       {
-        ...reqBody,
+        ...body,
       },
       {
         headers: {
@@ -60,7 +78,7 @@ export default function Ticket() {
     const ticketData = await response.data;
 
     if (status === 201 || status === 200) {
-      alert(JSON.stringify(ticketData));
+      toast(JSON.stringify(ticketData.data));
     }
   };
 
@@ -97,6 +115,42 @@ export default function Ticket() {
               </select>
             </div>
             <div className="flex flex-col">
+              <label htmlFor="seatClass">Seat Class</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setSeatClass(e.target.value)}
+                name="seatClass"
+                id="seatClass"
+              >
+                <option value="economy">Economy</option>
+                <option value="business">Bussiness</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="totalPassengers">Total Passengers</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setPassengers(e.target.value)}
+                name="passengers"
+                id="totalPassengers"
+              >
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="tripType">Trip type</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setTripType(e.target.value)}
+                name="tripType"
+                id="tripType"
+              >
+                <option value="one_way">One way</option>
+                <option value="round_trip">Round trip</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
               <div className="sm:w-[250px] w-full">
                 <label htmlFor="airportDeparture">Airport Departure</label>
                 <AirportSelect
@@ -126,6 +180,19 @@ export default function Ticket() {
                 className="input input-primary"
                 onChange={handleChange}
                 value={data.date}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="returnDate">Return Date</label>
+              <input
+                type="date"
+                placeholder="Return Date"
+                id="returnDate"
+                name="returnDate"
+                className="input input-primary"
+                onChange={handleChange}
+                value={data.returnDate}
+                disabled={tripType === "one_way"}
               />
             </div>
             <div className="flex flex-col">

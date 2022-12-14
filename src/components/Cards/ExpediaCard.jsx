@@ -8,7 +8,9 @@ export function ExpediaCard({
   arrivalIata,
   departureTime,
   arrivalTime,
+  sc,
   price,
+  tripType,
 }) {
   return (
     <div className="flex flex-col justify-center w-full bg-brand-lighter-100 p-4 rounded-lg cursor-pointer">
@@ -31,7 +33,9 @@ export function ExpediaCard({
               alt="Airplane logo"
               className="rounded-full h-4 w-4"
             />
-            <p className="text-base font-bold">{airline}</p>
+            <p className="text-base font-bold">
+              {airline} ({sc})
+            </p>
           </div>
         </div>
         {/* end of left content */}
@@ -45,7 +49,9 @@ export function ExpediaCard({
           <h3 className="font-bold text-xl md:text-2xl">
             Rp. {new Intl.NumberFormat("ID-id").format(price)}
           </h3>
-          <p className="text-xs md:text-sm">One way per traveler</p>
+          <p className="text-xs md:text-sm capitalize">
+            {tripType} per traveler
+          </p>
         </div>
         {/* end of right content */}
       </div>

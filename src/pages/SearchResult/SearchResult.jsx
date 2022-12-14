@@ -13,20 +13,29 @@ export function SearchResult() {
 
   const departure = searchParams.get("departure");
   const arrival = searchParams.get("arrival");
-  // const passengers = searchParams.get("passengers");
-  // const tripType = searchParams.get("tripType");
-  // const seatClass = searchParams.get("sc");
+  const passengers = searchParams.get("passengers");
+  const tripType = searchParams.get("tripType");
+  const seatClass = searchParams.get("sc");
   const fromDate = searchParams.get("date");
-  // const returnDate = searchParams.get("returnDate");
+  const returnDate = searchParams.get("returnDate");
 
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(
-        `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}`
-      );
-      setResultData(data?.data);
-    })();
-    //
+    if (tripType === "one_way") {
+      (async () => {
+        const { data } = await axios.get(
+          `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`
+        );
+        setResultData(data?.data);
+      })();
+    }
+    if (tripType === "round_trip") {
+      (async () => {
+        const { data } = await axios.get(
+          `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}&returnDate=${returnDate}`
+        );
+        setResultData(data?.data);
+      })();
+    }
   }, []);
 
   return (
@@ -50,8 +59,8 @@ export function SearchResult() {
             {resultData
               ? resultData?.map((ticket) => (
                   <ExpediaCard
-                    key={ticket.code}
-                    airline={ticket.airlineName}
+                    key={ticket.id}
+                    airline={ticket.name}
                     departureAirport={ticket.departureAirport}
                     departureIata={ticket.departure}
                     arrivalAirport={ticket.arrivalAirport}
@@ -59,6 +68,8 @@ export function SearchResult() {
                     departureTime={ticket.departureTime}
                     arrivalTime={ticket.arrivalTime}
                     price={ticket.price}
+                    sc={ticket.sc}
+                    tripType={ticket.tripType.split("_").join(" ")}
                   />
                 ))
               : "No flights found for this route at this date"}
