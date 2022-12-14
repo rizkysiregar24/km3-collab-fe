@@ -1,29 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { Dashboard } from "../../../components/Layout";
-import { setTicketData, resetData } from "../../../redux/ticket/ticket.actions";
+import {
+  setTicketData,
+  resetData,
+  getAllTickets,
+} from "../../../redux/ticket/ticket.actions";
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 const token = localStorage.getItem("token");
 
 function ListTicket() {
-  const [data, setData] = useState(null);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get(`${BASE_URL}/flight/data/`, {
-        headers: { Authorization: token },
-      });
-      const responseData = await response.data;
-      setData(responseData?.data);
-    })();
-  }, []);
+  const data = useSelector((state) => state.ticket.allTickets);
 
   const handleDeleteTicket = async (id) => {
     const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
@@ -35,6 +29,7 @@ function ListTicket() {
 
   useEffect(() => {
     dispatch(resetData());
+    dispatch(getAllTickets());
   }, []);
 
   return (
@@ -44,13 +39,13 @@ function ListTicket() {
         <div className="overflow-x-auto">
           <table className="table table-compact w-full">
             <thead>
-              <tr>
+              <tr className="cursor-pointer">
                 <th>Id</th>
                 <th>Airline</th>
-                <th>DA</th>
-                <th>DA IATA</th>
-                <th>AA</th>
-                <th>AA IATA</th>
+                <th title="Departure Airport">DA</th>
+                <th title="Departure Airport IATA Code">DAI</th>
+                <th title="Arrival Airport">AA</th>
+                <th title="Arrival Airport IATA Code">AAI</th>
                 <th>Date</th>
                 <th>Departure Time</th>
                 <th>Arrival Time</th>

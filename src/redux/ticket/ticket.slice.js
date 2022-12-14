@@ -11,6 +11,7 @@ const initialState = {
   departureTime: "",
   arrivalTime: "",
   price: +"",
+  allTickets: null,
 };
 
 const ticketSlice = createSlice({
@@ -53,9 +54,13 @@ const ticketSlice = createSlice({
       state.arrivalTime = "";
       state.price = "";
     },
+    _getAllTickets: (state, action) => {
+      state.allTickets = action.payload;
+    },
   },
 });
 
-export const { _setTicketData, _resetData } = ticketSlice.actions;
+export const { _setTicketData, _resetData, _getAllTickets } =
+  ticketSlice.actions;
 
 export default ticketSlice.reducer;
