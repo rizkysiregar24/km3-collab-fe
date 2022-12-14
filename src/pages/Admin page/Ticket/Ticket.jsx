@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { Dashboard } from "../../../components/Layout";
+import AirportSelect from "../../../components/Input/AirportSelect";
 
 const initialData = {
   code: "",
@@ -20,6 +21,22 @@ const token = localStorage.getItem("token");
 
 export default function Ticket() {
   const [data, setData] = useState(initialData);
+  const [departure, setDeparture] = useState(null);
+  const [arrival, setArrival] = useState(null);
+  const [airline, setAirline] = useState("Garuda Indonesia");
+
+  const reqBody = {
+    code: data.code,
+    airlineName: airline,
+    departureAirport: departure?.airportName,
+    departure: departure?.value,
+    arrivalAirport: arrival?.airportName,
+    arrival: arrival?.value,
+    date: data.date,
+    departureTime: data.departureTime,
+    arrivalTime: data.arrivalTime,
+    price: data.price,
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +48,7 @@ export default function Ticket() {
     const response = await axios.post(
       `${process.env.REACT_APP_AUTH_API}/flight/data`,
       {
-        ...data,
+        ...reqBody,
       },
       {
         headers: {
@@ -68,65 +85,36 @@ export default function Ticket() {
             </div>
             <div className="flex flex-col">
               <label htmlFor="airline">Airline</label>
-              <input
-                type="text"
-                placeholder="Airline"
-                id="airline"
-                name="airlineName"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.airlineName}
-              />
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setAirline(e.target.value)}
+              >
+                <option value="Garuda Indonesia">Garuda Indonesia</option>
+                <option value="Batik Air">Batik Air</option>
+                <option value="Citylink">Citylink</option>
+                <option value="Air Asia">Air Asia</option>
+                <option value="Lion Air">Lion Air</option>
+              </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="airportDeparture">Airport Departure</label>
-              <input
-                type="text"
-                placeholder="Airport Departure"
-                id="airportDeparture"
-                name="departureAirport"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.departureAirport}
-              />
+              <div className="sm:w-[250px] w-full">
+                <label htmlFor="airportDeparture">Airport Departure</label>
+                <AirportSelect
+                  placeholder="Where from?"
+                  value={departure}
+                  onChange={setDeparture}
+                />
+              </div>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="departureCode">Airport IATA Departure</label>
-              <input
-                type="text"
-                placeholder="Airport IATA Departure"
-                id="departureCode"
-                name="departure"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.departure}
-                maxLength={3}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="arrivalAirport">Airport Arrival</label>
-              <input
-                type="text"
-                placeholder="Airport Arrival"
-                id="arrivalAirport"
-                name="arrivalAirport"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.arrivalAirport}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="arrivalCode">Airport IATA Arrival</label>
-              <input
-                type="text"
-                placeholder="Arrival Airport IATA"
-                id="arrivalCode"
-                name="arrival"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.arrival}
-                maxLength={3}
-              />
+              <div className="sm:w-[250px] w-full">
+                <label htmlFor="arrivalAirport">Airport Arrival</label>
+                <AirportSelect
+                  placeholder="Where to?"
+                  value={arrival}
+                  onChange={setArrival}
+                />
+              </div>
             </div>
             <div className="flex flex-col">
               <label htmlFor="date">Date</label>
