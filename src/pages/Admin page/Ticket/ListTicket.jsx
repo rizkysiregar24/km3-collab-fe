@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -42,10 +43,10 @@ function ListTicket() {
       <section className="my-4 mx-2">
         <h1 className="text-2xl mb-4">List of all available tickets</h1>
         <div className="overflow-x-auto">
-          <table className="table table-compact w-full">
+          <table className="table table-zebra w-full">
             <thead>
               <tr>
-                <th>Id</th>
+                <th>Code</th>
                 <th>Airline</th>
                 <th>DA</th>
                 <th>DA IATA</th>
@@ -59,9 +60,9 @@ function ListTicket() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((ticket) => (
-                <tr key={ticket.id} className="py-2">
-                  <th>{ticket.id}</th>
+              {data?.map((ticket, index) => (
+                <tr key={index} className="py-2">
+                  <td>{ticket.code}</td>
                   <td>{ticket.airlineName}</td>
                   <td>{ticket.departureAirport}</td>
                   <td>{ticket.departure}</td>
