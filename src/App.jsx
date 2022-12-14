@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Protected from "./components/Routes/Protected";
 import { SearchResult } from "./pages/SearchResult";
@@ -21,33 +23,36 @@ import UpdateTicket from "./pages/Admin page/Ticket/UpdateTicket";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/*" element={<Error />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/user"
-          element={
-            <Protected>
-              <User />
-            </Protected>
-          }
-        />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/verified-email" element={<Verifiedemail />} />
-        <Route path="/admin-page" element={<Pageadmin />} />
-        <Route path="/user-page" element={<Userpage />} />
-        <Route path="/transaction" element={<Transaction />} />
-        <Route path="/create-ticket" element={<Ticket />} />
-        <Route path="/ticket" element={<ListTicket />} />
-        <Route path="/ticket/:id" element={<UpdateTicket />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/*" element={<Error />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/user"
+            element={
+              <Protected>
+                <User />
+              </Protected>
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/search" element={<SearchResult />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/verified-email" element={<Verifiedemail />} />
+          <Route path="/admin-page" element={<Pageadmin />} />
+          <Route path="/user-page" element={<Userpage />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/create-ticket" element={<Ticket />} />
+          <Route path="/ticket" element={<ListTicket />} />
+          <Route path="/ticket/:id" element={<UpdateTicket />} />
+        </Routes>
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
 
