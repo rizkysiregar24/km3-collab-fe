@@ -25,6 +25,19 @@ export const logout = () => (dispatch) => {
   dispatch(_logout());
 };
 
-export const loginGoogle = () => () => {
-  //
+export const loginGoogle = (accessToken) => async (dispatch) => {
+  try {
+    const { data: tokenData } = await axios.post(`${API_URL}/auth/google`, {
+      access_token: accessToken,
+    });
+
+    // check token with whoami
+
+    // save to localstorage and redux (token, userData)
+    localStorage.setItem("token", tokenData.token);
+    dispatch(_login(tokenData));
+  } catch (error) {
+    return error;
+  }
+  return null;
 };
