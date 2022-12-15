@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { Dashboard } from "../../../components/Layout";
 import {
@@ -24,7 +26,7 @@ function ListTicket() {
       headers: { Authorization: token },
     });
     const responseDeleteData = await responseDelete.data;
-    alert(responseDeleteData.message);
+    toast(responseDeleteData.message);
   };
 
   useEffect(() => {
@@ -37,34 +39,48 @@ function ListTicket() {
       <section className="my-4 mx-2">
         <h1 className="text-2xl mb-4">List of all available tickets</h1>
         <div className="overflow-x-auto">
-          <table className="table table-compact w-full">
+          <table className="table table-zebra w-full">
             <thead>
               <tr className="cursor-pointer">
-                <th>Id</th>
+                <th title="Flight Code">FC</th>
                 <th>Airline</th>
                 <th title="Departure Airport">DA</th>
                 <th title="Departure Airport IATA Code">DAI</th>
                 <th title="Arrival Airport">AA</th>
                 <th title="Arrival Airport IATA Code">AAI</th>
+                <th title="Seat Class">SC</th>
+                <th title="Trip Type">TT</th>
                 <th>Date</th>
+                <th>Return Date</th>
                 <th>Departure Time</th>
                 <th>Arrival Time</th>
+                <th>Passengers</th>
                 <th>Price</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {data?.map((ticket) => (
-                <tr key={ticket.id} className="py-2">
-                  <th>{ticket.id}</th>
-                  <td>{ticket.airlineName}</td>
+              {data?.map((ticket, index) => (
+                <tr key={index} className="py-2">
+                  <td className="uppercase">{ticket.code}</td>
+                  <td className="capitalize">{ticket.airlineName}</td>
                   <td>{ticket.departureAirport}</td>
                   <td>{ticket.departure}</td>
                   <td>{ticket.arrivalAirport}</td>
                   <td>{ticket.arrival}</td>
+                  <td className="capitalize">{ticket.sc}</td>
+                  <td className="capitalize">
+                    {ticket.tripType.split("_").join(" ")}
+                  </td>
                   <td>{new Date(ticket.date).toDateString()}</td>
+                  <td className="text-center">
+                    {ticket.returnDate
+                      ? new Date(ticket.returnDate).toDateString()
+                      : "-"}
+                  </td>
                   <td>{ticket.departureTime}</td>
                   <td>{ticket.arrivalTime}</td>
+                  <td>{ticket.passengers}</td>
                   <td>
                     Rp. {new Intl.NumberFormat("ID-id").format(ticket.price)}
                   </td>

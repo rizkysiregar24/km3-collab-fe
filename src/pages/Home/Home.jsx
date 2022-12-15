@@ -18,8 +18,8 @@ const SEAT_CLASS = [
     label: "Economy",
   },
   {
-    value: "bussiness",
-    label: "Bussiness",
+    value: "business",
+    label: "Business",
   },
 ];
 
