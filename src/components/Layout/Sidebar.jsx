@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (
-    <aside className="w-72 bg-[#363740]  h-screen">
+    <div className="w-72 bg-[#363740] ">
       <Link to="/admin-page">
         <h1 className="text-4xl border-b-4 font-bold py-10 px-8 text-white">
           Dasboard
         </h1>
       </Link>
-      <div className="overflow-y-auto p-10 px-3 bg-[#363740] rounded dark:bg-gray-800">
-        <ul className="space-y-2 h-32">
+      <div className="overflow-y-auto p-10 h-screen px-3 rounded ">
+        <ul className="space-y-2 h-32 ">
           <li className="border-b-4">
             <Link
               to="/user-page"
@@ -59,6 +59,6 @@ export default function Sidebar() {
           </li>
         </ul>
       </div>
-    </aside>
+    </div>
   );
 }

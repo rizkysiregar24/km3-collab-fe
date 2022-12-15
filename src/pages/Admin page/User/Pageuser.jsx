@@ -8,7 +8,7 @@ export default function Pageuser() {
   useEffect(() => {
     const config = {
       method: "get",
-      url: `${API_URL}/user/data/`,
+      url: `${API_URL}/admin/data/`,
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -26,7 +26,7 @@ export default function Pageuser() {
   const handleDelete = (id) => {
     const config = {
       method: "delete",
-      url: `${API_URL}/user/data/${id}`,
+      url: `${API_URL}/admin/data/${id}`,
       headers: {
         Authorization: localStorage.getItem("token"),
       },

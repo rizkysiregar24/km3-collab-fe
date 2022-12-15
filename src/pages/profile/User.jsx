@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiPhoneCall } from "react-icons/bi";
 import { AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
-import Navbar from "../components/Layout/Navbar";
+import Navbar from "../../components/Layout/Navbar";
 
 function User() {
   const [formData, setFormData] = useState({
