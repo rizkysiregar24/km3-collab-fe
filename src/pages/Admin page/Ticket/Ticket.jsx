@@ -63,22 +63,39 @@ export default function Ticket() {
 
   const handleAddTicket = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      `${process.env.REACT_APP_AUTH_API}/flight/data`,
-      {
-        ...body,
-      },
-      {
-        headers: {
-          Authorization: token,
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_AUTH_API}/flight/data`,
+        {
+          ...body,
         },
-      }
-    );
-    const status = await response.status;
-    const ticketData = await response.data;
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      const status = await response.status;
+      const ticketData = await response.data;
 
-    if (status === 201 || status === 200) {
-      toast(JSON.stringify(ticketData.data));
+      if (status === 201 || status === 200) {
+        toast(JSON.stringify(ticketData.data));
+        setData({
+          code: "",
+          airlineName: "",
+          departureAirport: "",
+          departure: "",
+          arrivalAirport: "",
+          arrival: "",
+          date: "",
+          returnDate: "",
+          departureTime: "",
+          arrivalTime: "",
+          price: +"",
+        });
+      }
+    } catch (error) {
+      toast(error.response.data.message);
     }
   };
 

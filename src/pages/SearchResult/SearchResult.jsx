@@ -43,14 +43,16 @@ export function SearchResult() {
       <div className="w-full mx-auto">
         <div className="flex justify-center my-8">
           <div className="flex justify-center items-center max-w-3xl flex-col gap-4 mx-4">
-            <div className="flex justify-end w-full">
+            <div className="flex justify-between w-full">
+              <p>Showing {resultData?.length} results</p>
               <label htmlFor="sort">
                 <select
                   name="sort"
                   id="sort"
-                  defaultValue="time"
+                  defaultValue="best"
                   className="select select-bordered w-full max-w-xs select-xs"
                 >
+                  <option value="best">Best</option>
                   <option value="price">Price</option>
                   <option value="time">Time</option>
                 </select>

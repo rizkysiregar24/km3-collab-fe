@@ -51,7 +51,7 @@ function App() {
           <Route path="/ticket/:id" element={<UpdateTicket />} />
         </Routes>
       </Router>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
     </>
   );
 }
