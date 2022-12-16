@@ -34,12 +34,10 @@ export default function Pageuser() {
 
     axios(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        alert(response.data.message);
         window.location.reload();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => error);
   };
 
   return (
