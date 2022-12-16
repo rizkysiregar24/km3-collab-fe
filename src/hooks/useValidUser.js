@@ -6,16 +6,21 @@ import { useSelector } from 'react-redux';
  * @returns {Boolean}
  */
 const useValidUser = () => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  const userDataRedux = useSelector((state) => state.user);
+  const lsToken = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+
+  const { username: lsName, email: lsEmail, role: lsRole } = JSON.parse(user) ?? {};
+  const { token, name, email, role } = useSelector((state) => state.user);
 
   const isValidUser =
-    Boolean(userData?.username) &&
-    Boolean(userData?.email) &&
-    Boolean(userData?.role) &&
-    Boolean(userDataRedux?.name) &&
-    Boolean(userDataRedux?.email) &&
-    Boolean(userDataRedux?.role);
+    Boolean(lsToken) &&
+    Boolean(lsName) &&
+    Boolean(lsEmail) &&
+    Boolean(lsRole) &&
+    Boolean(token) &&
+    Boolean(name) &&
+    Boolean(email) &&
+    Boolean(role);
 
   return isValidUser;
 };
