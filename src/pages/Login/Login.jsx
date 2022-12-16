@@ -25,13 +25,7 @@ export function Login() {
   const userData = JSON.parse(localStorage.getItem("user"));
   const userDataRedux = useSelector((state) => state.user);
 
-  const isValidUser =
-    Boolean(userData?.username) &&
-    Boolean(userData?.email) &&
-    Boolean(userData?.role) &&
-    Boolean(userDataRedux?.name) &&
-    Boolean(userDataRedux?.email) &&
-    Boolean(userDataRedux?.role);
+  const isValidUser = Boolean(userData?.username) && Boolean(userData?.email) && Boolean(userData?.role) && Boolean(userDataRedux?.name) && Boolean(userDataRedux?.email) && Boolean(userDataRedux?.role);
 
   const handleLogin = async () => {
     try {
@@ -106,36 +100,21 @@ export function Login() {
             <h1 className="font-bold text-2xl">Login</h1>
           </Link>
 
-          <p className="text-sm mt-5  ">
-            Welcome back! Please enter your details
-          </p>
+          <p className="text-sm mt-5  ">Welcome back! Please enter your details</p>
 
           <form className="flex flex-col w-80 ">
             <div className=" mt-5 ">Email</div>
-            <input
-              type="email"
-              className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
-                isError ? "input-error" : "input border-[#7E56DA]"
-              }`}
-              placeholder="Enter your Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <input type="email" className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${isError ? "input-error" : "input border-[#7E56DA]"}`} placeholder="Enter your Email" onChange={(e) => setEmail(e.target.value)} />
 
             <div className=" mt-5 ">Password</div>
             <div className=" flex flex-wrap">
               <input
                 type={type}
-                className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
-                  isError ? "input-error" : "input border-[#7E56DA] "
-                }`}
+                className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${isError ? "input-error" : "input border-[#7E56DA] "}`}
                 placeholder="Enter your Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button
-                className="absolute my-3 ml-72  "
-                type="button"
-                onClick={handleToogle}
-              >
+              <button className="absolute my-3 ml-72  " type="button" onClick={handleToogle}>
                 {icon}
               </button>
             </div>
@@ -169,10 +148,7 @@ export function Login() {
             <div className=" text-sm text-center mt-5">
               Don&apos;t have an account?{" "}
               <Link to="/Register">
-                <button
-                  className=" text-sm ml-2 mt-2 text-[#7E56DA]"
-                  type="button"
-                >
+                <button className=" text-sm ml-2 mt-2 text-[#7E56DA]" type="button">
                   Sign up
                 </button>{" "}
               </Link>
