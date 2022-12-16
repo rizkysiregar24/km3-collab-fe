@@ -20,6 +20,7 @@ import Transaction from './pages/transaction page/Transaction';
 import Ticket from './pages/Admin page/Ticket/Ticket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
+import { Booking } from './pages/Booking';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/create-ticket" element={<Ticket />} />
           <Route path="/ticket" element={<ListTicket />} />
           <Route path="/ticket/:id" element={<UpdateTicket />} />
+          <Route path="/booking/:id" element={<Booking />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={2000} />

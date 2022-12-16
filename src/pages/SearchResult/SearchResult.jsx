@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
-import { ExpediaCard } from "../../components/Cards";
-import { Layout } from "../../components/Layout";
+import { ExpediaCard } from '../../components/Cards';
+import { Layout } from '../../components/Layout';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 
@@ -11,16 +11,16 @@ export function SearchResult() {
   const [resultData, setResultData] = useState(null);
   const [searchParams] = useSearchParams();
 
-  const departure = searchParams.get("departure");
-  const arrival = searchParams.get("arrival");
-  const passengers = searchParams.get("passengers");
-  const tripType = searchParams.get("tripType");
-  const seatClass = searchParams.get("sc");
-  const fromDate = searchParams.get("date");
-  const returnDate = searchParams.get("returnDate");
+  const departure = searchParams.get('departure');
+  const arrival = searchParams.get('arrival');
+  const passengers = searchParams.get('passengers');
+  const tripType = searchParams.get('tripType');
+  const seatClass = searchParams.get('sc');
+  const fromDate = searchParams.get('date');
+  const returnDate = searchParams.get('returnDate');
 
   useEffect(() => {
-    if (tripType === "one_way") {
+    if (tripType === 'one_way') {
       (async () => {
         const { data } = await axios.get(
           `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`
@@ -28,7 +28,7 @@ export function SearchResult() {
         setResultData(data?.data);
       })();
     }
-    if (tripType === "round_trip") {
+    if (tripType === 'round_trip') {
       (async () => {
         const { data } = await axios.get(
           `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}&returnDate=${returnDate}`
@@ -50,8 +50,7 @@ export function SearchResult() {
                   name="sort"
                   id="sort"
                   defaultValue="best"
-                  className="select select-bordered w-full max-w-xs select-xs"
-                >
+                  className="select select-bordered w-full max-w-xs select-xs">
                   <option value="best">Best</option>
                   <option value="price">Price</option>
                   <option value="time">Time</option>
@@ -62,6 +61,7 @@ export function SearchResult() {
               ? resultData?.map((ticket) => (
                   <ExpediaCard
                     key={ticket.id}
+                    id={ticket.id}
                     airline={ticket.name}
                     departureAirport={ticket.departureAirport}
                     departureIata={ticket.departure}
@@ -71,10 +71,10 @@ export function SearchResult() {
                     arrivalTime={ticket.arrivalTime}
                     price={ticket.price}
                     sc={ticket.sc}
-                    tripType={ticket.tripType.split("_").join(" ")}
+                    tripType={ticket.tripType.split('_').join(' ')}
                   />
                 ))
-              : "No flights found for this route at this date"}
+              : 'No flights found for this route at this date'}
           </div>
         </div>
       </div>
