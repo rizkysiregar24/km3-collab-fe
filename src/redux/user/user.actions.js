@@ -14,7 +14,7 @@ export const login =
         password
       });
 
-      dispatch(_login({ token: data.data.token }));
+      dispatch(_login({ token: data.data.token, id: data.data.id }));
 
       if (status === 200) {
         localStorage.setItem('token', data.data.token);

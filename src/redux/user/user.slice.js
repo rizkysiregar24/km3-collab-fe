@@ -5,6 +5,7 @@ const userToken = localStorage.getItem('token');
 
 const initialState = {
   token: userToken || '',
+  id: userDataFromLocalStorage?.id || '',
   name: userDataFromLocalStorage?.username || '',
   email: userDataFromLocalStorage?.email || '',
   role: userDataFromLocalStorage?.role || '',
@@ -16,9 +17,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     _login: (state, action) => {
-      const { token, error } = action.payload;
+      const { token, error, id } = action.payload;
       state.token = token;
       state.error = error;
+      state.id = id;
     },
     _register: (state, action) => {
       const { email } = action.payload;
