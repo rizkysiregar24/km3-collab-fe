@@ -1,33 +1,35 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import { Dashboard } from "../../../components/Layout";
-import AirportSelect from "../../../components/Input/AirportSelect";
+import { Dashboard } from '../../../components/Layout';
+import AirportSelect from '../../../components/Input/AirportSelect';
+
+const today = new Date().toISOString().split('T')[0];
 
 const initialData = {
-  code: "",
-  airlineName: "",
-  departureAirport: "",
-  departure: "",
-  arrivalAirport: "",
-  arrival: "",
-  date: "",
-  returnDate: "",
-  departureTime: "",
-  arrivalTime: "",
-  price: +"",
+  code: '',
+  airlineName: '',
+  departureAirport: '',
+  departure: '',
+  arrivalAirport: '',
+  arrival: '',
+  date: today,
+  returnDate: '',
+  departureTime: '06:00:00',
+  arrivalTime: '07:00:00',
+  price: +''
 };
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 export default function Ticket() {
   const [data, setData] = useState(initialData);
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
-  const [airline, setAirline] = useState("Garuda Indonesia");
-  const [seatClass, setSeatClass] = useState("economy");
-  const [tripType, setTripType] = useState("one_way");
+  const [airline, setAirline] = useState('Garuda Indonesia');
+  const [seatClass, setSeatClass] = useState('economy');
+  const [tripType, setTripType] = useState('one_way');
   const [passengers, setPassengers] = useState(1);
 
   const reqBody = {
@@ -43,17 +45,17 @@ export default function Ticket() {
     price: data.price,
     sc: seatClass,
     tripType,
-    passengers,
+    passengers
   };
 
   const body =
-    tripType === "one_way"
+    tripType === 'one_way'
       ? {
-          ...reqBody,
+          ...reqBody
         }
       : {
           ...reqBody,
-          returnDate: data.returnDate,
+          returnDate: data.returnDate
         };
 
   const handleChange = (e) => {
@@ -67,12 +69,12 @@ export default function Ticket() {
       const response = await axios.post(
         `${process.env.REACT_APP_AUTH_API}/flight/data`,
         {
-          ...body,
+          ...body
         },
         {
           headers: {
-            Authorization: token,
-          },
+            Authorization: token
+          }
         }
       );
       const status = await response.status;
@@ -81,17 +83,17 @@ export default function Ticket() {
       if (status === 201 || status === 200) {
         toast(JSON.stringify(ticketData.data));
         setData({
-          code: "",
-          airlineName: "",
-          departureAirport: "",
-          departure: "",
-          arrivalAirport: "",
-          arrival: "",
-          date: "",
-          returnDate: "",
-          departureTime: "",
-          arrivalTime: "",
-          price: +"",
+          code: '',
+          airlineName: '',
+          departureAirport: '',
+          departure: '',
+          arrivalAirport: '',
+          arrival: '',
+          date: '',
+          returnDate: '',
+          departureTime: '',
+          arrivalTime: '',
+          price: +''
         });
       }
     } catch (error) {
@@ -122,8 +124,7 @@ export default function Ticket() {
               <label htmlFor="airline">Airline</label>
               <select
                 className="select select-primary w-full max-w-xs"
-                onChange={(e) => setAirline(e.target.value)}
-              >
+                onChange={(e) => setAirline(e.target.value)}>
                 <option value="Garuda Indonesia">Garuda Indonesia</option>
                 <option value="Batik Air">Batik Air</option>
                 <option value="Citylink">Citylink</option>
@@ -137,8 +138,7 @@ export default function Ticket() {
                 className="select select-primary w-full max-w-xs"
                 onChange={(e) => setSeatClass(e.target.value)}
                 name="seatClass"
-                id="seatClass"
-              >
+                id="seatClass">
                 <option value="economy">Economy</option>
                 <option value="business">Bussiness</option>
               </select>
@@ -149,8 +149,7 @@ export default function Ticket() {
                 className="select select-primary w-full max-w-xs"
                 onChange={(e) => setPassengers(e.target.value)}
                 name="passengers"
-                id="totalPassengers"
-              >
+                id="totalPassengers">
                 <option value={1}>1</option>
                 <option value={2}>2</option>
               </select>
@@ -161,8 +160,7 @@ export default function Ticket() {
                 className="select select-primary w-full max-w-xs"
                 onChange={(e) => setTripType(e.target.value)}
                 name="tripType"
-                id="tripType"
-              >
+                id="tripType">
                 <option value="one_way">One way</option>
                 <option value="round_trip">Round trip</option>
               </select>
@@ -180,11 +178,7 @@ export default function Ticket() {
             <div className="flex flex-col">
               <div className="sm:w-[250px] w-full">
                 <label htmlFor="arrivalAirport">Airport Arrival</label>
-                <AirportSelect
-                  placeholder="Where to?"
-                  value={arrival}
-                  onChange={setArrival}
-                />
+                <AirportSelect placeholder="Where to?" value={arrival} onChange={setArrival} />
               </div>
             </div>
             <div className="flex flex-col">
@@ -197,6 +191,7 @@ export default function Ticket() {
                 className="input input-primary"
                 onChange={handleChange}
                 value={data.date}
+                min={today}
               />
             </div>
             <div className="flex flex-col">
@@ -209,7 +204,8 @@ export default function Ticket() {
                 className="input input-primary"
                 onChange={handleChange}
                 value={data.returnDate}
-                disabled={tripType === "one_way"}
+                disabled={tripType === 'one_way'}
+                min={today}
               />
             </div>
             <div className="flex flex-col">
@@ -223,7 +219,7 @@ export default function Ticket() {
                 onChange={handleChange}
                 value={data.departureTime}
               />
-            </div>{" "}
+            </div>{' '}
             <div className="flex flex-col">
               <label htmlFor="timeArrival">Time Arrival</label>
               <input
@@ -249,11 +245,7 @@ export default function Ticket() {
               />
             </div>
             <div className="flex items-center mt-6">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleAddTicket}
-              >
+              <button type="button" className="btn btn-primary" onClick={handleAddTicket}>
                 Add
               </button>
             </div>

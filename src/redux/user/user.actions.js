@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import { _login, _register, _logout, whoami } from './user.slice';
+import { _login, _register, _logout, whoami, setError } from './user.slice';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
 
@@ -40,7 +41,8 @@ export const login =
         callback(verifiedStatus);
       }
     } catch (error) {
-      return error;
+      setError({ error: error.response.data.message });
+      toast(JSON.stringify(error.response.data.message), { type: 'error' });
     }
     return null;
   };

@@ -4,11 +4,11 @@ const userDataFromLocalStorage = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
 
 const initialState = {
-  token: userToken || null,
-  name: userDataFromLocalStorage?.username || null,
-  email: userDataFromLocalStorage?.email || null,
-  role: userDataFromLocalStorage?.role || null,
-  error: null
+  token: userToken || '',
+  name: userDataFromLocalStorage?.username || '',
+  email: userDataFromLocalStorage?.email || '',
+  role: userDataFromLocalStorage?.role || '',
+  error: ''
 };
 
 const userSlice = createSlice({
@@ -17,8 +17,8 @@ const userSlice = createSlice({
   reducers: {
     _login: (state, action) => {
       const { token, error } = action.payload;
-      state.token = token || null;
-      state.error = error || null;
+      state.token = token;
+      state.error = error;
     },
     _register: (state, action) => {
       const { email } = action.payload;
@@ -38,7 +38,7 @@ const userSlice = createSlice({
     },
     setError: (state, action) => {
       const { error } = action.payload;
-      state.error = error || null;
+      state.error = error;
     }
   }
 });

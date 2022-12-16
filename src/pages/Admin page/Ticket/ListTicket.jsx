@@ -1,19 +1,15 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { toast } from "react-toastify";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import { Dashboard } from "../../../components/Layout";
-import {
-  setTicketData,
-  resetData,
-  getAllTickets,
-} from "../../../redux/ticket/ticket.actions";
+import { Dashboard } from '../../../components/Layout';
+import { setTicketData, resetData, getAllTickets } from '../../../redux/ticket/ticket.actions';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 function ListTicket() {
   const dispatch = useDispatch();
@@ -23,7 +19,7 @@ function ListTicket() {
 
   const handleDeleteTicket = async (id) => {
     const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
-      headers: { Authorization: token },
+      headers: { Authorization: token }
     });
     const responseDeleteData = await responseDelete.data;
     toast(responseDeleteData.message);
@@ -69,21 +65,15 @@ function ListTicket() {
                   <td>{ticket.arrivalAirport}</td>
                   <td>{ticket.arrival}</td>
                   <td className="capitalize">{ticket.sc}</td>
-                  <td className="capitalize">
-                    {ticket.tripType.split("_").join(" ")}
-                  </td>
+                  <td className="capitalize">{ticket.tripType.split('_').join(' ')}</td>
                   <td>{new Date(ticket.date).toDateString()}</td>
                   <td className="text-center">
-                    {ticket.returnDate
-                      ? new Date(ticket.returnDate).toDateString()
-                      : "-"}
+                    {ticket.returnDate ? new Date(ticket.returnDate).toDateString() : '-'}
                   </td>
                   <td>{ticket.departureTime}</td>
                   <td>{ticket.arrivalTime}</td>
                   <td>{ticket.passengers}</td>
-                  <td>
-                    Rp. {new Intl.NumberFormat("ID-id").format(ticket.price)}
-                  </td>
+                  <td>Rp. {new Intl.NumberFormat('ID-id').format(ticket.price)}</td>
                   <td>
                     <button
                       className="btn btn-warning btn-xs mr-2"
@@ -99,13 +89,12 @@ function ListTicket() {
                             date: ticket.date,
                             departureTime: ticket.departureTime,
                             arrivalTime: ticket.arrivalTime,
-                            price: ticket.price,
+                            price: ticket.price
                           })
                         );
                         navigate(`/ticket/${ticket.id}`);
                       }}
-                      type="button"
-                    >
+                      type="button">
                       Update
                     </button>
                     <button
@@ -113,8 +102,7 @@ function ListTicket() {
                       onClick={() => {
                         handleDeleteTicket(ticket.id);
                       }}
-                      type="button"
-                    >
+                      type="button">
                       Delete
                     </button>
                   </td>

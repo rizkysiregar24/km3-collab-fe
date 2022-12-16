@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-import { Dashboard } from "../../../components/Layout";
-import { resetData } from "../../../redux/ticket/ticket.actions";
+import { Dashboard } from '../../../components/Layout';
+import { resetData } from '../../../redux/ticket/ticket.actions';
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 export default function UpdateTicket() {
   const {
@@ -19,7 +19,7 @@ export default function UpdateTicket() {
     date,
     departureTime,
     arrivalTime,
-    price,
+    price
   } = useSelector((state) => state.ticket);
 
   const initialData = {
@@ -29,10 +29,10 @@ export default function UpdateTicket() {
     departure,
     arrivalAirport,
     arrival,
-    date: new Date(date).toISOString().split("T")[0],
+    date: new Date(date).toISOString().split('T')[0],
     departureTime,
     arrivalTime,
-    price,
+    price
   };
 
   const [data, setData] = useState(initialData);
@@ -52,18 +52,18 @@ export default function UpdateTicket() {
     const response = await axios.put(
       `${process.env.REACT_APP_AUTH_API}/flight/data/${id}`,
       {
-        ...data,
+        ...data
       },
       {
         headers: {
-          Authorization: token,
-        },
+          Authorization: token
+        }
       }
     );
     const status = await response.status;
 
     if (status === 201 || status === 200) {
-      navigate("/ticket");
+      navigate('/ticket');
     }
   };
 
@@ -171,7 +171,7 @@ export default function UpdateTicket() {
                 onChange={handleChange}
                 value={data.departureTime}
               />
-            </div>{" "}
+            </div>{' '}
             <div className="flex flex-col">
               <label htmlFor="timeArrival">Time Arrival</label>
               <input
@@ -197,11 +197,7 @@ export default function UpdateTicket() {
               />
             </div>
             <div className="flex items-center mt-6 gap-2">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleUpdateTicket}
-              >
+              <button type="button" className="btn btn-primary" onClick={handleUpdateTicket}>
                 Update
               </button>
               <button
@@ -209,9 +205,8 @@ export default function UpdateTicket() {
                 className="btn btn-primary btn-outline"
                 onClick={() => {
                   dispatch(resetData());
-                  navigate("/ticket");
-                }}
-              >
+                  navigate('/ticket');
+                }}>
                 Cancel
               </button>
             </div>

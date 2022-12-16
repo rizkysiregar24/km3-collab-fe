@@ -61,6 +61,8 @@ export function Login() {
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
+              name="email"
+              id="email"
               className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
                 isError ? 'input-error' : 'input border-[#7E56DA]'
               }`}
@@ -72,6 +74,8 @@ export function Login() {
             <div className=" flex flex-wrap">
               <input
                 type={type}
+                name="password"
+                id="password"
                 className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
                   isError ? 'input-error' : 'input border-[#7E56DA] '
                 }`}
