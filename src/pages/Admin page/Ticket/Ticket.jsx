@@ -78,10 +78,9 @@ export default function Ticket() {
         }
       );
       const status = await response.status;
-      const ticketData = await response.data;
 
       if (status === 201 || status === 200) {
-        toast(JSON.stringify(ticketData.data));
+        toast('Ticket successfully created');
         setData({
           code: '',
           airlineName: '',

@@ -56,16 +56,16 @@ export const logout = () => (dispatch) => {
 export const loginGoogle = (accessToken) => async (dispatch) => {
   try {
     const { data: tokenData } = await axios.post(`${API_URL}/auth/google`, {
-      access_token: accessToken,
+      access_token: accessToken
     });
 
     // check token with whoami
 
     // save to localstorage and redux (token, userData)
-    localStorage.setItem("token", tokenData.token);
+    localStorage.setItem('token', tokenData.token);
     dispatch(_login(tokenData));
   } catch (error) {
-    return error;
+    toast(JSON.stringify(error.response.data.message), { type: 'error' });
   }
   return null;
 };
@@ -88,7 +88,7 @@ export const register =
         callback(registerStatus);
       }
     } catch (error) {
-      return error;
+      toast(JSON.stringify(error.response.data.message), { type: 'error' });
     }
     return null;
   };

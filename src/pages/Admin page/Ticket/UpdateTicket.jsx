@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import { Dashboard } from '../../../components/Layout';
 import { resetData } from '../../../redux/ticket/ticket.actions';
@@ -63,6 +64,7 @@ export default function UpdateTicket() {
     const status = await response.status;
 
     if (status === 201 || status === 200) {
+      toast('Ticket successfully updated');
       navigate('/ticket');
     }
   };

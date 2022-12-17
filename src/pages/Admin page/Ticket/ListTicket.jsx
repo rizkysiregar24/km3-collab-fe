@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -12,6 +12,8 @@ const BASE_URL = process.env.REACT_APP_AUTH_API;
 const token = localStorage.getItem('token');
 
 function ListTicket() {
+  const [refetch, setRefetch] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,12 +25,14 @@ function ListTicket() {
     });
     const responseDeleteData = await responseDelete.data;
     toast(responseDeleteData.message);
+    setRefetch(true);
   };
 
   useEffect(() => {
     dispatch(resetData());
     dispatch(getAllTickets());
-  }, []);
+    setRefetch(false);
+  }, [refetch]);
 
   return (
     <Dashboard>
