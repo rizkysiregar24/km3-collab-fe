@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
 import Logo from '../Icons/Logo';
+import CustomModal from '../Modal/CustomModal';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { name, role } = useSelector((state) => state.user);
 
@@ -16,6 +19,14 @@ function Navbar() {
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,6 +52,9 @@ function Navbar() {
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
                 username={name}
+                openModal={openModal}
+                closeModal={closeModal}
+                isOpen={modalOpen}
               />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
@@ -66,6 +80,9 @@ function Navbar() {
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
                 username={name}
+                openModal={openModal}
+                closeModal={closeModal}
+                isOpen={modalOpen}
               />
             </div>
           ) : (
@@ -140,7 +157,14 @@ function Navbar() {
 
 export default Navbar;
 
-export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
+export function AuthRightElementNavbar({
+  handleLogout,
+  isAdmin,
+  username,
+  openModal,
+  isOpen,
+  closeModal
+}) {
   return (
     <div className="flex items-center gap-2">
       <Link to="/notifications">
@@ -186,9 +210,27 @@ export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
             <Link to="/transactions">Transactions</Link>
           </li>
           <li>
-            <button type="button" onClick={handleLogout}>
+            <button type="button" onClick={openModal}>
               Logout
             </button>
+            <CustomModal
+              isOpen={isOpen}
+              closeModal={closeModal}
+              className="max-w-xs"
+              label="Logout warning">
+              <h2 className="text-lg font-semibold">Are you sure you want to logout?</h2>
+              <div className="flex gap-4 mt-4 justify-between">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-outline w-28 sm:w-32"
+                  onClick={closeModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn btn-error w-28 sm:w-32" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </CustomModal>
           </li>
         </ul>
       </div>

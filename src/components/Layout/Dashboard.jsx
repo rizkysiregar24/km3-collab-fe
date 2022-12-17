@@ -24,11 +24,11 @@ export function Dashboard({ children }) {
     <Protected access="Admin">
       <section>
         <NavbarDashboard />
-        <div className="drawer drawer-mobile">
-          <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+        <div className="drawer drawer-mobile z-0">
+          <input id="my-drawer-4" type="checkbox" className="drawer-toggle z-0" />
           <div className="drawer-content p-4">{children}</div>
-          <div className="drawer-side">
-            <label htmlFor="my-drawer-4" className="drawer-overlay" />
+          <div className="drawer-side lg:z-0">
+            <label htmlFor="my-drawer-4" className="drawer-overlay z-0" />
             <ul className="menu p-4 w-60 bg-base-100 text-base-content border-r-2 border-t-2">
               <li className="border-b-4">
                 <Link
