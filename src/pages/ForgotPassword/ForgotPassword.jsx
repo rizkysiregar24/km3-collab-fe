@@ -1,40 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import Logo from "../../components/Icons/Logo";
-import Footer from "../../components/Layout/Footer";
-import { EMAIL } from "../../utils/regex";
+import useValidUser from '../../hooks/useValidUser';
+import Button from '../../components/Input/Button';
+import Logo from '../../components/Icons/Logo';
+import Footer from '../../components/Layout/Footer';
+import { EMAIL } from '../../utils/regex';
 
 export function ForgotPassword() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [isSent, setIsSent] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
-
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const userDataRedux = useSelector((state) => state.user);
-
-  const isValidUser =
-    Boolean(userData?.username) &&
-    Boolean(userData?.email) &&
-    Boolean(userData?.role) &&
-    Boolean(userDataRedux?.name) &&
-    Boolean(userDataRedux?.email) &&
-    Boolean(userDataRedux?.role);
+  const isValidUser = useValidUser();
 
   const handleSendEmail = async () => {
     try {
       setIsSubmitting(true);
-      const response = await axios.post(
-        `${process.env.REACT_APP_AUTH_API}/auth/forgot-password`,
-        {
-          email,
-        }
-      );
+      const response = await axios.post(`${process.env.REACT_APP_AUTH_API}/auth/forgot-password`, {
+        email
+      });
 
       const statusCode = response.status;
 
@@ -62,21 +50,18 @@ export function ForgotPassword() {
 
   useEffect(() => {
     if (isValidUser) {
-      navigate("/");
+      navigate('/');
     }
   }, []);
 
   useEffect(() => {
-    document.title = "Forgot Password | Terbang Tinggi";
+    document.title = 'Forgot Password | Terbang Tinggi';
   }, []);
 
   return (
     <section className="bg-slate-100 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
-        <Link
-          className="font-bold text-2xl inline-flex items-center gap-2 mb-8"
-          to="/"
-        >
+        <Link className="font-bold text-2xl inline-flex items-center gap-2 mb-8" to="/">
           <Logo size={36} />
           Terbang Tinggi
         </Link>
@@ -91,12 +76,7 @@ export function ForgotPassword() {
                 Email sent, check your inbox
               </p>
               <Link to="/">
-                <button
-                  type="button"
-                  className="btn bg-brand w-full hover:bg-brand-darker-800 mt-4"
-                >
-                  Go to Home
-                </button>
+                <Button>Go to Home</Button>
               </Link>
             </div>
           ) : (
@@ -105,46 +85,36 @@ export function ForgotPassword() {
                 Forgot Your Password?
               </h2>
               <p className="mt-4 text-gray-600">
-                Don&apos;t fret! Just type in your email and we will send you a
-                code to reset your password!
+                Don&apos;t fret! Just type in your email and we will send you a code to reset your
+                password!
               </p>
-              <form
-                className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
-                onSubmit={handleSubmit}
-              >
+              <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label
                     htmlFor="emailAddress"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your email
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="emailAddress"
-                    className={`w-full input   ${
-                      isError ? "input-error" : "input-primary"
-                    }`}
+                    className={`w-full input   ${isError ? 'input-error' : 'input-primary'}`}
                     placeholder="example@mail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                   {!isError ? null : (
-                    <p className="text-error text-sm mt-1 mb-0 animate-pulse">
-                      Email not found
-                    </p>
+                    <p className="text-error text-sm mt-1 mb-0 animate-pulse">Email not found</p>
                   )}
                 </div>
-                <button
+                <Button
                   type="submit"
-                  className="btn bg-brand w-full hover:bg-brand-darker-800"
                   onClick={handleSubmit}
-                  disabled={!email || !EMAIL.test(email) || isSubmitting}
-                >
-                  {isSubmitting ? "Submitting" : "Send Email"}
-                </button>
+                  disabled={!email || !EMAIL.test(email) || isSubmitting}>
+                  {isSubmitting ? 'Submitting' : 'Send Email'}
+                </Button>
               </form>
             </>
           )}
