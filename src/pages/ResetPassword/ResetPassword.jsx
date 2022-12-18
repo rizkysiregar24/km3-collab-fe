@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-import Button from '../../components/Input/Button';
+import { Button } from '../../components/Input';
 import Logo from '../../components/Icons/Logo';
 import Footer from '../../components/Layout/Footer';
 
