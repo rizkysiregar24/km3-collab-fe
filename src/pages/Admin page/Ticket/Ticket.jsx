@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 import { Dashboard } from '../../../components/Layout';
-import AirportSelect from '../../../components/Input/AirportSelect';
+import { AirportSelect } from '../../../components/Input';
 
 const today = new Date().toISOString().split('T')[0];
 

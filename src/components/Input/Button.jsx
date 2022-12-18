@@ -4,7 +4,7 @@ import React from 'react';
  *
  * @param {React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>} props
  */
-function Button(props) {
+export function Button(props) {
   const { children, className, ...rest } = props;
 
   return (

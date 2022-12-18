@@ -1,25 +1,18 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoMdSwap } from 'react-icons/io';
 
 import './Home.css';
-import { defaultAirportSelected } from '../../utils/airports';
 import SEAT_CLASS from '../../utils/seatClass';
-import { Layout } from '../../components/Layout/Layout';
 import FeatureSection from './FeatureSection';
-import SeatIcon from '../../components/Icons/SeatIcon';
-import SearchIcon from '../../components/Icons/SearchIcon';
-import RadioButton from '../../components/Input/RadioButton';
-import AirportSelect from '../../components/Input/AirportSelect';
-import Button from '../../components/Input/Button';
-import InputDate from '../../components/Input/InputDate';
+import { defaultAirportSelected } from '../../utils/airports';
+import { today, tomorrow, formattedToday } from '../../utils/dates';
+import { Layout } from '../../components/Layout';
+import { SeatIcon, SearchIcon } from '../../components/Icons';
+import { RadioButton, AirportSelect, Button, InputDate } from '../../components/Input';
 
 export function Home() {
-  const today = new Date();
-  const tomorrow = new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const formattedToday = new Date().toISOString().split('T')[0];
-
   const [startDate, setStartDate] = useState(formattedToday);
   const [tripType, setTripType] = useState('one_way');
   const [adult, setAdult] = useState(1);
@@ -74,11 +67,6 @@ export function Home() {
     }
     setAdult(adult - 1);
   };
-
-  // Set document title
-  useEffect(() => {
-    document.title = 'Terbang Tinggi | Best Price for Flights';
-  }, []);
 
   return (
     <Layout>
