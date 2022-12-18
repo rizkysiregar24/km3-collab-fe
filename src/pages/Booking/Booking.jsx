@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Button from '../../components/Input/Button';
+import { Button } from '../../components/Input';
 import { Layout } from '../../components/Layout';
 
 const API_URL = process.env.REACT_APP_AUTH_API;

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import useValidUser from '../../hooks/useValidUser';
-import Button from '../../components/Input/Button';
+import { Button } from '../../components/Input';
 import Logo from '../../components/Icons/Logo';
 import Footer from '../../components/Layout/Footer';
 import { EMAIL } from '../../utils/regex';
