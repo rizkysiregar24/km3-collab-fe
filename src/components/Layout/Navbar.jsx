@@ -1,28 +1,32 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { logout } from "../../redux/user/user.actions";
-import Logo from "../Icons/Logo";
+import useValidUser from '../../hooks/useValidUser';
+import { logout } from '../../redux/user/user.actions';
+import Logo from '../Icons/Logo';
+import CustomModal from '../Modal/CustomModal';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const userDataRedux = useSelector((state) => state.user);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const isAdmin = userDataRedux.role === "Admin";
+  const { name, role } = useSelector((state) => state.user);
 
-  const isValidUser =
-    Boolean(userData?.username) &&
-    Boolean(userData?.email) &&
-    Boolean(userData?.role) &&
-    Boolean(userDataRedux?.name) &&
-    Boolean(userDataRedux?.email) &&
-    Boolean(userDataRedux?.role);
+  const isAdmin = role === 'Admin';
 
   const dispatch = useDispatch();
+  const isValidUser = useValidUser();
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -35,15 +39,11 @@ function Navbar() {
           <Link
             className="font-bold text-2xl hidden md:inline-flex items-center gap-2"
             to="/"
-            title="Back to Home"
-          >
+            title="Back to Home">
             <Logo size={36} />
             Terbang Tinggi
           </Link>
-          <Link
-            className="font-bold text-2xl md:hidden inline-flex items-center gap-2"
-            to="/"
-          >
+          <Link className="font-bold text-2xl md:hidden inline-flex items-center gap-2" to="/">
             <Logo />
           </Link>
           <div className="hidden md:block">
@@ -51,21 +51,22 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
-                username={userDataRedux.name}
+                username={name}
+                openModal={openModal}
+                closeModal={closeModal}
+                isOpen={modalOpen}
               />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
                   to="/login"
-                  className=" hover:bg-brand-darker-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-brand border-2"
-                >
+                  className=" hover:bg-brand-darker-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-brand border-2">
                   Login
                 </Link>
 
                 <Link
                   to="/register"
-                  className="hover:bg-brand-darker-800  px-3 py-2 rounded-md text-sm font-medium bg-brand text-white border-brand border-solid border-2"
-                >
+                  className="hover:bg-brand-darker-800  px-3 py-2 rounded-md text-sm font-medium bg-brand text-white border-brand border-solid border-2">
                   Register
                 </Link>
               </div>
@@ -78,7 +79,10 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
-                username={userDataRedux.name}
+                username={name}
+                openModal={openModal}
+                closeModal={closeModal}
+                isOpen={modalOpen}
               />
             </div>
           ) : (
@@ -88,8 +92,7 @@ function Navbar() {
                 type="button"
                 className="bg-brand text-white hover:bg-brand-darker-800 inline-flex items-center justify-center p-2 rounded-md  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand focus:ring-white"
                 aria-controls="mobile-menu"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 <span className="sr-only">Open main menu</span>
                 {!isOpen ? (
                   <svg
@@ -98,8 +101,7 @@ function Navbar() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    aria-hidden="true"
-                  >
+                    aria-hidden="true">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -114,8 +116,7 @@ function Navbar() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    aria-hidden="true"
-                  >
+                    aria-hidden="true">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -132,20 +133,18 @@ function Navbar() {
 
       {/* Mobile Menu Navbar */}
       {isValidUser ? null : (
-        <div className={isOpen ? "block" : "hidden"}>
+        <div className={isOpen ? 'block' : 'hidden'}>
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
                 to="/login"
-                className="hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
-              >
+                className="hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">
                 Login
               </Link>
 
               <Link
                 to="/register"
-                className=" hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
-              >
+                className=" hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">
                 Register
               </Link>
             </div>
@@ -158,23 +157,25 @@ function Navbar() {
 
 export default Navbar;
 
-export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
+export function AuthRightElementNavbar({
+  handleLogout,
+  isAdmin,
+  username,
+  openModal,
+  isOpen,
+  closeModal
+}) {
   return (
     <div className="flex items-center gap-2">
       <Link to="/notifications">
-        <button
-          className="btn btn-ghost btn-circle"
-          type="button"
-          title="Notifications"
-        >
+        <button className="btn btn-ghost btn-circle" type="button" title="Notifications">
           <div className="indicator">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -191,18 +192,12 @@ export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
         <label
           tabIndex={0}
           className="btn btn-outline btn-primary btn-sm btn-circle avatar placeholder"
-          title="Profile Menu"
-        >
-          {username ? (
-            <span>{username[0].toUpperCase()}</span>
-          ) : (
-            <span>TT</span>
-          )}
+          title="Profile Menu">
+          {username ? <span>{username[0].toUpperCase()}</span> : <span>TT</span>}
         </label>
         <ul
           tabIndex={0}
-          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-        >
+          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           {isAdmin ? (
             <li>
               <Link to="/admin-page">Dashboard</Link>
@@ -215,9 +210,27 @@ export function AuthRightElementNavbar({ handleLogout, isAdmin, username }) {
             <Link to="/transactions">Transactions</Link>
           </li>
           <li>
-            <button type="button" onClick={handleLogout}>
+            <button type="button" onClick={openModal}>
               Logout
             </button>
+            <CustomModal
+              isOpen={isOpen}
+              closeModal={closeModal}
+              className="max-w-xs"
+              label="Logout warning">
+              <h2 className="text-lg font-semibold">Are you sure you want to logout?</h2>
+              <div className="flex gap-4 mt-4 justify-between">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-outline w-28 sm:w-32"
+                  onClick={closeModal}>
+                  Cancel
+                </button>
+                <button type="button" className="btn btn-error w-28 sm:w-32" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </CustomModal>
           </li>
         </ul>
       </div>

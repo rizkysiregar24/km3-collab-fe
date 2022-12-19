@@ -1,5 +1,12 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
+/**
+ * This hook is getting airportsIndonesia state from Redux store and transform the data to meet
+ * requirements for `react-select` library that must have a label and value.
+ * After having a value, it'll be filtered by their label and alias for searching in `react-select` lib
+ * and then it'll return the filtered options
+ * @returns {Array}
+ */
 const useAirportList = () => {
   const { airportsIndonesia } = useSelector((state) => state.airport);
 
@@ -9,16 +16,13 @@ const useAirportList = () => {
       label: `${label} (${value}) - ${city}`,
       airportName: label,
       cityName: city,
-      ...rest,
+      ...rest
     })
   );
 
   const filterAirports = (inputValue) =>
     optionsAllAirportData.filter((airport) =>
-      airport.label
-        .concat(airport.alias.join(" "))
-        .toLowerCase()
-        .includes(inputValue.toLowerCase())
+      airport.label.concat(airport.alias.join(' ')).toLowerCase().includes(inputValue.toLowerCase())
     );
 
   const promiseOptions = (inputValue) =>
