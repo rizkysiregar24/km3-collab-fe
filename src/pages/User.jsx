@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiPhoneCall } from "react-icons/bi";
 import { AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
+
 import Navbar from "../components/Layout/Navbar";
 
 function User() {
@@ -55,9 +56,6 @@ function User() {
                     name="fullname"
                     className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
                     placeholder="Full Name"
-                    onChange={onChangeHandler}
-                    value={formData.fullname}
-                    required
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
                     <AiOutlineUser className=" mx-5 mt-2" size={20} />
