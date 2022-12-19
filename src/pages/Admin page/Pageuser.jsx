@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Pageuser() {
   const [user, setUser] = useState([]);
@@ -19,7 +20,7 @@ export default function Pageuser() {
         setUser(resp.data.data.user);
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        toast(err.response.data.message);
       });
   }, []);
 
@@ -34,12 +35,10 @@ export default function Pageuser() {
 
     axios(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         window.location.reload();
+        return response;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => error);
   };
 
   return (

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Dashboard } from "../../components/Layout";
+import { Dashboard } from '../../components/Layout';
 
 export default function Pageadmin() {
   return (

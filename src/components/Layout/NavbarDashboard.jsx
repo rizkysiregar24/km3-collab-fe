@@ -8,17 +8,20 @@ import { logout } from '../../redux/user/user.actions';
 import Logo from '../Icons/Logo';
 import CustomModal from '../Modal/CustomModal';
 
-function Navbar() {
+function NavbarDashboard() {
   const [isOpen, setIsOpen] = useState(false);
-
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { name, role } = useSelector((state) => state.user);
+  const { role, name } = useSelector((state) => state.user);
 
   const isAdmin = role === 'Admin';
 
-  const dispatch = useDispatch();
   const isValidUser = useValidUser();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -28,22 +31,26 @@ function Navbar() {
     setModalOpen(false);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
-    <nav className="bg-white text-black shadow-md ">
+    <nav className="bg-white text-black shadow-md border-b-2 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link
-            className="font-bold text-2xl hidden md:inline-flex items-center gap-2"
-            to="/"
-            title="Back to Home">
-            <Logo size={36} />
-            Terbang Tinggi
-          </Link>
-          <Link className="font-bold text-2xl md:hidden inline-flex items-center gap-2" to="/">
+          <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h7"
+              />
+            </svg>
+          </label>
+          <Link className="font-bold text-2xl inline-flex items-center gap-2" to="/admin-page">
             <Logo />
           </Link>
           <div className="hidden md:block">
@@ -155,7 +162,7 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarDashboard;
 
 export function AuthRightElementNavbar({
   handleLogout,
@@ -200,7 +207,7 @@ export function AuthRightElementNavbar({
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           {isAdmin ? (
             <li>
-              <Link to="/admin-page">Dashboard</Link>
+              <Link to="/">Back to Home</Link>
             </li>
           ) : null}
           <li>

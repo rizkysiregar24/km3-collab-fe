@@ -1,25 +1,62 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import { Dashboard } from "../../../components/Layout";
+import { Dashboard } from '../../../components/Layout';
+import { AirportSelect } from '../../../components/Input';
+
+const today = new Date().toISOString().split('T')[0];
 
 const initialData = {
-  code: "",
-  airlineName: "",
-  departureAirport: "",
-  departure: "",
-  arrivalAirport: "",
-  arrival: "",
-  date: "",
-  departureTime: "",
-  arrivalTime: "",
-  price: +"",
+  code: '',
+  airlineName: '',
+  departureAirport: '',
+  departure: '',
+  arrivalAirport: '',
+  arrival: '',
+  date: today,
+  returnDate: '',
+  departureTime: '06:00:00',
+  arrivalTime: '07:00:00',
+  price: +''
 };
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 export default function Ticket() {
   const [data, setData] = useState(initialData);
+  const [departure, setDeparture] = useState(null);
+  const [arrival, setArrival] = useState(null);
+  const [airline, setAirline] = useState('Garuda Indonesia');
+  const [seatClass, setSeatClass] = useState('economy');
+  const [tripType, setTripType] = useState('one_way');
+  const [passengers, setPassengers] = useState(1);
+
+  const reqBody = {
+    code: data.code,
+    airlineName: airline,
+    departureAirport: departure?.airportName,
+    departure: departure?.value,
+    arrivalAirport: arrival?.airportName,
+    arrival: arrival?.value,
+    date: data.date,
+    departureTime: data.departureTime,
+    arrivalTime: data.arrivalTime,
+    price: data.price,
+    sc: seatClass,
+    tripType,
+    passengers
+  };
+
+  const body =
+    tripType === 'one_way'
+      ? {
+          ...reqBody
+        }
+      : {
+          ...reqBody,
+          returnDate: data.returnDate
+        };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,22 +65,38 @@ export default function Ticket() {
 
   const handleAddTicket = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      `${process.env.REACT_APP_AUTH_API}/flight/data`,
-      {
-        ...data,
-      },
-      {
-        headers: {
-          Authorization: token,
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_AUTH_API}/flight/data`,
+        {
+          ...body
         },
-      }
-    );
-    const status = await response.status;
-    const ticketData = await response.data;
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+      const status = await response.status;
 
-    if (status === 201 || status === 200) {
-      alert(JSON.stringify(ticketData));
+      if (status === 201 || status === 200) {
+        toast('Ticket successfully created');
+        setData({
+          code: '',
+          airlineName: '',
+          departureAirport: '',
+          departure: '',
+          arrivalAirport: '',
+          arrival: '',
+          date: '',
+          returnDate: '',
+          departureTime: '',
+          arrivalTime: '',
+          price: +''
+        });
+      }
+    } catch (error) {
+      toast(error.response.data.message);
     }
   };
 
@@ -68,65 +121,64 @@ export default function Ticket() {
             </div>
             <div className="flex flex-col">
               <label htmlFor="airline">Airline</label>
-              <input
-                type="text"
-                placeholder="Airline"
-                id="airline"
-                name="airlineName"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.airlineName}
-              />
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setAirline(e.target.value)}>
+                <option value="Garuda Indonesia">Garuda Indonesia</option>
+                <option value="Batik Air">Batik Air</option>
+                <option value="Citylink">Citylink</option>
+                <option value="Air Asia">Air Asia</option>
+                <option value="Lion Air">Lion Air</option>
+              </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="airportDeparture">Airport Departure</label>
-              <input
-                type="text"
-                placeholder="Airport Departure"
-                id="airportDeparture"
-                name="departureAirport"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.departureAirport}
-              />
+              <label htmlFor="seatClass">Seat Class</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setSeatClass(e.target.value)}
+                name="seatClass"
+                id="seatClass">
+                <option value="economy">Economy</option>
+                <option value="business">Bussiness</option>
+              </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="departureCode">Airport IATA Departure</label>
-              <input
-                type="text"
-                placeholder="Airport IATA Departure"
-                id="departureCode"
-                name="departure"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.departure}
-                maxLength={3}
-              />
+              <label htmlFor="totalPassengers">Total Passengers</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setPassengers(e.target.value)}
+                name="passengers"
+                id="totalPassengers">
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+              </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="arrivalAirport">Airport Arrival</label>
-              <input
-                type="text"
-                placeholder="Airport Arrival"
-                id="arrivalAirport"
-                name="arrivalAirport"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.arrivalAirport}
-              />
+              <label htmlFor="tripType">Trip type</label>
+              <select
+                className="select select-primary w-full max-w-xs"
+                onChange={(e) => setTripType(e.target.value)}
+                name="tripType"
+                id="tripType">
+                <option value="one_way">One way</option>
+                <option value="round_trip">Round trip</option>
+              </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="arrivalCode">Airport IATA Arrival</label>
-              <input
-                type="text"
-                placeholder="Arrival Airport IATA"
-                id="arrivalCode"
-                name="arrival"
-                className="input input-primary"
-                onChange={handleChange}
-                value={data.arrival}
-                maxLength={3}
-              />
+              <div className="sm:w-[250px] w-full">
+                <label htmlFor="airportDeparture">Airport Departure</label>
+                <AirportSelect
+                  placeholder="Where from?"
+                  value={departure}
+                  onChange={setDeparture}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="sm:w-[250px] w-full">
+                <label htmlFor="arrivalAirport">Airport Arrival</label>
+                <AirportSelect placeholder="Where to?" value={arrival} onChange={setArrival} />
+              </div>
             </div>
             <div className="flex flex-col">
               <label htmlFor="date">Date</label>
@@ -138,6 +190,21 @@ export default function Ticket() {
                 className="input input-primary"
                 onChange={handleChange}
                 value={data.date}
+                min={today}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="returnDate">Return Date</label>
+              <input
+                type="date"
+                placeholder="Return Date"
+                id="returnDate"
+                name="returnDate"
+                className="input input-primary"
+                onChange={handleChange}
+                value={data.returnDate}
+                disabled={tripType === 'one_way'}
+                min={today}
               />
             </div>
             <div className="flex flex-col">
@@ -151,7 +218,7 @@ export default function Ticket() {
                 onChange={handleChange}
                 value={data.departureTime}
               />
-            </div>{" "}
+            </div>{' '}
             <div className="flex flex-col">
               <label htmlFor="timeArrival">Time Arrival</label>
               <input
@@ -177,11 +244,7 @@ export default function Ticket() {
               />
             </div>
             <div className="flex items-center mt-6">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleAddTicket}
-              >
+              <button type="button" className="btn btn-primary" onClick={handleAddTicket}>
                 Add
               </button>
             </div>

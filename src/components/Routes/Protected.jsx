@@ -1,15 +1,22 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-function Protected({ children }) {
-  const data = useSelector((state) => state.user);
+import useValidUser from '../../hooks/useValidUser';
 
-  const isValid =
-    Boolean(data?.name) && Boolean(data?.email) && Boolean(data?.role);
+function Protected({ children, access }) {
+  const isValidUser = useValidUser();
 
-  if (!isValid) {
+  const { role } = useSelector((state) => state.user);
+
+  if (!isValidUser) {
     return <Navigate to="/login" />;
+  }
+
+  if (access) {
+    if (role !== access) {
+      return <Navigate to="/" />;
+    }
   }
 
   return children;
