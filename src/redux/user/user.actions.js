@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { _login, _register, _logout, whoami, setError } from './user.slice';
+import { _login, _register, _logout, whoami, setError, _myprofile } from './user.slice';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
+const token = localStorage.getItem('token');
 
 export const login =
   ({ email, password }, callback) =>
@@ -92,3 +93,31 @@ export const register =
     }
     return null;
   };
+
+export const myProfile = () => async (dispatch) => {
+  try {
+    const { data: tokenData } = await axios.get(`${API_URL}/user/myProfile`, {
+      headers: {
+        Authorization: token
+      }
+    });
+
+    dispatch(
+      _myprofile({
+        name: tokenData.data.username,
+        email: tokenData.data.email,
+        thumbnail: tokenData.data.thumbnail,
+        fullName: tokenData.data.fullName,
+        gender: tokenData.data.gender,
+        country: tokenData.data.country,
+        province: tokenData.data.province,
+        city: tokenData.data.city,
+        address: tokenData.data.address,
+        phone: tokenData.data.phone
+      })
+    );
+  } catch (error) {
+    toast(JSON.stringify(error.response.data.message), { type: 'error' });
+  }
+  return null;
+};
