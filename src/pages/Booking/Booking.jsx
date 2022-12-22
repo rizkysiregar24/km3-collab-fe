@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable array-callback-return */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -11,15 +13,7 @@ import { Layout } from '../../components/Layout';
 const API_URL = process.env.REACT_APP_AUTH_API;
 
 export function Booking() {
-  const [data, setData] = useState([
-    {
-      email: '',
-      firstName: '',
-      lastName: '',
-      phone: '',
-      type: 'adult'
-    }
-  ]);
+  const [data, setData] = useState([]);
   const [ticketData, setTicketData] = useState(null);
 
   const [searchParams] = useSearchParams();
@@ -43,7 +37,7 @@ export function Booking() {
         `${API_URL}/transaction`,
         {
           flight_id: Number(id),
-          passenger: [{ ...data }]
+          passenger: data
         },
         {
           headers: {
@@ -65,9 +59,14 @@ export function Booking() {
     return null;
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData([...data, { [name]: value }]);
+  const handleChange = (index, name, value) => {
+    const newData = data.map((d, i) => {
+      if (index === i) {
+        return { ...d, [name]: value };
+      }
+      return d;
+    });
+    setData(newData);
   };
 
   useEffect(() => {
@@ -76,6 +75,23 @@ export function Booking() {
       setTicketData(ticketResponse?.data);
     })();
   }, []);
+
+  useEffect(() => {
+    if (Number(passengers) > 0) {
+      const passengerData = {
+        email: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        type: 'adult'
+      };
+      const passengersData = [];
+      Array.from({ length: passengers }, () => {
+        passengersData.push(passengerData);
+      });
+      setData(passengersData);
+    }
+  }, [passengers]);
 
   return (
     <Layout>
@@ -88,73 +104,84 @@ export function Booking() {
       </div>
       <div className="flex justify-around flex-wrap flex-col-reverse md:flex-row">
         <div className="flex flex-col flex-wrap">
-          {Array.from({ length: passengers }, (v, i) => (
-            <div className="p-8" key={i}>
-              <h1>Detail Passenger {i + 1}</h1>
-              <form>
-                <label htmlFor="email" className="flex flex-col">
-                  Email
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="johndoe@mail.com"
-                    className="input input-primary w-full"
-                    onChange={handleChange}
-                    value={data[i]?.email}
-                  />
-                </label>
-                <label htmlFor="firstName" className="flex flex-col">
-                  Fisrt Name
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    placeholder="First Name"
-                    className="input input-primary"
-                    onChange={handleChange}
-                    value={data[i]?.firstName}
-                  />
-                </label>
-                <label htmlFor="lastName" className="flex flex-col">
-                  Last Name
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    placeholder="Last Name"
-                    className="input input-primary"
-                    onChange={handleChange}
-                    value={data[i]?.lastName}
-                  />
-                </label>
-                <label htmlFor="phone" className="flex flex-col">
-                  Phone number
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    placeholder="081000100101"
-                    className="input input-primary"
-                    onChange={handleChange}
-                    value={data[i]?.phone}
-                  />
-                </label>
-                <label htmlFor="type" className="flex flex-col">
-                  Passenger type
-                  <select
-                    name="type"
-                    id="type"
-                    className="select select-primary w-full max-w-xs"
-                    onChange={handleChange}
-                    value={data[i]?.type}>
-                    <option value="adult">Adult</option>
-                    <option value="child">Child</option>
-                  </select>
-                </label>
-              </form>
-            </div>
-          ))}
+          {data.length > 0 &&
+            data.map((v, i) => (
+              <div className="p-8" key={i}>
+                <h1>Detail Passenger {i + 1}</h1>
+                <form>
+                  <label htmlFor="email" className="flex flex-col">
+                    Email
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="johndoe@mail.com"
+                      className="input input-primary w-full"
+                      onChange={(e) => {
+                        handleChange(i, e.target.name, e.target.value);
+                      }}
+                      value={data[i]?.email}
+                    />
+                  </label>
+                  <label htmlFor="firstName" className="flex flex-col">
+                    Fisrt Name
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      className="input input-primary"
+                      onChange={(e) => {
+                        handleChange(i, e.target.name, e.target.value);
+                      }}
+                      value={data[i]?.firstName}
+                    />
+                  </label>
+                  <label htmlFor="lastName" className="flex flex-col">
+                    Last Name
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      className="input input-primary"
+                      onChange={(e) => {
+                        handleChange(i, e.target.name, e.target.value);
+                      }}
+                      value={data[i]?.lastName}
+                    />
+                  </label>
+                  <label htmlFor="phone" className="flex flex-col">
+                    Phone number
+                    <input
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      placeholder="081000100101"
+                      className="input input-primary"
+                      onChange={(e) => {
+                        handleChange(i, e.target.name, e.target.value);
+                      }}
+                      value={data[i]?.phone}
+                    />
+                  </label>
+                  <label htmlFor="type" className="flex flex-col">
+                    Passenger type
+                    <select
+                      name="type"
+                      id="type"
+                      className="select select-primary w-full max-w-xs"
+                      onChange={(e) => {
+                        handleChange(i, e.target.name, e.target.value);
+                      }}
+                      value={data[i]?.type}>
+                      <option value="adult">Adult</option>
+                      <option value="child">Child</option>
+                    </select>
+                  </label>
+                </form>
+              </div>
+            ))}
           <Button className="mt-4" onClick={handleTransaction}>
             Proceed to payment
           </Button>
