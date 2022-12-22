@@ -54,7 +54,7 @@ export const logout = () => (dispatch) => {
   dispatch(_logout());
 };
 
-export const loginGoogle = (accessToken) => async (dispatch) => {
+export const loginGoogle = (accessToken, callback, data) => async (dispatch) => {
   try {
     const { data: tokenData } = await axios.post(`${API_URL}/auth/google`, {
       access_token: accessToken
@@ -65,6 +65,23 @@ export const loginGoogle = (accessToken) => async (dispatch) => {
     // save to localstorage and redux (token, userData)
     localStorage.setItem('token', tokenData.token);
     dispatch(_login(tokenData));
+    const { data: verifiedToken, status: verifiedStatus } = await axios.get(`${API_URL}/auth/me`, {
+      headers: {
+        Authorization: data.data.token
+      }
+    });
+
+    if (verifiedStatus === 200) {
+      dispatch(
+        whoami({
+          name: verifiedToken.data.username,
+          email: verifiedToken.data.email,
+          role: verifiedToken.data.role
+        })
+      );
+      localStorage.setItem('user', JSON.stringify(verifiedToken.data));
+      callback(verifiedStatus);
+    }
   } catch (error) {
     toast(JSON.stringify(error.response.data.message), { type: 'error' });
   }
