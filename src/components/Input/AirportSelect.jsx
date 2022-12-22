@@ -13,7 +13,7 @@ export function AirportSelect({ value, onChange, placeholder }) {
       defaultOptions={defaultOptionsAirportData}
       loadOptions={promiseOptions}
       value={value}
-      onChange={(choice) => onChange(choice)}
+      onChange={onChange}
       placeholder={placeholder}
       required
       noOptionsMessage={() => 'Airport not found'}

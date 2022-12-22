@@ -30,7 +30,7 @@ export default function Ticket() {
   const [airline, setAirline] = useState('Garuda Indonesia');
   const [seatClass, setSeatClass] = useState('economy');
   const [tripType, setTripType] = useState('one_way');
-  const [passengers, setPassengers] = useState(1);
+  const [capacity, setCapacity] = useState(1);
 
   const reqBody = {
     code: data.code,
@@ -45,7 +45,7 @@ export default function Ticket() {
     price: data.price,
     sc: seatClass,
     tripType,
-    passengers
+    capacity
   };
 
   const body =
@@ -143,15 +143,16 @@ export default function Ticket() {
               </select>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="totalPassengers">Total Passengers</label>
-              <select
-                className="select select-primary w-full max-w-xs"
-                onChange={(e) => setPassengers(e.target.value)}
-                name="passengers"
-                id="totalPassengers">
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-              </select>
+              <label htmlFor="totalCapacity">Seat Capacity</label>
+              <input
+                type="number"
+                min={0}
+                max={1000}
+                className="select select-primary w-full max-w-xs appearance-none"
+                onChange={(e) => setCapacity(e.target.value)}
+                name="capacity"
+                id="totalCapacity"
+              />
             </div>
             <div className="flex flex-col">
               <label htmlFor="tripType">Trip type</label>
