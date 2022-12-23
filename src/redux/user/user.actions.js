@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { _login, _register, _logout, whoami, setError } from './user.slice';
+import { _login, _register, _logout, whoami, setError, _setCurrentTicket } from './user.slice';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
 
@@ -92,3 +92,7 @@ export const register =
     }
     return null;
   };
+
+export const setCurrentTicket = (ticketDetail) => (dispatch) => {
+  dispatch(_setCurrentTicket(ticketDetail));
+};

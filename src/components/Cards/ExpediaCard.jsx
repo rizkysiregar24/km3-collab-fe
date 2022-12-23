@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { setCurrentTicket } from '../../redux/user/user.actions';
 
 export function ExpediaCard({
   id,
-  airline,
+  airlineName,
   departureAirport,
   arrivalAirport,
   departureIata,
@@ -12,11 +15,34 @@ export function ExpediaCard({
   arrivalTime,
   sc,
   price,
-  tripType
+  tripType,
+  passengers,
+  query
 }) {
+  const dispatch = useDispatch();
+
   return (
     <Link
-      to={`/booking/${id}`}
+      onClick={() => {
+        dispatch(
+          setCurrentTicket({
+            id,
+            airlineName,
+            departureAirport,
+            arrivalAirport,
+            departureIata,
+            arrivalIata,
+            departureTime,
+            arrivalTime,
+            sc,
+            price,
+            tripType,
+            passengers
+          })
+        );
+      }}
+      to={`/booking/${id}?${query}`}
+      // set current ticket to localStorage or Redux store for booking information
       className="flex flex-col justify-center w-full bg-brand-lighter-100 p-4 rounded-lg cursor-pointer">
       <div className="flex justify-between items-start gap-4 md:gap-16">
         {/* left content, e.g time, destination, airline name */}
@@ -36,7 +62,7 @@ export function ExpediaCard({
               alt="Airplane logo"
               className="rounded-full h-4 w-4"
             />
-            <p className="text-base font-bold">{airline}</p>
+            <p className="text-base font-bold">{airlineName}</p>
           </div>
         </div>
         {/* end of left content */}
