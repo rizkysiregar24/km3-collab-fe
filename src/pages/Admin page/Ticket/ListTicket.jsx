@@ -73,7 +73,7 @@ function ListTicket() {
                 <th>Return Date</th>
                 <th>Departure Time</th>
                 <th>Arrival Time</th>
-                <th>Passengers</th>
+                <th>Capacity</th>
                 <th>Price</th>
                 <th>Action</th>
               </tr>
@@ -95,7 +95,7 @@ function ListTicket() {
                   </td>
                   <td>{ticket.departureTime}</td>
                   <td>{ticket.arrivalTime}</td>
-                  <td>{ticket.passengers}</td>
+                  <td>{ticket.capacity}</td>
                   <td>Rp. {new Intl.NumberFormat('ID-id').format(ticket.price)}</td>
                   <td>
                     <button
