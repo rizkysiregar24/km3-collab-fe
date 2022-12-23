@@ -1,5 +1,6 @@
 import React from 'react';
 import { RiTicket2Line } from 'react-icons/ri';
+import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,16 +25,16 @@ export function Dashboard({ children }) {
     <Protected access="Admin">
       <section>
         <NavbarDashboard />
-        <div className="drawer drawer-mobile z-0">
+        <div className="drawer drawer-mobile z-0 drop-shadow-2xl md:drop-shadow-xl">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle z-0" />
           <div className="drawer-content p-4">{children}</div>
-          <div className="drawer-side lg:z-0">
+          <div className="drawer-side lg:z-0 pl-5 pt-5 drop-shadow-2xl md:drop-shadow-xl">
             <label htmlFor="my-drawer-4" className="drawer-overlay z-0" />
-            <ul className="menu p-4 w-60 bg-base-100 text-base-content border-r-2 border-t-2">
-              <li className="border-b-4">
+            <ul className="menu p-4 w-64 bg-gray-50 rounded-lg dark:bg-gray-800 bg-base-100 text-base-content  py-20">
+              <li className="py-2">
                 <Link
                   to="/user-page"
-                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-200">
+                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-300 hover:drop-shadow-xl">
                   <svg
                     aria-hidden="true"
                     className="flex-shrink-0 w-6 h-6 "
@@ -49,19 +50,19 @@ export function Dashboard({ children }) {
                   <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
                 </Link>
               </li>
-              <li className="border-b-4">
+              <li className="py-2">
                 <Link
                   to="/create-ticket"
-                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-200 ">
+                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-300 hover:drop-shadow-xl ">
                   <RiTicket2Line className="w-6 h-6 " />
                   <span className="flex-1 ml-3 whitespace-nowrap ">Create Ticket</span>
                 </Link>
               </li>
-              <li className="border-b-4">
+              <li className="py-2">
                 <Link
                   to="/ticket"
-                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-200 ">
-                  <RiTicket2Line className="w-6 h-6 " />
+                  className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-300 hover:drop-shadow-xl ">
+                  <HiOutlineClipboardDocumentList className="w-6 h-6 " />
                   <span className="flex-1 ml-3 whitespace-nowrap ">List Ticket</span>
                 </Link>
               </li>

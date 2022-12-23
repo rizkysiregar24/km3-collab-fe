@@ -11,7 +11,7 @@ const initialState = {
   role: userDataFromLocalStorage?.role || '',
   phone: '',
   province: '',
-  fullName: '',
+  fullName: userDataFromLocalStorage?.fullName || '',
   thumbnail: '',
   error: ''
 };

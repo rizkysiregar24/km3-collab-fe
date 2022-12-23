@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlinePhone, AiOutlineUser, AiOutlineMail, AiOutlineGlobal } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
+import { toast } from 'react-toastify';
 import { myProfile } from '../../redux/user/user.actions';
 
 import Navbar from '../../components/Layout/Navbar';
 
 function User() {
   const dispatch = useDispatch();
-
+  const API_URL = process.env.REACT_APP_AUTH_API;
   const {
     name: username,
     email,
@@ -35,6 +37,25 @@ function User() {
     name: username
   });
 
+  const save = () => {
+    const config = {
+      method: 'patch',
+      url: `${API_URL}/user/updateProfile/`,
+      headers: {
+        Authorization: localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      }
+    };
+
+    axios(config)
+      .then((response) => {
+        toast(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        toast(error);
+      });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -59,28 +80,42 @@ function User() {
     });
   }, [username, email, thumbnail, fullName, gender, country, province, city, address, nomorhp]);
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-  };
   return (
     <div className="mx-auto ">
       <Navbar />
       <div className="max-w-4xl mx-auto">
         <div className="flex flex-col items-center  md:py-10  px-5">
-          <form className="w-full" onSubmit={onSubmitHandler}>
+          <form className="w-full">
             <div>
               <h1 className="font-bold text-2xl">Person Detail</h1>
               <div className="form-group flex flex-col mt-5">
-                <label htmlFor="fullname">Username</label>
+                <label htmlFor="username">Username</label>
                 <div className="relative flex ">
                   <input
                     id="Username"
                     type="text"
                     name="name"
                     className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
-                    placeholder="Full Name"
+                    placeholder="username"
                     onChange={handleChange}
                     value={formData.name}
+                  />
+                  <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
+                    <AiOutlineUser className=" mx-5 mt-2" size={20} />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group flex flex-col mt-5">
+                <label htmlFor="address">Address</label>
+                <div className="relative flex ">
+                  <input
+                    id="address"
+                    type="text"
+                    name="address"
+                    className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
+                    placeholder="address"
+                    onChange={handleChange}
+                    value={formData.address}
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
                     <AiOutlineUser className=" mx-5 mt-2" size={20} />
@@ -172,6 +207,23 @@ function User() {
                   </div>
                 </div>
               </fieldset>
+            </div>
+            <div className="flex ">
+              <div className="form-group mt-5 ml-auto">
+                <button
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="submit"
+                  onClick={save}>
+                  Save
+                </button>
+              </div>
+              <div className="form-group mt-5  ">
+                <button
+                  className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  type="button">
+                  Cancel
+                </button>
+              </div>
             </div>
           </form>
         </div>
