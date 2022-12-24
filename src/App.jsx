@@ -10,7 +10,7 @@ import Error from './pages/Error';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import User from './pages/User';
+import User from './pages/Profile/User';
 import Verifiedemail from './pages/Authentication/Verifiedemail';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
@@ -46,7 +46,7 @@ function App() {
           <Route path="/search" element={<SearchResult />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/verified-email" element={<Verifiedemail />} />
-          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transactions" element={<Transaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
           <Route path="/create-ticket" element={<Ticket />} />

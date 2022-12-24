@@ -1,9 +1,18 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { _login, _register, _logout, whoami, setError, _setCurrentTicket } from './user.slice';
+import {
+  _login,
+  _register,
+  _logout,
+  whoami,
+  setError,
+  _myprofile,
+  _setCurrentTicket
+} from './user.slice';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
+const token = localStorage.getItem('token');
 
 export const login =
   ({ email, password }, callback) =>
@@ -53,7 +62,7 @@ export const logout = () => (dispatch) => {
   dispatch(_logout());
 };
 
-export const loginGoogle = (accessToken) => async (dispatch) => {
+export const loginGoogle = (accessToken, callback, data) => async (dispatch) => {
   try {
     const { data: tokenData } = await axios.post(`${API_URL}/auth/google`, {
       access_token: accessToken
@@ -64,6 +73,23 @@ export const loginGoogle = (accessToken) => async (dispatch) => {
     // save to localstorage and redux (token, userData)
     localStorage.setItem('token', tokenData.token);
     dispatch(_login(tokenData));
+    const { data: verifiedToken, status: verifiedStatus } = await axios.get(`${API_URL}/auth/me`, {
+      headers: {
+        Authorization: data.data.token
+      }
+    });
+
+    if (verifiedStatus === 200) {
+      dispatch(
+        whoami({
+          name: verifiedToken.data.username,
+          email: verifiedToken.data.email,
+          role: verifiedToken.data.role
+        })
+      );
+      localStorage.setItem('user', JSON.stringify(verifiedToken.data));
+      callback(verifiedStatus);
+    }
   } catch (error) {
     toast(JSON.stringify(error.response.data.message), { type: 'error' });
   }
@@ -93,6 +119,33 @@ export const register =
     return null;
   };
 
+export const myProfile = () => async (dispatch) => {
+  try {
+    const { data: tokenData } = await axios.get(`${API_URL}/user/myProfile`, {
+      headers: {
+        Authorization: token
+      }
+    });
+
+    dispatch(
+      _myprofile({
+        name: tokenData.data.username,
+        email: tokenData.data.email,
+        thumbnail: tokenData.data.thumbnail,
+        fullName: tokenData.data.fullName,
+        gender: tokenData.data.gender,
+        country: tokenData.data.country,
+        province: tokenData.data.province,
+        city: tokenData.data.city,
+        address: tokenData.data.address,
+        phone: tokenData.data.phone
+      })
+    );
+  } catch (error) {
+    toast(JSON.stringify(error.response.data.message), { type: 'error' });
+  }
+  return null;
+};
 export const setCurrentTicket = (ticketDetail) => (dispatch) => {
   dispatch(_setCurrentTicket(ticketDetail));
 };

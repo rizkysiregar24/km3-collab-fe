@@ -9,8 +9,12 @@ const initialState = {
   name: userDataFromLocalStorage?.username || '',
   email: userDataFromLocalStorage?.email || '',
   role: userDataFromLocalStorage?.role || '',
-  error: '',
-  currentTicket: null
+  phone: '',
+  province: '',
+  fullName: userDataFromLocalStorage?.fullName || '',
+  thumbnail: '',
+  currentTicket: null,
+  error: ''
 };
 
 const userSlice = createSlice({
@@ -43,14 +47,27 @@ const userSlice = createSlice({
       const { error } = action.payload;
       state.error = error;
     },
-
+    _myprofile: (state, action) => {
+      const { name, email, thumbnail, fullName, gender, country, province, city, address, phone } =
+        action.payload;
+      state.name = name;
+      state.email = email;
+      state.thumbnail = thumbnail;
+      state.fullName = fullName;
+      state.gender = gender;
+      state.country = country;
+      state.province = province;
+      state.city = city;
+      state.address = address;
+      state.phone = phone;
+    },
     _setCurrentTicket: (state, action) => {
       state.currentTicket = action.payload;
     }
   }
 });
 
-export const { _login, _register, _logout, whoami, setError, _setCurrentTicket } =
+export const { _login, _register, _logout, whoami, setError, _setCurrentTicket, _myprofile } =
   userSlice.actions;
 
 export default userSlice.reducer;
