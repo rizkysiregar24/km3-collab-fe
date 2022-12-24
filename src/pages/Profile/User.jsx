@@ -106,6 +106,7 @@ function User() {
                     placeholder="username"
                     onChange={handleChange}
                     value={formData.name}
+                    disabled
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
                     <AiOutlineUser className=" mx-5 mt-2" size={20} />
@@ -141,6 +142,7 @@ function User() {
                     placeholder="Emergency Number"
                     onChange={handleChange}
                     value={formData.email}
+                    disabled
                   />
                   <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
                     <AiOutlineMail className=" mx-5 mt-2" size={20} />
