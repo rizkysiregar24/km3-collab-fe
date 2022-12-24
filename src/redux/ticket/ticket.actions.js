@@ -39,10 +39,12 @@ export const resetData = () => (dispatch) => {
   dispatch(_resetData());
 };
 
-export const getAllTickets = () => async (dispatch) => {
-  const response = await axios.get(`${BASE_URL}/flight/data`, {
-    headers: { Authorization: token }
-  });
-  const responseData = await response.data;
-  dispatch(_getAllTickets(responseData.data));
-};
+export const getAllTickets =
+  (page = 1) =>
+  async (dispatch) => {
+    const response = await axios.get(`${BASE_URL}/flight/data?page=${page}`, {
+      headers: { Authorization: token }
+    });
+    const responseData = await response.data;
+    dispatch(_getAllTickets(responseData.data));
+  };

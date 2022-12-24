@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { _login, _register, _logout, whoami, setError, _myprofile } from './user.slice';
+import {
+  _login,
+  _register,
+  _logout,
+  whoami,
+  setError,
+  _myprofile,
+  _setCurrentTicket
+} from './user.slice';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
 const token = localStorage.getItem('token');
@@ -137,4 +145,7 @@ export const myProfile = () => async (dispatch) => {
     toast(JSON.stringify(error.response.data.message), { type: 'error' });
   }
   return null;
+};
+export const setCurrentTicket = (ticketDetail) => (dispatch) => {
+  dispatch(_setCurrentTicket(ticketDetail));
 };

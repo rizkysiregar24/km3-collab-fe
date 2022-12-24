@@ -22,7 +22,6 @@ export default function Pageuser() {
 
     axios(config)
       .then((resp) => {
-        console.log(resp);
         setUser(resp.data.data.rows);
         setTotalPage(resp.data.data.totalPage);
       })

@@ -25,12 +25,12 @@ export function Dashboard({ children }) {
     <Protected access="Admin">
       <section>
         <NavbarDashboard />
-        <div className="drawer drawer-mobile z-0 drop-shadow-2xl md:drop-shadow-xl">
+        <div className="drawer drawer-mobile z-0">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle z-0" />
           <div className="drawer-content p-4">{children}</div>
-          <div className="drawer-side lg:z-0 pl-5 pt-5 drop-shadow-2xl md:drop-shadow-xl">
-            <label htmlFor="my-drawer-4" className="drawer-overlay z-0" />
-            <ul className="menu p-4 w-64 bg-gray-50 rounded-lg dark:bg-gray-800 bg-base-100 text-base-content  py-20">
+          <div className="drawer-side lg:z-0 drop-shadow-xl">
+            <label htmlFor="my-drawer-4" className="drawer-overlay z-0 drop-shadow-xl" />
+            <ul className="menu p-4 w-60 bg-base-100 text-base-content border-r-2 border-t-2 ">
               <li className="py-2">
                 <Link
                   to="/user-page"
