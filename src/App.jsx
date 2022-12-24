@@ -21,7 +21,6 @@ import Ticket from './pages/Admin page/Ticket/Ticket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
 import { Booking } from './pages/Booking';
-import Detail from './pages/detail/Detail';
 
 function App() {
   return (
@@ -52,7 +51,6 @@ function App() {
           <Route path="/ticket" element={<ListTicket />} />
           <Route path="/ticket/:id" element={<UpdateTicket />} />
           <Route path="/booking/:id" element={<Booking />} />
-          <Route path="/detail-user" element={<Detail />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={2000} />

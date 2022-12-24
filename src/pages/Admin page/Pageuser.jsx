@@ -8,6 +8,7 @@ export default function Pageuser() {
   const [user, setUser] = useState([]);
   const API_URL = process.env.REACT_APP_AUTH_API;
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function Pageuser() {
 
     axios(config)
       .then((resp) => {
-        setUser(resp.data.data.user);
+        console.log(resp);
+        setUser(resp.data.data.rows);
+        setTotalPage(resp.data.data.totalPage);
       })
       .catch((err) => {
         toast(err.response.data.message);
@@ -44,26 +47,26 @@ export default function Pageuser() {
       .catch((error) => error);
   };
 
-  const handlePageClick = async () => {
-    setPage(page + 1);
+  const handlePageClick = async (val) => {
+    setPage(val.selected + 1);
   };
 
-  const handleDetail = (id) => {
-    const config = {
-      method: 'get',
-      url: `${API_URL}/admin/data/${id}`,
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    };
+  // const handleDetail = (id) => {
+  //   const config = {
+  //     method: 'get',
+  //     url: `${API_URL}/admin/data/${id}`,
+  //     headers: {
+  //       Authorization: localStorage.getItem('token')
+  //     }
+  //   };
 
-    axios(config)
-      .then((response) => {
-        navigate('/detail-user');
-        toast(response.data.message);
-      })
-      .catch((error) => error);
-  };
+  //   axios(config)
+  //     .then((response) => {
+  //       navigate('/detail-user');
+  //       toast(response.data.message);
+  //     })
+  //     .catch((error) => error);
+  // };
 
   return (
     <div className="px-5 mt-10">
@@ -114,7 +117,7 @@ export default function Pageuser() {
                     Delete
                   </button>
                 </td>
-                <td className="py-4 px-6 text-right">
+                {/* <td className="py-4 px-6 text-right">
                   <button
                     type="button"
                     href="/#"
@@ -124,7 +127,7 @@ export default function Pageuser() {
                     }}>
                     Detail
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
@@ -134,7 +137,7 @@ export default function Pageuser() {
         previousLabel="previous"
         nextLabel="next"
         breakLabel="..."
-        pageCount={15}
+        pageCount={totalPage}
         onPageChange={handlePageClick}
         marginPagesDisplayed={2}
         pageRangeDisplayed={3}

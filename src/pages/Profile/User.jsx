@@ -37,10 +37,17 @@ function User() {
     name: username
   });
 
-  const save = () => {
+  const save = (e) => {
+    e.preventDefault();
     const config = {
       method: 'patch',
       url: `${API_URL}/user/updateProfile/`,
+      data: {
+        gender: formData.gender,
+        country: formData.country,
+        address: formData.address,
+        phone: formData.phone
+      },
       headers: {
         Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json'
