@@ -1,7 +1,7 @@
-import React from "react";
-import { MdFlightTakeoff, MdOutlineFlightLand } from "react-icons/md";
-import CalendarIcon from "../../components/Icons/CalendarIcon";
-import Navbar from "../../components/Layout/Navbar";
+import React from 'react';
+import { MdFlightTakeoff, MdOutlineFlightLand } from 'react-icons/md';
+import CalendarIcon from '../../components/Icons/CalendarIcon';
+import Navbar from '../../components/Layout/Navbar';
 
 export default function Transaction() {
   return (
@@ -14,7 +14,12 @@ export default function Transaction() {
           <h1 className="text-3xl font-bold text-center">Transaction History </h1>
           <div className="border-2 rounded-lg  drop-shadow-2xl md:drop-shadow-xl bg-white px-5 py-5 mt-5">
             <div className="flex">
-              <svg width={40} height={40} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width={40}
+                height={40}
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_55_12)">
                   <circle cx="24" cy="24" r="24" fill="white" />
                   <path
@@ -73,7 +78,12 @@ export default function Transaction() {
           </div>
           <div className="border-2 rounded-lg  drop-shadow-2xl md:drop-shadow-xl bg-white px-5 py-5 mt-5">
             <div className="flex">
-              <svg width={40} height={40} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width={40}
+                height={40}
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_55_12)">
                   <circle cx="24" cy="24" r="24" fill="white" />
                   <path
