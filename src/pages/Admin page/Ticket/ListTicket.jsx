@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -19,6 +19,25 @@ function ListTicket() {
 
   const data = useSelector((state) => state.ticket.allTickets);
 
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: 1
+  });
+
+  const page = searchParams.get('page');
+  const { totalPage: totalPages } = data ?? {};
+
+  const handleDecrementPage = () => {
+    setSearchParams({
+      page: +searchParams.get('page') - 1
+    });
+  };
+
+  const handleIncrementPage = () => {
+    setSearchParams({
+      page: +searchParams.get('page') + 1
+    });
+  };
+
   const handleDeleteTicket = async (id) => {
     const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
       headers: { Authorization: token }
@@ -30,9 +49,9 @@ function ListTicket() {
 
   useEffect(() => {
     dispatch(resetData());
-    dispatch(getAllTickets());
+    dispatch(getAllTickets(Number(page)));
     setRefetch(false);
-  }, [refetch]);
+  }, [refetch, page]);
 
   return (
     <Dashboard>
@@ -54,13 +73,13 @@ function ListTicket() {
                 <th>Return Date</th>
                 <th>Departure Time</th>
                 <th>Arrival Time</th>
-                <th>Passengers</th>
+                <th>Capacity</th>
                 <th>Price</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {data?.map((ticket, index) => (
+              {data?.rows?.map((ticket, index) => (
                 <tr key={index} className="py-2">
                   <td className="uppercase">{ticket.code}</td>
                   <td className="capitalize">{ticket.airlineName}</td>
@@ -76,7 +95,7 @@ function ListTicket() {
                   </td>
                   <td>{ticket.departureTime}</td>
                   <td>{ticket.arrivalTime}</td>
-                  <td>{ticket.passengers}</td>
+                  <td>{ticket.capacity}</td>
                   <td>Rp. {new Intl.NumberFormat('ID-id').format(ticket.price)}</td>
                   <td>
                     <button
@@ -114,6 +133,27 @@ function ListTicket() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-center my-4">
+          <div className="btn-group">
+            <button
+              type="button"
+              className="btn"
+              disabled={page <= 1}
+              onClick={handleDecrementPage}>
+              {+page === 1 ? '' : +page - 1}
+            </button>
+            <button type="button" className="btn btn-active">
+              {page}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={page >= totalPages}
+              onClick={handleIncrementPage}>
+              {+page === totalPages ? '' : +page + 1}
+            </button>
+          </div>
         </div>
       </section>
     </Dashboard>

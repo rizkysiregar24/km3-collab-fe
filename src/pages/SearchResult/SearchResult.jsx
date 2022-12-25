@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -21,20 +22,28 @@ export function SearchResult() {
 
   useEffect(() => {
     if (tripType === 'one_way') {
-      (async () => {
-        const { data } = await axios.get(
-          `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`
-        );
-        setResultData(data?.data);
-      })();
+      try {
+        (async () => {
+          const { data } = await axios.get(
+            `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`
+          );
+          setResultData(data?.data);
+        })();
+      } catch (error) {
+        return error;
+      }
     }
     if (tripType === 'round_trip') {
-      (async () => {
-        const { data } = await axios.get(
-          `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}&returnDate=${returnDate}`
-        );
-        setResultData(data?.data);
-      })();
+      try {
+        (async () => {
+          const { data } = await axios.get(
+            `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}&returnDate=${returnDate}`
+          );
+          setResultData(data?.data);
+        })();
+      } catch (error) {
+        return error;
+      }
     }
   }, []);
 
@@ -60,24 +69,29 @@ export function SearchResult() {
               </div>
             ) : null}
             {resultData ? (
-              resultData?.map((ticket) => (
-                <ExpediaCard
-                  key={ticket.id}
-                  id={ticket.id}
-                  airline={ticket.name}
-                  departureAirport={ticket.departureAirport}
-                  departureIata={ticket.departure}
-                  arrivalAirport={ticket.arrivalAirport}
-                  arrivalIata={ticket.arrival}
-                  departureTime={ticket.departureTime}
-                  arrivalTime={ticket.arrivalTime}
-                  price={ticket.price}
-                  sc={ticket.sc}
-                  tripType={ticket.tripType.split('_').join(' ')}
-                />
-              ))
+              resultData
+                // ?.sort((a, b) => b.departureTime - a.departureTime)
+                // Sort by price & time departure or arrival
+                ?.map((ticket) => (
+                  <ExpediaCard
+                    key={ticket.id}
+                    id={ticket.id}
+                    airlineName={ticket.airlineName}
+                    departureAirport={ticket.departureAirport}
+                    departureIata={ticket.departure}
+                    arrivalAirport={ticket.arrivalAirport}
+                    arrivalIata={ticket.arrival}
+                    departureTime={ticket.departureTime}
+                    arrivalTime={ticket.arrivalTime}
+                    price={ticket.price}
+                    sc={ticket.sc}
+                    passengers={ticket.passengers}
+                    tripType={ticket.tripType.split('_').join(' ')}
+                    query={`departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`}
+                  />
+                ))
             ) : (
-              <div className="h-96">Loading....</div>
+              <div className="h-96">Ticket not found</div>
             )}
           </div>
         </div>

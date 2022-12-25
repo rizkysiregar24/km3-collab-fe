@@ -10,7 +10,7 @@ import Error from './pages/Error';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import User from './pages/User';
+import User from './pages/Profile/User';
 import Verifiedemail from './pages/Authentication/Verifiedemail';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
@@ -21,6 +21,8 @@ import Ticket from './pages/Admin page/Ticket/Ticket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
 import { Booking } from './pages/Booking';
+import Payment from './pages/Booking/Payment';
+import { History } from './pages/History';
 
 function App() {
   return (
@@ -44,13 +46,15 @@ function App() {
           <Route path="/search" element={<SearchResult />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/verified-email" element={<Verifiedemail />} />
-          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transactions" element={<Transaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
           <Route path="/create-ticket" element={<Ticket />} />
           <Route path="/ticket" element={<ListTicket />} />
           <Route path="/ticket/:id" element={<UpdateTicket />} />
           <Route path="/booking/:id" element={<Booking />} />
+          <Route path="/payment/:paymentId" element={<Payment />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={2000} />

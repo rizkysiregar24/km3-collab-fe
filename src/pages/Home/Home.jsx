@@ -7,23 +7,27 @@ import './Home.css';
 import SEAT_CLASS from '../../utils/seatClass';
 import FeatureSection from './FeatureSection';
 import { defaultAirportSelected } from '../../utils/airports';
-import { today, tomorrow, formattedToday } from '../../utils/dates';
+import { dayAfterTomorrow, today, tomorrow } from '../../utils/dates';
 import { Layout } from '../../components/Layout';
 import { SeatIcon, SearchIcon } from '../../components/Icons';
 import { RadioButton, AirportSelect, Button, InputDate } from '../../components/Input';
 
 export function Home() {
-  const [startDate, setStartDate] = useState(formattedToday);
-  const [tripType, setTripType] = useState('one_way');
+  const [startDate, setStartDate] = useState(today);
+  const [tripType, setTripType] = useState(localStorage.getItem('historyTripType') ?? 'one_way');
   const [adult, setAdult] = useState(1);
-  const [departure, setDeparture] = useState(defaultAirportSelected.departure);
-  const [returnDate, setReturnDate] = useState(tomorrow);
-  const [arrival, setArrival] = useState(defaultAirportSelected.arrival);
+  const [departure, setDeparture] = useState(
+    JSON.parse(localStorage.getItem('historyDeparture')) ?? defaultAirportSelected.departure
+  );
+  const [returnDate, setReturnDate] = useState(dayAfterTomorrow);
+  const [arrival, setArrival] = useState(
+    JSON.parse(localStorage.getItem('historyArrival')) ?? defaultAirportSelected.arrival
+  );
   const [seatClass, setSeatClass] = useState('economy');
 
   const navigate = useNavigate();
 
-  const isSameAirpot = departure === arrival;
+  const isSameAirpot = Object.entries(departure).toString() === Object.entries(arrival).toString();
   const isSameAirportEqualNull = departure === null && arrival === null;
 
   // Function definition
@@ -40,10 +44,12 @@ export function Home() {
 
   const handleRoundTrip = () => {
     setTripType('round_trip');
+    localStorage.setItem('historyTripType', 'round_trip');
   };
 
   const handleOneWay = () => {
     setTripType('one_way');
+    localStorage.setItem('historyTripType', 'one_way');
   };
 
   const handleSwapDestination = (e) => {
@@ -54,7 +60,7 @@ export function Home() {
 
   const incrementAdultPassenger = (e) => {
     e.preventDefault();
-    if (adult === 2) {
+    if (adult === 5) {
       return;
     }
     setAdult(adult + 1);
@@ -109,7 +115,10 @@ export function Home() {
                 <AirportSelect
                   placeholder="Where from?"
                   value={departure}
-                  onChange={setDeparture}
+                  onChange={(choice) => {
+                    setDeparture(choice);
+                    localStorage.setItem('historyDeparture', JSON.stringify(choice));
+                  }}
                 />
                 {isSameAirpot && !isSameAirportEqualNull ? (
                   <small className="text-error">Airpot cannot be same</small>
@@ -117,7 +126,14 @@ export function Home() {
               </div>
               <div className="sm:w-[250px] w-full">
                 <label className="font-semibold">To</label>
-                <AirportSelect placeholder="Where to?" value={arrival} onChange={setArrival} />
+                <AirportSelect
+                  placeholder="Where to?"
+                  value={arrival}
+                  onChange={(choice) => {
+                    setArrival(choice);
+                    localStorage.setItem('historyArrival', JSON.stringify(choice));
+                  }}
+                />
               </div>
               <div className="sm:w-[200px] w-full">
                 <label className="font-semibold">No. of Passengers</label>
@@ -159,7 +175,10 @@ export function Home() {
                 <label className="font-semibold">Departure Date</label>
                 <InputDate
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  onChange={(e) => {
+                    localStorage.setItem('historyStartDate', startDate);
+                    setStartDate(e.target.value);
+                  }}
                   min={today}
                   required
                   title="Departure date"
@@ -173,9 +192,10 @@ export function Home() {
                 <InputDate
                   value={returnDate}
                   onChange={(e) => {
+                    localStorage.setItem('historyReturnDate', returnDate);
                     setReturnDate(e.target.value);
                   }}
-                  min={formattedToday}
+                  min={tomorrow}
                   required
                   disabled={tripType === 'one_way'}
                   title="Return date"
