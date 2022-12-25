@@ -3,7 +3,6 @@ import axios from 'axios';
 import { _setTicketData, _resetData, _getAllTickets } from './ticket.slice';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
-const token = localStorage.getItem('token');
 
 export const setTicketData =
   ({
@@ -42,6 +41,7 @@ export const resetData = () => (dispatch) => {
 export const getAllTickets =
   (page = 1) =>
   async (dispatch) => {
+    const token = localStorage.getItem('token');
     const response = await axios.get(`${BASE_URL}/flight/data?page=${page}`, {
       headers: { Authorization: token }
     });
