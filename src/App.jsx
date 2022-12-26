@@ -16,7 +16,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import Userpage from './pages/Admin page/Userpage';
 import Pageadmin from './pages/Admin page/Pageadmin';
-import Transaction from './pages/transaction page/Transaction';
+import Transaction from './pages/Transaction/Transaction';
 import Ticket from './pages/Admin page/Ticket/Ticket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
