@@ -5,7 +5,7 @@ import Logo from "../Icons/Logo";
 
 function Footer() {
   return (
-    <footer className="p-4 bg-slate-100 rounded-t-md shadow md:px-6 md:py-8 mx-auto max-w-screen-2xl">
+    <footer className="p-4 bg-slate-100 rounded-t-md shadow md:px-6 md:py-8 mx-auto max-w-screen-2xl print:hidden">
       <div className="sm:flex sm:items-center sm:justify-between">
         <Link
           className="font-bold text-2xl hidden md:inline-flex items-center gap-2"
