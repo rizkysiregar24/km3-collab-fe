@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
@@ -30,6 +31,9 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    toast('Successfully log out', {
+      type: 'info'
+    });
   };
 
   return (
