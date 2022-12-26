@@ -50,22 +50,22 @@ export default function Pageuser() {
     setPage(val.selected + 1);
   };
 
-  // const handleDetail = (id) => {
-  //   const config = {
-  //     method: 'get',
-  //     url: `${API_URL}/admin/data/${id}`,
-  //     headers: {
-  //       Authorization: localStorage.getItem('token')
-  //     }
-  //   };
+  const handleDetail = (id) => {
+    const config = {
+      method: 'get',
+      url: `${API_URL}/admin/data/${id}`,
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    };
 
-  //   axios(config)
-  //     .then((response) => {
-  //       navigate('/detail-user');
-  //       toast(response.data.message);
-  //     })
-  //     .catch((error) => error);
-  // };
+    axios(config)
+      .then((response) => {
+        navigate(`/detail-user/${id}`);
+        toast(response.data.message);
+      })
+      .catch((error) => error);
+  };
 
   return (
     <div className="px-5 mt-10">
@@ -116,17 +116,17 @@ export default function Pageuser() {
                     Delete
                   </button>
                 </td>
-                {/* <td className="py-4 px-6 text-right">
+                <td className="py-4 px-6 text-right">
                   <button
                     type="button"
                     href="/#"
-                    className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                    className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
                       handleDetail(x.id);
                     }}>
                     Detail
                   </button>
-                </td> */}
+                </td>
               </tr>
             ))}
           </tbody>

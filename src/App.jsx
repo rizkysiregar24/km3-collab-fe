@@ -23,6 +23,7 @@ import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
 import { Booking } from './pages/Booking';
 import Payment from './pages/Booking/Payment';
 import { History } from './pages/History';
+import Detail from './pages/detail/Detail';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/payment/:paymentId" element={<Payment />} />
           <Route path="/history" element={<History />} />
+          <Route path="/detail-user/:id" element={<Detail />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={2000} />
