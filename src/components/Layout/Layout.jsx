@@ -5,8 +5,9 @@ import Footer from './Footer';
 
 export function Layout({ children, title, className }) {
   useEffect(() => {
-    document.title =
-      `${title} | Best Price for Flights` ?? 'Terbang Tinggi | Best Price for Flights';
+    document.title = title
+      ? `${title} | Best Price for Flights`
+      : 'Terbang Tinggi | Best Price for Flights';
   }, []);
 
   return (
