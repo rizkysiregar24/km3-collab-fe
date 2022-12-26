@@ -15,6 +15,9 @@ export function Booking() {
   const [data, setData] = useState([]);
   const [ticketData, setTicketData] = useState(null);
 
+  const valiadteForms =
+    data?.filter((x) => x?.email && x?.firstName && x?.phone)?.length === data?.length;
+
   const [searchParams] = useSearchParams();
   const passengers = searchParams.get('passengers');
   const { id } = useParams();
@@ -103,9 +106,9 @@ export function Booking() {
   }, [passengers]);
 
   return (
-    <Layout className="bg-slate-100">
+    <Layout title="Booking" className="bg-slate-100">
       <div className="flex justify-center my-4">
-        <ul className="steps">
+        <ul className="steps w-full">
           <li className="step step-primary">Book</li>
           <li className="step">Pay</li>
           <li className="step">E-ticket</li>
@@ -122,7 +125,7 @@ export function Booking() {
                 <h2 className="font-semibold bg-[#F5F6FA] text-xl p-3 rounded-[4px]">
                   Passenger {i + 1}
                 </h2>
-                <form>
+                <form onSubmit={handleTransaction} disabled={!valiadteForms}>
                   <label htmlFor="email" className="flex flex-col text-sm font-semibold gap-[6px]">
                     Email
                     <input
@@ -135,6 +138,7 @@ export function Booking() {
                         handleChange(i, e.target.name, e.target.value);
                       }}
                       value={data[i]?.email}
+                      required
                     />
                   </label>
                   <label
@@ -151,6 +155,7 @@ export function Booking() {
                         handleChange(i, e.target.name, e.target.value);
                       }}
                       value={data[i]?.firstName}
+                      required
                     />
                   </label>
                   <label
@@ -182,6 +187,7 @@ export function Booking() {
                         handleChange(i, e.target.name, e.target.value);
                       }}
                       value={data[i]?.phone}
+                      required
                     />
                   </label>
                   <label htmlFor="type" className="flex flex-col text-sm font-semibold gap-[6px]">
@@ -201,7 +207,11 @@ export function Booking() {
                 </form>
               </div>
             ))}
-          <Button className="my-4 md:hidden block" onClick={handleTransaction}>
+          <Button
+            className="my-4 md:hidden block"
+            onClick={handleTransaction}
+            type="submit"
+            disabled={!valiadteForms}>
             Proceed to payment
           </Button>
         </div>
@@ -230,7 +240,10 @@ export function Booking() {
         </div>
 
         <div className="mx-auto basis-[100vw] md:flex md:justify-center hidden z-10">
-          <Button className="my-4 max-w-xl mx-auto" onClick={handleTransaction}>
+          <Button
+            className="my-4 max-w-xl mx-auto"
+            onClick={handleTransaction}
+            disabled={!valiadteForms}>
             Proceed to payment
           </Button>
         </div>
@@ -238,72 +251,3 @@ export function Booking() {
     </Layout>
   );
 }
-
-// import React, { useState } from 'react';
-
-// export function Booking() {
-//   // Declare a state variable called "items" with an initial value of an empty array
-//   const [items, setItems] = useState([]);
-
-//   // Function to add a new item to the array
-//   const addItem = () => {
-//     setItems([...items, { id: items.length, value: Math.random() }]);
-//   };
-
-//   return (
-//     <div>
-//       {JSON.stringify(items)}
-//       <button onClick={addItem} type="button">
-//         Add item
-//       </button>
-//       {items.map((item) => (
-//         <div key={item.id}>{item.value}</div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// import React, { useState } from 'react';
-
-// export function Booking() {
-//   // Declare a state variable called "data" with an initial value of an empty array
-//   const [data, setData] = useState([]);
-
-//   // Function to handle form submission
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-
-//     // Get the form values
-//     const name = event.target.elements.name.value;
-//     const address = event.target.elements.address.value;
-
-//     // Add the new item to the array
-//     setData([...data, { name, address }]);
-//   };
-
-//   return (
-//     <div>
-//       {JSON.stringify(data)}
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Name:
-//           <input type="text" name="name" />
-//         </label>
-//         <br />
-//         <label>
-//           Address:
-//           <input type="text" name="address" />
-//         </label>
-//         <br />
-//         <button type="submit">Submit</button>
-//         {data.map((item) => (
-//           <div key={item.name}>
-//             Name: {item.name}
-//             <br />
-//             Address: {item.address}
-//           </div>
-//         ))}
-//       </form>
-//     </div>
-//   );
-// }
