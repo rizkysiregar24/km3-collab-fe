@@ -1,20 +1,20 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import counterReducer from "./redux/counter/counter.slice";
-import userReducer from "./redux/user/user.slice";
-import ticketReducer from "./redux/ticket/ticket.slice";
-import airportReducer from "./redux/airport/airport.slice";
-import { setAirport } from "./redux/airport/airport.actions";
+import counterReducer from './redux/counter/counter.slice';
+import userReducer from './redux/user/user.slice';
+import ticketReducer from './redux/ticket/ticket.slice';
+import airportReducer from './redux/airport/airport.slice';
+import { setAirport } from './redux/airport/airport.actions';
 
-const airportData = JSON.parse(localStorage.getItem("allAirports"));
+const airportData = JSON.parse(localStorage.getItem('allAirports'));
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     user: userReducer,
     ticket: ticketReducer,
-    airport: airportReducer,
-  },
+    airport: airportReducer
+  }
 });
 
 if (!airportData) {
