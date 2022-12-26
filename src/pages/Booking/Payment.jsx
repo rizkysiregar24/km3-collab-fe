@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import useValidUser from '../../hooks/useValidUser';
 import { Layout } from '../../components/Layout';
 import { Button } from '../../components/Input';
-import { getAirlineLogo } from '../../utils/airports';
+import { getAirlineLogo } from '../../utils/airlines';
 import CustomModal from '../../components/Modal/CustomModal';
 
 const API_URL = process.env.REACT_APP_AUTH_API;
@@ -87,7 +87,7 @@ function Payment() {
   return (
     <Layout title="Payment">
       <div className="flex justify-center my-4">
-        <ul className="steps">
+        <ul className="steps w-full">
           <li data-content="✓" className="step step-primary">
             Book
           </li>
@@ -148,13 +148,17 @@ function Payment() {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <p>Ticket ({total})</p>
-              <p>{`IDR${new Intl.NumberFormat('ID-id').format(price * total)}`}</p>
+              <p className="font-semibold">
+                {`IDR${new Intl.NumberFormat('ID-id').format(price * total)}`}
+              </p>
             </div>
             <div className="flex justify-between">
               <p>Platform service fee</p>
-              <p>{`IDR${new Intl.NumberFormat('ID-id').format(15000)}`}</p>
+              <p className="font-semibold">
+                {`IDR${new Intl.NumberFormat('ID-id').format(15000)}`}
+              </p>
             </div>
-            <div className="flex justify-between font-semibold text-lg">
+            <div className="flex justify-between font-semibold text-xl border-t-2 border-gray-300">
               <p>Total</p>
               <p>{`IDR${new Intl.NumberFormat('ID-id').format(15000 + price * total)}`}</p>
             </div>
@@ -164,6 +168,12 @@ function Payment() {
           <Button className={`max-w-xs ${isPaid ? 'hidden' : 'block'}`} onClick={openModal}>
             Confirm Payment
           </Button>
+          <div
+            className={`max-w-xs ${
+              !isPaid ? 'hidden' : 'block'
+            } bg-info text-black font-bold px-4 py-2 rounded-[4px]`}>
+            Paid, get your e-ticket now
+          </div>
           <CustomModal isOpen={isOpen} closeModal={closeModal} label="Payment confirmation">
             <div className="flex flex-col items-center justify-center gap-4">
               <h2 className="font-bold text-xl">Confirm this payment?</h2>
