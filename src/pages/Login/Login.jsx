@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import useValidUser from '../../hooks/useValidUser';
 import { login } from '../../redux/user/user.actions';
@@ -23,9 +24,17 @@ export function Login() {
 
   const handleLogin = () => {
     dispatch(
-      login({ email, password }, (status) => {
-        if (status === 200) {
+      login({ email, password }, (status, role) => {
+        if (status === 200 && role === 'admin') {
+          navigate('/admin-page');
+          toast('Succsessfully logged in as admin', {
+            type: 'success'
+          });
+        } else if (status === 200) {
           navigate('/');
+          toast('Succsessfully logged in', {
+            type: 'success'
+          });
         }
       })
     );

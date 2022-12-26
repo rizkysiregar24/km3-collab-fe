@@ -126,7 +126,7 @@ export default function Ticket() {
                 onChange={(e) => setAirline(e.target.value)}>
                 <option value="Garuda Indonesia">Garuda Indonesia</option>
                 <option value="Batik Air">Batik Air</option>
-                <option value="Citylink">Citylink</option>
+                <option value="Citylink">Citilink</option>
                 <option value="Air Asia">Air Asia</option>
                 <option value="Lion Air">Lion Air</option>
               </select>

@@ -7,13 +7,22 @@ import './Home.css';
 import SEAT_CLASS from '../../utils/seatClass';
 import FeatureSection from './FeatureSection';
 import { defaultAirportSelected } from '../../utils/airports';
-import { dayAfterTomorrow, today, tomorrow } from '../../utils/dates';
+import {
+  dayAfterTomorrow,
+  today,
+  tomorrow,
+  isLessThanToday,
+  historyStartDate
+} from '../../utils/dates';
 import { Layout } from '../../components/Layout';
 import { SeatIcon, SearchIcon } from '../../components/Icons';
 import { RadioButton, AirportSelect, Button, InputDate } from '../../components/Input';
 
 export function Home() {
-  const [startDate, setStartDate] = useState(today);
+  // State definition
+  const [startDate, setStartDate] = useState(
+    !isLessThanToday(historyStartDate) ? today : isLessThanToday(historyStartDate)
+  );
   const [tripType, setTripType] = useState(localStorage.getItem('historyTripType') ?? 'one_way');
   const [adult, setAdult] = useState(1);
   const [departure, setDeparture] = useState(
@@ -176,7 +185,7 @@ export function Home() {
                 <InputDate
                   value={startDate}
                   onChange={(e) => {
-                    localStorage.setItem('historyStartDate', startDate);
+                    localStorage.setItem('historyStartDate', e.target.value);
                     setStartDate(e.target.value);
                   }}
                   min={today}
@@ -225,7 +234,7 @@ export function Home() {
               <Button
                 className="sm:w-auto w-full"
                 onClick={handleSearchFlight}
-                disabled={!departure || !arrival || isSameAirpot}>
+                disabled={!departure || !arrival || isSameAirpot || !startDate || !returnDate}>
                 <SearchIcon />
                 Search Flights
               </Button>

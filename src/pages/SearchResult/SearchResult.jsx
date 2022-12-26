@@ -5,11 +5,13 @@ import axios from 'axios';
 
 import { ExpediaCard } from '../../components/Cards';
 import { Layout } from '../../components/Layout';
+import Spinner from '../../components/Layout/Spinner';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 
 export function SearchResult() {
   const [resultData, setResultData] = useState(null);
+  const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
 
   const departure = searchParams.get('departure');
@@ -22,30 +24,42 @@ export function SearchResult() {
 
   useEffect(() => {
     if (tripType === 'one_way') {
-      try {
-        (async () => {
+      (async () => {
+        try {
+          setError(null);
           const { data } = await axios.get(
             `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`
           );
           setResultData(data?.data);
-        })();
-      } catch (error) {
-        return error;
-      }
+        } catch (err) {
+          setError(err);
+        }
+      })();
     }
     if (tripType === 'round_trip') {
-      try {
-        (async () => {
+      (async () => {
+        try {
+          setError(null);
           const { data } = await axios.get(
             `${BASE_URL}/schedule/search?departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}&returnDate=${returnDate}`
           );
           setResultData(data?.data);
-        })();
-      } catch (error) {
-        return error;
-      }
+        } catch (err) {
+          setError(err);
+        }
+      })();
     }
   }, []);
+
+  if (error) {
+    return (
+      <Layout>
+        <section className="h-[calc(100vh-250px)] flex justify-center items-center">
+          <p className="capitalize">{error?.response?.data?.message}</p>
+        </section>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -91,7 +105,7 @@ export function SearchResult() {
                   />
                 ))
             ) : (
-              <div className="h-96">Ticket not found</div>
+              <Spinner textContent="Searching your ticket" />
             )}
           </div>
         </div>
