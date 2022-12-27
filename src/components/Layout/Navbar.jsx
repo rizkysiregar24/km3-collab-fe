@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-
 import { toast } from 'react-toastify';
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
@@ -56,10 +55,13 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    toast('Successfully log out', {
+      type: 'info'
+    });
   };
 
   return (
-    <nav className="bg-white text-black shadow-md ">
+    <nav className="bg-white text-black shadow-md print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link
@@ -195,29 +197,26 @@ export function AuthRightElementNavbar({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <button
-        className="btn btn-ghost btn-circle"
-        type="button"
-        title="Notifications"
-        onClick={handleNotif}>
-        <div className="indicator">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-            />
-          </svg>
-          {/* if there is notification, display this span right below this comment */}
-          <span className="badge badge-xs badge-primary indicator-item" />
-        </div>
-      </button>
+      <Link to="/cart">
+        <button className="btn btn-ghost btn-circle" type="button" title="Cart">
+          <div className="indicator">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <span className="badge badge-xs badge-primary indicator-item" />
+          </div>
+        </button>
+      </Link>
 
       <div className="dropdown dropdown-end">
         <label
@@ -238,7 +237,12 @@ export function AuthRightElementNavbar({
             <Link to="/user">Profile</Link>
           </li>
           <li>
-            <Link to="/transactions">Transactions</Link>
+            <Link to="/transaction">Transactions</Link>
+          </li>
+          <li>
+            <button type="button" className="indicator" onClick={handleNotif}>
+              Notifications
+            </button>
           </li>
           <li>
             <button type="button" onClick={openModal}>
@@ -268,3 +272,24 @@ export function AuthRightElementNavbar({
     </div>
   );
 }
+
+/* <Link to="/notifications">
+        <button className="btn btn-ghost btn-circle" type="button" title="Notifications">
+          <div className="indicator">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              />
+            </svg>
+            <span className="badge badge-xs badge-primary indicator-item" />
+          </div>
+        </button>
+      </Link> */

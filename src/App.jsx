@@ -24,6 +24,8 @@ import { Booking } from './pages/Booking';
 import Payment from './pages/Booking/Payment';
 import { History } from './pages/History';
 import Detail from './pages/detail/Detail';
+import Cart from './pages/Booking/Cart';
+import ETicket from './pages/Booking/ETicket';
 
 function App() {
   return (
@@ -47,7 +49,7 @@ function App() {
           <Route path="/search" element={<SearchResult />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/verified-email" element={<Verifiedemail />} />
-          <Route path="/transactions" element={<Transaction />} />
+          <Route path="/transaction" element={<Transaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
           <Route path="/create-ticket" element={<Ticket />} />
@@ -57,6 +59,8 @@ function App() {
           <Route path="/payment/:paymentId" element={<Payment />} />
           <Route path="/history" element={<History />} />
           <Route path="/detail-user/:id" element={<Detail />} />
+          <Route path="/eticket/:paymentId" element={<ETicket />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={2000} />
