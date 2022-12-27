@@ -22,6 +22,8 @@ import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
 import { Booking } from './pages/Booking';
 import Payment from './pages/Booking/Payment';
+import { History } from './pages/History';
+import Detail from './pages/detail/Detail';
 import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
 
@@ -55,6 +57,8 @@ function App() {
           <Route path="/ticket/:id" element={<UpdateTicket />} />
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/payment/:paymentId" element={<Payment />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/detail-user/:id" element={<Detail />} />
           <Route path="/eticket/:paymentId" element={<ETicket />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>

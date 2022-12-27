@@ -56,7 +56,7 @@ function User() {
 
     axios(config)
       .then((response) => {
-        toast(JSON.stringify(response.data));
+        toast(response.data.message);
       })
       .catch((error) => {
         toast(error);

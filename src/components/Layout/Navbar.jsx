@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
+import { toast } from 'react-toastify';
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
 import Logo from '../Icons/Logo';
@@ -17,6 +17,7 @@ function Navbar() {
   const { name, role } = useSelector((state) => state.user);
 
   const isAdmin = role === 'Admin';
+  const isUser = role === 'User';
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
@@ -55,6 +56,7 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
+                isUser={isUser}
                 username={name}
                 openModal={openModal}
                 closeModal={closeModal}
@@ -83,6 +85,7 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
+                isUser={isUser}
                 username={name}
                 openModal={openModal}
                 closeModal={closeModal}
@@ -167,7 +170,9 @@ export function AuthRightElementNavbar({
   username,
   openModal,
   isOpen,
-  closeModal
+  closeModal,
+
+  isUser
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -211,16 +216,9 @@ export function AuthRightElementNavbar({
             <Link to="/user">Profile</Link>
           </li>
           <li>
-            <Link to="/transactions">Transactions</Link>
+            <Link to="/transaction">Transactions</Link>
           </li>
-          <li>
-            <Link to="/notifications">
-              <div className="indicator">
-                Notifications
-                <span className="badge badge-xs badge-primary indicator-item" />
-              </div>
-            </Link>
-          </li>
+          <li>{isUser ? <Link to="/notifications">Notifications</Link> : null}</li>
           <li>
             <button type="button" onClick={openModal}>
               Logout
