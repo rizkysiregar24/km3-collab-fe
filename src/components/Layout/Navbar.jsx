@@ -19,6 +19,7 @@ function Navbar() {
   const { name, role } = useSelector((state) => state.user);
 
   const isAdmin = role === 'Admin';
+  const isUser = role === 'User';
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
@@ -79,6 +80,7 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
+                isUser={isUser}
                 username={name}
                 openModal={openModal}
                 closeModal={closeModal}
@@ -108,6 +110,7 @@ function Navbar() {
               <AuthRightElementNavbar
                 handleLogout={handleLogout}
                 isAdmin={isAdmin}
+                isUser={isUser}
                 username={name}
                 openModal={openModal}
                 closeModal={closeModal}
@@ -193,7 +196,8 @@ export function AuthRightElementNavbar({
   openModal,
   isOpen,
   closeModal,
-  handleNotif
+  handleNotif,
+  isUser
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -240,9 +244,11 @@ export function AuthRightElementNavbar({
             <Link to="/transaction">Transactions</Link>
           </li>
           <li>
-            <button type="button" className="indicator" onClick={handleNotif}>
-              Notifications
-            </button>
+            {isUser ? (
+              <button type="button" className="indicator" onClick={handleNotif}>
+                Notifications
+              </button>
+            ) : null}
           </li>
           <li>
             <button type="button" onClick={openModal}>
