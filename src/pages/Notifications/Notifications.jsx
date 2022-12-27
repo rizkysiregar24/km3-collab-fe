@@ -20,6 +20,7 @@ export function Notifications() {
     axios(config)
       .then((response) => {
         setNotif(response.data);
+        toast(response.data.message);
       })
       .catch((error) => {
         toast(error);

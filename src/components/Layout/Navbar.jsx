@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+
 import { toast } from 'react-toastify';
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
@@ -11,8 +11,6 @@ import CustomModal from '../Modal/CustomModal';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const API_URL = process.env.REACT_APP_AUTH_API;
-  const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -23,28 +21,6 @@ function Navbar() {
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
-
-  const handleNotif = () => {
-    const config = {
-      method: 'get',
-      url: `${API_URL}/notification/user/data`,
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    };
-
-    axios(config)
-      .then((response) => {
-        if (role === 'User') {
-          navigate(`/notifications`);
-        }
-        if (role === 'Admin') {
-          navigate(`/notifications`);
-        }
-        toast(response.data.message);
-      })
-      .catch((error) => error);
-  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -84,7 +60,6 @@ function Navbar() {
                 username={name}
                 openModal={openModal}
                 closeModal={closeModal}
-                handleNotif={handleNotif}
                 isOpen={modalOpen}
               />
             ) : (
@@ -196,7 +171,7 @@ export function AuthRightElementNavbar({
   openModal,
   isOpen,
   closeModal,
-  handleNotif,
+
   isUser
 }) {
   return (
@@ -243,13 +218,7 @@ export function AuthRightElementNavbar({
           <li>
             <Link to="/transaction">Transactions</Link>
           </li>
-          <li>
-            {isUser ? (
-              <button type="button" className="indicator" onClick={handleNotif}>
-                Notifications
-              </button>
-            ) : null}
-          </li>
+          <li>{isUser ? <Link to="/notifications">Notifications</Link> : null}</li>
           <li>
             <button type="button" onClick={openModal}>
               Logout
