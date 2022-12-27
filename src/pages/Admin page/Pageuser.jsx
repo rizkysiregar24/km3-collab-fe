@@ -88,6 +88,9 @@ export default function Pageuser() {
               <th scope="col" className="py-3 px-6">
                 <span className="sr-only">delete</span>
               </th>
+              <th scope="col" className="py-3 px-6">
+                <span className="sr-only">detail</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -108,23 +111,23 @@ export default function Pageuser() {
                   <button
                     type="button"
                     href="/#"
-                    className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                    className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
-                      handleDelete(x.id);
-                      navigate('/user-page');
+                      handleDetail(x.id);
                     }}>
-                    Delete
+                    Detail
                   </button>
                 </td>
                 <td className="py-4 px-6 text-right">
                   <button
                     type="button"
                     href="/#"
-                    className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                    className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
-                      handleDetail(x.id);
+                      handleDelete(x.id);
+                      navigate('/user-page');
                     }}>
-                    Detail
+                    Delete
                   </button>
                 </td>
               </tr>
