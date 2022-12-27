@@ -3,42 +3,49 @@ import { MdFlightTakeoff } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 
 import useValidUser from '../../hooks/useValidUser';
 import { login } from '../../redux/user/user.actions';
 import Googlelogin from './Googlelogin';
 
 export function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [type, setType] = useState('password');
   const [icon, setIcon] = useState(FaEyeSlash);
 
-  const { error: isError } = useSelector((state) => state.user);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isValidUser = useValidUser();
 
-  const handleLogin = () => {
-    dispatch(
-      login({ email, password }, (status, role) => {
-        if (status === 200 && role === 'admin') {
-          navigate('/admin-page');
-          toast('Succsessfully logged in as admin', {
-            type: 'success'
-          });
-        } else if (status === 200) {
-          navigate('/');
-          toast('Succsessfully logged in', {
-            type: 'success'
-          });
-        }
-      })
-    );
-  };
+  const handleLogin = (data) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        dispatch(
+          login(data, (status, role) => {
+            if (status === 200 && role === 'admin') {
+              navigate('/admin-page');
+              toast('Succsessfully logged in as admin', {
+                type: 'success'
+              });
+            } else if (status === 200) {
+              navigate('/');
+              toast('Succsessfully logged in', {
+                type: 'success'
+              });
+            }
+          })
+        );
+        resolve();
+      }, 500);
+    });
 
   const handleToogle = () => {
     if (type === 'password') {
@@ -66,36 +73,33 @@ export function Login() {
 
           <p className="text-sm mt-5  ">Welcome back! Please enter your details</p>
 
-          <form className="flex flex-col w-80 ">
+          <form className="flex flex-col w-80" onSubmit={handleSubmit(handleLogin)}>
             <div className=" mt-5 ">Email</div>
             <input
               type="email"
-              name="email"
-              id="email"
               className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
-                isError ? 'input-error' : 'input border-[#7E56DA]'
+                errors.email ? 'input-error' : 'input border-[#7E56DA]'
               }`}
               placeholder="Enter your Email"
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', { required: true })}
             />
+            {errors.email && <small className="text-error">Email is required</small>}
 
             <div className=" mt-5 ">Password</div>
             <div className=" flex flex-wrap">
               <input
                 type={type}
-                name="password"
-                id="password"
                 className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
-                  isError ? 'input-error' : 'input border-[#7E56DA] '
+                  errors.password ? 'input-error' : 'input border-[#7E56DA] '
                 }`}
                 placeholder="Enter your Password"
-                onChange={(e) => setPassword(e.target.value)}
+                {...register('password', { required: true })}
               />
               <button className="absolute my-3 ml-72  " type="button" onClick={handleToogle}>
                 {icon}
               </button>
             </div>
-            {isError ? <small>{isError}</small> : null}
+            {errors.password && <small className="text-error">Password is required</small>}
 
             <button
               className=" text-xs ml-auto mt-2 text-[#7E56DA]  "
@@ -105,15 +109,12 @@ export function Login() {
             </button>
 
             <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed"
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLogin();
-              }}
-              disabled={!email || !password}>
-              Sign in
+              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+              disabled={isSubmitting}
+              type="submit">
+              {isSubmitting ? 'Logging in' : 'Login'}
             </button>
+
             <GoogleOAuthProvider clientId="134468154099-apc6un8gp22f8dadi8tf1kf4o2fv2lnk.apps.googleusercontent.com">
               <Googlelogin />
             </GoogleOAuthProvider>

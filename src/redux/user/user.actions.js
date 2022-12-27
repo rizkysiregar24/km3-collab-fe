@@ -96,7 +96,7 @@ export const loginGoogle = (accessToken, callback, data) => async (dispatch) => 
   return null;
 };
 
-export const register =
+export const registerUser =
   ({ email, password, confirmPassword, username }, callback) =>
   async (dispatch) => {
     try {
@@ -146,6 +146,7 @@ export const myProfile = () => async (dispatch) => {
   }
   return null;
 };
+
 export const setCurrentTicket = (ticketDetail) => (dispatch) => {
   dispatch(_setCurrentTicket(ticketDetail));
 };

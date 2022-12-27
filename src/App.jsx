@@ -59,7 +59,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={500} />
     </>
   );
 }
