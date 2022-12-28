@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ function ListTicket() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const data = useSelector((state) => state.ticket.allTickets);
+  const { data, error } = useSelector((state) => state.ticket.allTickets);
 
   const [searchParams, setSearchParams] = useSearchParams({
     page: 1
@@ -53,6 +53,20 @@ function ListTicket() {
     dispatch(getAllTickets(Number(page)));
     setRefetch(false);
   }, [refetch, page]);
+
+  if (error) {
+    return (
+      <Dashboard>
+        <h1 className="text-2xl mb-4">List of all available tickets</h1>
+        <p>
+          {error}, create one{' '}
+          <Link className="underline" to="/create-ticket">
+            here
+          </Link>
+        </p>
+      </Dashboard>
+    );
+  }
 
   return (
     <Dashboard>
