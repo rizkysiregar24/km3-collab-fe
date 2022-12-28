@@ -1,47 +1,21 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 import { Dashboard } from '../../../components/Layout';
-import { resetData } from '../../../redux/ticket/ticket.actions';
 
 const token = localStorage.getItem('token');
+const API_URL = process.env.REACT_APP_AUTH_API;
 
 export default function UpdateTicket() {
-  const {
-    code,
-    airlineName,
-    departureAirport,
-    departure,
-    arrivalAirport,
-    arrival,
-    date,
-    departureTime,
-    arrivalTime,
-    price
-  } = useSelector((state) => state.ticket);
-
-  const initialData = {
-    code,
-    airlineName,
-    departureAirport,
-    departure,
-    arrivalAirport,
-    arrival,
-    date: new Date(date).toISOString().split('T')[0],
-    departureTime,
-    arrivalTime,
-    price
-  };
-
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState(null);
 
   const { id } = useParams();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +25,7 @@ export default function UpdateTicket() {
   const handleUpdateTicket = async (e) => {
     e.preventDefault();
     const response = await axios.put(
-      `${process.env.REACT_APP_AUTH_API}/flight/data/${id}`,
+      `${API_URL}/flight/data/${id}`,
       {
         ...data
       },
@@ -69,6 +43,18 @@ export default function UpdateTicket() {
     }
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get(`${API_URL}/flight/data/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setData(res.data.data);
+    };
+    getData();
+  }, []);
+
   return (
     <Dashboard>
       <div className="p-8">
@@ -84,7 +70,7 @@ export default function UpdateTicket() {
                 name="code"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.code}
+                value={data?.code}
                 maxLength={5}
               />
             </div>
@@ -97,7 +83,7 @@ export default function UpdateTicket() {
                 name="airlineName"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.airlineName}
+                value={data?.airlineName}
               />
             </div>
             <div className="flex flex-col">
@@ -109,7 +95,8 @@ export default function UpdateTicket() {
                 name="departureAirport"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.departureAirport}
+                value={data?.departureAirport}
+                disabled
               />
             </div>
             <div className="flex flex-col">
@@ -121,8 +108,9 @@ export default function UpdateTicket() {
                 name="departure"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.departure}
+                value={data?.departure}
                 maxLength={3}
+                disabled
               />
             </div>
             <div className="flex flex-col">
@@ -134,7 +122,8 @@ export default function UpdateTicket() {
                 name="arrivalAirport"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.arrivalAirport}
+                value={data?.arrivalAirport}
+                disabled
               />
             </div>
             <div className="flex flex-col">
@@ -146,8 +135,9 @@ export default function UpdateTicket() {
                 name="arrival"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.arrival}
+                value={data?.arrival}
                 maxLength={3}
+                disabled
               />
             </div>
             <div className="flex flex-col">
@@ -159,7 +149,7 @@ export default function UpdateTicket() {
                 name="date"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.date}
+                value={data?.date}
               />
             </div>
             <div className="flex flex-col">
@@ -171,7 +161,7 @@ export default function UpdateTicket() {
                 name="departureTime"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.departureTime}
+                value={data?.departureTime}
               />
             </div>{' '}
             <div className="flex flex-col">
@@ -183,7 +173,7 @@ export default function UpdateTicket() {
                 name="arrivalTime"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.arrivalTime}
+                value={data?.arrivalTime}
               />
             </div>
             <div className="flex flex-col">
@@ -195,7 +185,7 @@ export default function UpdateTicket() {
                 name="price"
                 className="input input-primary"
                 onChange={handleChange}
-                value={data.price}
+                value={data?.price}
               />
             </div>
             <div className="flex items-center mt-6 gap-2">
@@ -206,7 +196,6 @@ export default function UpdateTicket() {
                 type="button"
                 className="btn btn-primary btn-outline"
                 onClick={() => {
-                  dispatch(resetData());
                   navigate('/ticket');
                 }}>
                 Cancel

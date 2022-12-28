@@ -4,7 +4,7 @@ import AsyncSelect from 'react-select/async';
 import useAirportList from '../../hooks/useAirportList';
 import { defaultOptionsAirportData } from '../../utils/airports';
 
-export function AirportSelect({ value, onChange, placeholder }) {
+export function AirportSelect({ value, onChange, placeholder, ...rest }) {
   const promiseOptions = useAirportList();
 
   return (
@@ -39,6 +39,7 @@ export function AirportSelect({ value, onChange, placeholder }) {
           cursor: 'pointer'
         })
       }}
+      {...rest}
     />
   );
 }
