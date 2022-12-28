@@ -68,10 +68,8 @@ export const loginGoogle = (accessToken, callback, data) => async (dispatch) => 
       access_token: accessToken
     });
 
-    // check token with whoami
+    console.log(tokenData);
 
-    // save to localstorage and redux (token, userData)
-    localStorage.setItem('token', tokenData.token);
     dispatch(_login(tokenData));
     const { data: verifiedToken, status: verifiedStatus } = await axios.get(`${API_URL}/auth/me`, {
       headers: {
