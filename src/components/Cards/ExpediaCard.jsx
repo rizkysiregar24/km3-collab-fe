@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { setCurrentTicket } from '../../redux/user/user.actions';
-import { getAirlineLogo } from '../../utils/airlines';
 
 export function ExpediaCard({
   id,
   airlineName,
+  logo,
   departureAirport,
   arrivalAirport,
   departureIata,
@@ -59,11 +59,7 @@ export function ExpediaCard({
             <p className="text-sm">24h 50m (Direct)</p>
           </div>
           <div className="flex gap-2 items-center">
-            <img
-              src={getAirlineLogo(airlineName)}
-              alt="Airplane logo"
-              className="rounded-full h-4"
-            />
+            <img src={logo ?? ''} alt="Airplane logo" className="rounded-full h-4" />
             <p className="text-base font-bold">{airlineName}</p>
           </div>
         </div>
