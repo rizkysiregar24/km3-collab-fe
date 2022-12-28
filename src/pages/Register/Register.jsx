@@ -5,9 +5,11 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import useValidUser from '../../hooks/useValidUser';
 import { registerUser } from '../../redux/user/user.actions';
+import { registerSchema } from '../../utils/schemas';
 
 export function Register() {
   const [passwordEye, setPasswordEye] = useState(false);
@@ -17,7 +19,7 @@ export function Register() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
-  } = useForm();
+  } = useForm({ resolver: yupResolver(registerSchema) });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,32 +60,36 @@ export function Register() {
           <p className="text-sm mt-5  ">Get Started! Please enter your details</p>
 
           <form className="flex flex-col w-80" onSubmit={handleSubmit(handleRegister)}>
-            <div className=" mt-5 ">Username</div>
+            <div className="mt-3">Username</div>
             <input
               type="text"
-              className={`focus:outline-0 border border-[#7E56DA] px-9 rounded-md pl-5 h-10 placeholder:text-sm ${
+              className={`focus:outline-0 border border-brand px-9 rounded-md pl-5 h-10 placeholder:text-sm ${
                 errors.username && 'border-error'
               }`}
               placeholder="Enter your Username"
               {...register('username', { required: true })}
             />
-            {errors.username && <small className="text-error">Username is required</small>}
+            <small className={`text-error mt-1 ${errors.username ? 'block' : 'invisible'}`}>
+              {errors.username?.message}
+            </small>
 
-            <div className=" mt-3 ">Email</div>
+            <div className="mt-2">Email</div>
             <input
               type="email"
-              className={`focus:outline-0 border  border-[#7E56DA] px-9 rounded-md h-10 pl-5 placeholder:text-sm ${
+              className={`focus:outline-0 border  border-brand px-9 rounded-md h-10 pl-5 placeholder:text-sm ${
                 errors.email && 'border-error'
               }`}
               placeholder="Enter your Email"
               {...register('email', { required: true })}
             />
-            {errors.email && <small className="text-error">Email is required</small>}
+            <small className={`text-error mt-1 ${errors.email ? 'block' : 'invisible'}`}>
+              {errors.email?.message}
+            </small>
 
-            <div className=" mt-3 ">Password</div>
+            <div className="mt-2">Password</div>
             <div className="flex">
               <input
-                className={`w-full focus:outline-0 border px-9 border-[#7E56DA] h-10 pl-5 rounded-md placeholder:text-sm ${
+                className={`w-full focus:outline-0 border px-9 border-brand h-10 pl-5 rounded-md placeholder:text-sm ${
                   errors.password && 'border-error'
                 }`}
                 type={passwordEye === false ? 'password' : 'text'}
@@ -98,12 +104,14 @@ export function Register() {
                 )}
               </span>
             </div>
-            {errors.password && <small className="text-error">Password is required</small>}
+            <small className={`text-error mt-1 ${errors.password ? 'block' : 'invisible'}`}>
+              {errors.password?.message}
+            </small>
 
-            <div className=" mt-3">Password Confirmation</div>
+            <div className="mt-2">Password Confirmation</div>
             <div className="flex">
               <input
-                className={`w-full focus:outline-0 border border-[#7E56DA] px-9 pl-5 rounded-md h-10 placeholder:text-sm ${
+                className={`w-full focus:outline-0 border border-brand px-9 pl-5 rounded-md h-10 placeholder:text-sm ${
                   errors.confirmPassword && 'border-error'
                 }`}
                 type={confirmPasswordEye === false ? 'password' : 'text'}
@@ -118,12 +126,12 @@ export function Register() {
                 )}
               </span>
             </div>
-            {errors.confirmPassword && (
-              <small className="text-error">Confirm password is required</small>
-            )}
+            <small className={`text-error mt-1 ${errors.confirmPassword ? 'block' : 'invisible'}`}>
+              {errors.confirmPassword?.message}
+            </small>
 
             <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-brand rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
               disabled={isSubmitting}
               type="submit">
               {isSubmitting ? 'Registering' : 'Register'}
@@ -131,10 +139,9 @@ export function Register() {
 
             <div className=" text-sm text-center mt-3">
               Already Have An Account?{' '}
-              <Link to="/Login">
-                <button className=" text-xs ml-2 mt-2 text-[#7E56DA]" type="button">
-                  {' '}
-                  Sign In
+              <Link to="/login">
+                <button className="mt-2 text-brand" type="button">
+                  Login
                 </button>
               </Link>
             </div>
@@ -143,7 +150,7 @@ export function Register() {
         <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic ">
           {' '}
           <MdFlightLand
-            className="hover:cursor-pointer text-[#7E56DA]  mt-20"
+            className="hover:cursor-pointer text-brand  mt-20"
             size={200}
             onClick={() => {
               navigate('/');
