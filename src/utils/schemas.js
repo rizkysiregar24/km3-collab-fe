@@ -8,7 +8,14 @@ export const loginSchema = yup.object({
 export const registerSchema = yup.object({
   username: yup.string().required('Username is required').min(3, 'Username min 3 chars'),
   email: yup.string().email().required('Email is required'),
-  password: yup.string().required('Password is required').min(6, 'Password min 6 chars'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password min 6 chars')
+    .matches(
+      /(?=[A-Za-z0-9]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,}).*$/,
+      'Password must contain at least 6 characters, one lowercase, one uppercase, and one number'
+    ),
   confirmPassword: yup
     .string()
     .required('Confirm password is required')
