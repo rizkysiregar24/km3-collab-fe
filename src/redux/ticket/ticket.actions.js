@@ -41,10 +41,14 @@ export const resetData = () => (dispatch) => {
 export const getAllTickets =
   (page = 1) =>
   async (dispatch) => {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(`${BASE_URL}/flight/data?page=${page}`, {
-      headers: { Authorization: token }
-    });
-    const responseData = await response.data;
-    dispatch(_getAllTickets(responseData.data));
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BASE_URL}/flight/data?page=${page}`, {
+        headers: { Authorization: token }
+      });
+      const responseData = await response.data;
+      dispatch(_getAllTickets({ data: responseData.data, error: null }));
+    } catch (error) {
+      dispatch(_getAllTickets({ data: null, error: error.response.data.message }));
+    }
   };

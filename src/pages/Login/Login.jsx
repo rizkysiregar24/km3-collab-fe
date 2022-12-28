@@ -3,42 +3,51 @@ import { MdFlightTakeoff } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import useValidUser from '../../hooks/useValidUser';
 import { login } from '../../redux/user/user.actions';
 import Googlelogin from './Googlelogin';
+import { loginSchema } from '../../utils/schemas';
 
 export function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [type, setType] = useState('password');
   const [icon, setIcon] = useState(FaEyeSlash);
 
-  const { error: isError } = useSelector((state) => state.user);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm({ resolver: yupResolver(loginSchema) });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isValidUser = useValidUser();
 
-  const handleLogin = () => {
-    dispatch(
-      login({ email, password }, (status, role) => {
-        if (status === 200 && role === 'admin') {
-          navigate('/admin-page');
-          toast('Succsessfully logged in as admin', {
-            type: 'success'
-          });
-        } else if (status === 200) {
-          navigate('/');
-          toast('Succsessfully logged in', {
-            type: 'success'
-          });
-        }
-      })
-    );
-  };
+  const handleLogin = (data) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        dispatch(
+          login(data, (status, role) => {
+            if (status === 200 && role === 'admin') {
+              navigate('/admin-page');
+              toast('Succsessfully logged in as admin', {
+                type: 'success'
+              });
+            } else if (status === 200) {
+              navigate('/');
+              toast('Succsessfully logged in', {
+                type: 'success'
+              });
+            }
+          })
+        );
+        resolve();
+      }, 500);
+    });
 
   const handleToogle = () => {
     if (type === 'password') {
@@ -66,63 +75,63 @@ export function Login() {
 
           <p className="text-sm mt-5  ">Welcome back! Please enter your details</p>
 
-          <form className="flex flex-col w-80 ">
-            <div className=" mt-5 ">Email</div>
+          <form className="flex flex-col w-80" onSubmit={handleSubmit(handleLogin)}>
+            <div className="mt-4">Email</div>
             <input
               type="email"
-              name="email"
-              id="email"
               className={`border focus:outline-0 rounded-md px-9 h-10 placeholder:text-sm ${
-                isError ? 'input-error' : 'input border-[#7E56DA]'
+                errors.email ? 'input-error' : 'input border-brand'
               }`}
               placeholder="Enter your Email"
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', { required: true })}
             />
+            <small className={`text-error mt-1 ${errors.email ? 'block' : 'invisible'}`}>
+              {errors.email?.message}
+            </small>
 
-            <div className=" mt-5 ">Password</div>
-            <div className=" flex flex-wrap">
+            <div className="mt-2">Password</div>
+            <div className="flex flex-wrap">
               <input
                 type={type}
-                name="password"
-                id="password"
                 className={`w-full h-10 border focus:outline-0 px-9 rounded-md placeholder:text-sm ${
-                  isError ? 'input-error' : 'input border-[#7E56DA] '
+                  errors.password ? 'input-error' : 'input border-brand'
                 }`}
                 placeholder="Enter your Password"
-                onChange={(e) => setPassword(e.target.value)}
+                {...register('password', { required: true })}
               />
               <button className="absolute my-3 ml-72  " type="button" onClick={handleToogle}>
                 {icon}
               </button>
             </div>
-            {isError ? <small>{isError}</small> : null}
+            <div className="flex justify-between">
+              <small className={`text-error mt-1 ${errors.password ? 'block' : 'invisible'}`}>
+                {errors.password?.message}
+              </small>
+
+              <button
+                className=" text-xs ml-auto mt-1 text-brand"
+                type="button"
+                onClick={() => navigate('/forgot-password')}>
+                Forgot Password
+              </button>
+            </div>
 
             <button
-              className=" text-xs ml-auto mt-2 text-[#7E56DA]  "
-              type="button"
-              onClick={() => navigate('/forgot-password')}>
-              Forgot Password
+              className="bg-brand rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+              disabled={isSubmitting}
+              type="submit">
+              {isSubmitting ? 'Logging in' : 'Login'}
             </button>
 
-            <button
-              className="bg-[#7E56DA] rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed"
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLogin();
-              }}
-              disabled={!email || !password}>
-              Sign in
-            </button>
             <GoogleOAuthProvider clientId="134468154099-apc6un8gp22f8dadi8tf1kf4o2fv2lnk.apps.googleusercontent.com">
               <Googlelogin />
             </GoogleOAuthProvider>
 
             <div className=" text-sm text-center mt-5">
               Don&apos;t have an account?{' '}
-              <Link to="/Register">
-                <button className=" text-sm ml-2 mt-2 text-[#7E56DA]" type="button">
-                  Sign up
+              <Link to="/register">
+                <button className="text-sm mt-2 text-brand" type="button">
+                  Register
                 </button>{' '}
               </Link>
             </div>
@@ -130,7 +139,7 @@ export function Login() {
         </div>
         <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic ">
           <MdFlightTakeoff
-            className="text-[#7E56DA] hover:cursor-pointer  mt-20"
+            className="text-brand hover:cursor-pointer  mt-20"
             size={200}
             onClick={() => {
               navigate('/');
