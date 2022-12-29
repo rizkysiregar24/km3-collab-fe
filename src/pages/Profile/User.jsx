@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlinePhone, AiOutlineUser, AiOutlineMail, AiOutlineGlobal } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { FaCity } from 'react-icons/fa';
+import { BsFillPinMapFill } from 'react-icons/bs';
 
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import { myProfile } from '../../redux/user/user.actions';
 
 import Navbar from '../../components/Layout/Navbar';
@@ -168,7 +171,7 @@ function User() {
               </div>
             </div>
             <div className="form-group flex flex-col mt-5">
-              <label htmlFor="emergencynumber">country</label>
+              <label htmlFor="emergencynumber">Country</label>
               <div className="relative flex ">
                 <input
                   id="country"
@@ -182,6 +185,40 @@ function User() {
                 />
                 <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
                   <AiOutlineGlobal className=" mx-5 mt-2" size={20} />
+                </div>
+              </div>
+            </div>
+            <div className="form-group flex flex-col mt-5">
+              <label htmlFor="username">Province</label>
+              <div className="relative flex ">
+                <input
+                  id="province"
+                  type="text"
+                  name="province"
+                  className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
+                  placeholder="province"
+                  onChange={handleChange}
+                  value={formData.province}
+                />
+                <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
+                  <BsFillPinMapFill className=" mx-5 mt-2" size={20} />
+                </div>
+              </div>
+            </div>
+            <div className="form-group flex flex-col mt-5">
+              <label htmlFor="username">City</label>
+              <div className="relative flex ">
+                <input
+                  id="city"
+                  type="text"
+                  name="city"
+                  className="px-20 border w-full rounded focus:outline-0  py-1 border-slate-500 required:red-border-500"
+                  placeholder="city"
+                  onChange={handleChange}
+                  value={formData.city}
+                />
+                <div className="absolute bg-[#7E56DA] rounded text-white h-full w-16 ">
+                  <FaCity className=" mx-5 mt-2" size={20} />
                 </div>
               </div>
             </div>
@@ -227,11 +264,13 @@ function User() {
                 </button>
               </div>
               <div className="form-group mt-5  ">
-                <button
-                  className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  type="button">
-                  Cancel
-                </button>
+                <Link to="/">
+                  <button
+                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    type="button">
+                    Cancel
+                  </button>
+                </Link>
               </div>
             </div>
           </form>

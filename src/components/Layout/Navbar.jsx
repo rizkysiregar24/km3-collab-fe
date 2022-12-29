@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { toast } from 'react-toastify';
 import useValidUser from '../../hooks/useValidUser';
@@ -16,11 +17,15 @@ function Navbar() {
 
   const { name, role } = useSelector((state) => state.user);
 
+  const [notif, setNotif] = useState([]);
+
   const isAdmin = role === 'Admin';
   const isUser = role === 'User';
+  const API_URL = process.env.REACT_APP_AUTH_API;
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
+  const navigate = useNavigate();
 
   const openModal = () => {
     setModalOpen(true);
@@ -36,6 +41,27 @@ function Navbar() {
       type: 'info'
     });
   };
+  const handleProfile = () => {
+    navigate('/user');
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    const config = {
+      method: 'get',
+      url: `${API_URL}/notification/user/data`,
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    };
+    axios(config)
+      .then((response) => {
+        setNotif(response.data.data);
+      })
+      .catch((error) => {
+        toast(error);
+      });
+  }, []);
 
   return (
     <nav className="bg-white text-black shadow-md print:hidden">
@@ -61,6 +87,8 @@ function Navbar() {
                 openModal={openModal}
                 closeModal={closeModal}
                 isOpen={modalOpen}
+                notif={notif}
+                handleProfile={handleProfile}
               />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
@@ -90,6 +118,8 @@ function Navbar() {
                 openModal={openModal}
                 closeModal={closeModal}
                 isOpen={modalOpen}
+                notif={notif}
+                handleProfile={handleProfile}
               />
             </div>
           ) : (
@@ -171,8 +201,9 @@ export function AuthRightElementNavbar({
   openModal,
   isOpen,
   closeModal,
-
-  isUser
+  notif,
+  isUser,
+  handleProfile
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -213,12 +244,27 @@ export function AuthRightElementNavbar({
             </li>
           ) : null}
           <li>
-            <Link to="/user">Profile</Link>
+            {isUser ? (
+              <button type="button" onClick={handleProfile}>
+                Profile
+              </button>
+            ) : null}
           </li>
           <li>
             <Link to="/transaction">Transactions</Link>
           </li>
-          <li>{isUser ? <Link to="/notifications">Notifications</Link> : null}</li>
+          <li>
+            {isUser ? (
+              <Link to="/notifications">
+                <div className="inline-flex relative items-center  ">
+                  Notifications{' '}
+                  <div className="  inline-flex absolute -top-4 -right-7 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900">
+                    {notif.length}
+                  </div>
+                </div>
+              </Link>
+            ) : null}
+          </li>
           <li>
             <button type="button" onClick={openModal}>
               Logout
