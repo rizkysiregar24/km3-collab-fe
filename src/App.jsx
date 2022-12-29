@@ -27,6 +27,7 @@ import Detail from './pages/detail/Detail';
 import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
 import { Dashboard } from './pages/Dashboard';
+import { Reset } from './pages/Reset';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reset" element={<Reset />} />
         </Routes>
       </Router>
       <ToastContainer autoClose={500} />
