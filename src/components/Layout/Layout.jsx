@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-export function Layout({ children, title, className }) {
+export function Layout({ children, title, className, footer }) {
   useEffect(() => {
     document.title = title
       ? `${title} | Best Price for Flights`
@@ -14,7 +14,7 @@ export function Layout({ children, title, className }) {
     <main className={`mx-auto ${className}`}>
       <Navbar />
       {children}
-      <Footer />
+      <Footer variant={footer} />
     </main>
   );
 }
