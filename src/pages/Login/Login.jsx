@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdFlightTakeoff } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,11 @@ import { loginSchema } from '../../utils/schemas';
 export function Login() {
   const [type, setType] = useState('password');
   const [icon, setIcon] = useState(FaEyeSlash);
+  const [searchParams] = useSearchParams();
+
+  const redirect = searchParams.get('redirect');
+  const id = searchParams.get('id');
+  const passengers = searchParams.get('passengers');
 
   const {
     register,
@@ -32,12 +37,18 @@ export function Login() {
       setTimeout(() => {
         dispatch(
           login(data, (status, role) => {
+            if (status === 200 && Boolean(redirect)) {
+              navigate(`/${redirect}/${id}?passengers=${passengers}`);
+              return;
+            }
             if (status === 200 && role === 'admin') {
               navigate('/admin-page');
               toast('Succsessfully logged in as admin', {
                 type: 'success'
               });
-            } else if (status === 200) {
+              return;
+            }
+            if (status === 200) {
               navigate('/');
               toast('Succsessfully logged in', {
                 type: 'success'
