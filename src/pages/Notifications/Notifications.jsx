@@ -34,7 +34,7 @@ export function Notifications() {
       <div className="h-screen">
         <div className="text-2xl font-bold flex mt-5 ml-28">
           Notifications
-          <div className="ml-2 badge badge-xs badge-primary indicator-item" />
+          <div className="ml-1 bg-red-500 w-3 h-3 rounded-full" />
         </div>
         {notif?.map((x) => (
           <div

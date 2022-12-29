@@ -22,7 +22,6 @@ export const login =
         email,
         password
       });
-
       dispatch(_login({ token: data.data.token, id: data.data.id }));
 
       if (status === 200) {
