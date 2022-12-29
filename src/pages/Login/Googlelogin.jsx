@@ -1,33 +1,33 @@
-/* eslint-disable consistent-return */
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { loginGoogle } from '../../redux/user/user.actions';
 
 export default function Googlelogin() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { token } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
-      dispatch(loginGoogle(response.access_token));
+      dispatch(
+        loginGoogle(response.access_token, (status) => {
+          if (status === 200 || status === 201) {
+            navigate('/');
+          } else {
+            toast('Login failed', { type: 'error' });
+          }
+        })
+      );
     },
     onError: (error) => error
   });
 
-  useEffect(() => {
-    if (token) {
-      navigate('/');
-    }
-  }, [token]);
-
   return (
     <button
-      className="  rounded-md mt-5 text-gray-900 bg-white hover:bg-gray-100  border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium  text-sm text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 border-solid border-2 h-8"
+      className="  rounded-md mt-5 text-gray-900 bg-white hover:bg-gray-100  border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium  text-sm text-center inline-flex items-center border-solid border-2 h-8"
       type="button"
       onClick={() => {
         googleLogin();

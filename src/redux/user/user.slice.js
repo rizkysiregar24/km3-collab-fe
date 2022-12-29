@@ -13,7 +13,6 @@ const initialState = {
   province: '',
   fullName: userDataFromLocalStorage?.fullName || '',
   thumbnail: '',
-  currentTicket: null,
   error: ''
 };
 
@@ -36,6 +35,7 @@ const userSlice = createSlice({
       state.role = '';
       state.name = '';
       state.token = '';
+      state.id = '';
     },
     whoami: (state, action) => {
       const { name, email, role } = action.payload;
@@ -60,14 +60,10 @@ const userSlice = createSlice({
       state.city = city;
       state.address = address;
       state.phone = phone;
-    },
-    _setCurrentTicket: (state, action) => {
-      state.currentTicket = action.payload;
     }
   }
 });
 
-export const { _login, _register, _logout, whoami, setError, _setCurrentTicket, _myprofile } =
-  userSlice.actions;
+export const { _login, _register, _logout, whoami, setError, _myprofile } = userSlice.actions;
 
 export default userSlice.reducer;
