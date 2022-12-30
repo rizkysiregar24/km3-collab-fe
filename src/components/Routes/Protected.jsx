@@ -14,7 +14,7 @@ function Protected({ children, access }) {
   }
 
   if (access) {
-    if (role !== access) {
+    if (role.toLowerCase() !== access.toLowerCase()) {
       return <Navigate to="/" />;
     }
   }

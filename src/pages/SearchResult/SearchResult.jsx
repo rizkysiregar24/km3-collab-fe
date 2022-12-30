@@ -6,12 +6,14 @@ import axios from 'axios';
 import { ExpediaCard } from '../../components/Cards';
 import { Layout } from '../../components/Layout';
 import Spinner from '../../components/Layout/Spinner';
+import { getSortedTicket } from '../../utils/tickets';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 
 export function SearchResult() {
   const [resultData, setResultData] = useState(null);
   const [error, setError] = useState(null);
+  const [sort, setSort] = useState('best');
   const [searchParams] = useSearchParams();
 
   const departure = searchParams.get('departure');
@@ -72,38 +74,37 @@ export function SearchResult() {
                 <label htmlFor="sort">
                   <select
                     name="sort"
-                    id="sort"
-                    defaultValue="best"
+                    onChange={(e) => setSort(e.target.value)}
                     className="select select-bordered w-full max-w-xs select-xs">
-                    <option value="best">Best</option>
-                    <option value="price">Price</option>
-                    <option value="time">Time</option>
+                    <option value="best">Featured</option>
+                    <option value="price">Price: Low to High</option>
+                    <option value="priceAsc">Price: High to Low</option>
+                    <option value="time">Arrival: Earlier</option>
+                    <option value="timeLate">Arrival: Later</option>
                   </select>
                 </label>
               </div>
             ) : null}
             {resultData ? (
-              resultData
-                // ?.sort((a, b) => b.departureTime - a.departureTime)
-                // Sort by price & time departure or arrival
-                ?.map((ticket) => (
-                  <ExpediaCard
-                    key={ticket.id}
-                    id={ticket.id}
-                    airlineName={ticket.airlineName}
-                    departureAirport={ticket.departureAirport}
-                    departureIata={ticket.departure}
-                    arrivalAirport={ticket.arrivalAirport}
-                    arrivalIata={ticket.arrival}
-                    departureTime={ticket.departureTime}
-                    arrivalTime={ticket.arrivalTime}
-                    price={ticket.price}
-                    sc={ticket.sc}
-                    passengers={ticket.passengers}
-                    tripType={ticket.tripType.split('_').join(' ')}
-                    query={`departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`}
-                  />
-                ))
+              getSortedTicket(sort, resultData)?.map((ticket) => (
+                <ExpediaCard
+                  key={ticket.id}
+                  id={ticket.id}
+                  airlineName={ticket.airlineName}
+                  logo={ticket.airlineLogo}
+                  departureAirport={ticket.departureAirport}
+                  departureIata={ticket.departure}
+                  arrivalAirport={ticket.arrivalAirport}
+                  arrivalIata={ticket.arrival}
+                  departureTime={ticket.departureTime}
+                  arrivalTime={ticket.arrivalTime}
+                  price={ticket.price}
+                  sc={ticket.sc}
+                  passengers={ticket.passengers}
+                  tripType={ticket.tripType.split('_').join(' ')}
+                  query={`departure=${departure}&arrival=${arrival}&date=${fromDate}&sc=${seatClass}&tripType=${tripType}&passengers=${passengers}`}
+                />
+              ))
             ) : (
               <Spinner textContent="Searching your ticket" />
             )}

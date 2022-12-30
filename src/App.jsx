@@ -17,7 +17,7 @@ import { ResetPassword } from './pages/ResetPassword';
 import Userpage from './pages/Admin page/Userpage';
 import Pageadmin from './pages/Admin page/Pageadmin';
 import Transaction from './pages/transaction page/Transaction';
-import Ticket from './pages/Admin page/Ticket/Ticket';
+import CreateTicket from './pages/Admin page/Ticket/CreateTicket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
 import { Booking } from './pages/Booking';
@@ -26,6 +26,8 @@ import { History } from './pages/History';
 import Detail from './pages/detail/Detail';
 import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
+import { Dashboard } from './pages/Dashboard';
+import { Reset } from './pages/Reset';
 
 function App() {
   return (
@@ -52,7 +54,7 @@ function App() {
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
-          <Route path="/create-ticket" element={<Ticket />} />
+          <Route path="/create-ticket" element={<CreateTicket />} />
           <Route path="/ticket" element={<ListTicket />} />
           <Route path="/ticket/:id" element={<UpdateTicket />} />
           <Route path="/booking/:id" element={<Booking />} />
@@ -61,9 +63,12 @@ function App() {
           <Route path="/detail-user/:id" element={<Detail />} />
           <Route path="/eticket/:paymentId" element={<ETicket />} />
           <Route path="/cart" element={<Cart />} />
+
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reset" element={<Reset />} />
         </Routes>
       </Router>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={500} />
     </>
   );
 }

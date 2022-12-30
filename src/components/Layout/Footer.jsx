@@ -1,16 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Logo from "../Icons/Logo";
+import Logo from '../Icons/Logo';
 
-function Footer() {
+function Footer({ variant }) {
   return (
-    <footer className="p-4 bg-slate-100 rounded-t-md shadow md:px-6 md:py-8 mx-auto max-w-screen-2xl print:hidden">
+    <footer
+      className={`p-4 ${
+        variant === 'white' ? 'bg-white' : 'bg-slate-100'
+      } rounded-t-md shadow md:px-6 md:py-8 mx-auto max-w-screen-2xl print:hidden`}>
       <div className="sm:flex sm:items-center sm:justify-between">
-        <Link
-          className="font-bold text-2xl hidden md:inline-flex items-center gap-2"
-          to="/"
-        >
+        <Link className="font-bold text-2xl hidden md:inline-flex items-center gap-2" to="/">
           <Logo size={36} />
           Terbang Tinggi
         </Link>
@@ -29,7 +29,7 @@ function Footer() {
       </div>
       <hr className="my-6 border-gray-500 sm:mx-auto lg:my-8" />
       <span className="block text-sm text-gray-500 sm:text-center">
-        © {new Date().getFullYear()}{" "}
+        © {new Date().getFullYear()}{' '}
         <a href="https://terbangtinggi.km3ggwp.com" className="hover:underline">
           Terbang Tinggi
         </a>
