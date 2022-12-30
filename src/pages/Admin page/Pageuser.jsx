@@ -10,6 +10,7 @@ export default function Pageuser() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const config = {
@@ -23,12 +24,14 @@ export default function Pageuser() {
     axios(config)
       .then((resp) => {
         setUser(resp.data.data.rows);
+
         setTotalPage(resp.data.data.totalPage);
       })
       .catch((err) => {
         toast(err.response.data.message);
       });
-  }, [page]);
+    setRefresh(false);
+  }, [page, refresh]);
 
   const handleDelete = (id) => {
     const config = {
@@ -42,6 +45,7 @@ export default function Pageuser() {
     axios(config)
       .then((response) => {
         toast(response.data.message);
+        setRefresh(true);
       })
       .catch((error) => error);
   };
@@ -50,22 +54,26 @@ export default function Pageuser() {
     setPage(val.selected + 1);
   };
 
-  // const handleDetail = (id) => {
-  //   const config = {
-  //     method: 'get',
-  //     url: `${API_URL}/admin/data/${id}`,
-  //     headers: {
-  //       Authorization: localStorage.getItem('token')
-  //     }
-  //   };
+  const handleDetail = (id) => {
+    const config = {
+      method: 'get',
+      url: `${API_URL}/admin/data/${id}`,
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    };
 
-  //   axios(config)
-  //     .then((response) => {
-  //       navigate('/detail-user');
-  //       toast(response.data.message);
-  //     })
-  //     .catch((error) => error);
-  // };
+    axios(config)
+      .then((response) => {
+        if (response.data.data.detail_user === null) {
+          toast('Data Not Found');
+        } else {
+          navigate(`/detail-user/${id}`);
+          toast(response.data.message);
+        }
+      })
+      .catch((error) => error);
+  };
 
   return (
     <div className="px-5 mt-10">
@@ -88,6 +96,9 @@ export default function Pageuser() {
               <th scope="col" className="py-3 px-6">
                 <span className="sr-only">delete</span>
               </th>
+              <th scope="col" className="py-3 px-6">
+                <span className="sr-only">detail</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -102,8 +113,19 @@ export default function Pageuser() {
                 </th>
 
                 <td className="py-4 px-6">{x.email}</td>
-                <td className="py-4 px-6">{x.createdAt}</td>
-                <td className="py-4 px-6">{x.updatedAt}</td>
+                <td className="py-4 px-6">{new Date(x.createdAt).toDateString()}</td>
+                <td className="py-4 px-6">{new Date(x.updatedAt).toDateString()}</td>
+                <td className="py-4 px-6 text-right">
+                  <button
+                    type="button"
+                    href="/#"
+                    className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                    onClick={() => {
+                      handleDetail(x.id);
+                    }}>
+                    Detail
+                  </button>
+                </td>
                 <td className="py-4 px-6 text-right">
                   <button
                     type="button"
@@ -111,22 +133,10 @@ export default function Pageuser() {
                     className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
                       handleDelete(x.id);
-                      navigate('/user-page');
                     }}>
                     Delete
                   </button>
                 </td>
-                {/* <td className="py-4 px-6 text-right">
-                  <button
-                    type="button"
-                    href="/#"
-                    className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
-                    onClick={() => {
-                      handleDetail(x.id);
-                    }}>
-                    Detail
-                  </button>
-                </td> */}
               </tr>
             ))}
           </tbody>

@@ -1,32 +1,33 @@
-/* eslint-disable consistent-return */
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { loginGoogle } from '../../redux/user/user.actions';
 
 export default function Googlelogin() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { token } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
-      dispatch(loginGoogle(response.access_token));
+      dispatch(
+        loginGoogle(response.access_token, (status) => {
+          if (status === 200 || status === 201) {
+            navigate('/');
+          } else {
+            toast('Login failed', { type: 'error' });
+          }
+        })
+      );
     },
     onError: (error) => error
   });
 
-  useEffect(() => {
-    if (token) {
-      navigate('/');
-    }
-  }, [token]);
-
   return (
     <button
-      className="  rounded-md flex mt-5 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 border-solid border-2 h-8"
+      className="  rounded-md mt-5 text-gray-900 bg-white hover:bg-gray-100  border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium  text-sm text-center inline-flex items-center border-solid border-2 h-8"
       type="button"
       onClick={() => {
         googleLogin();
@@ -53,7 +54,7 @@ export default function Googlelogin() {
           d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
         />
       </svg>
-      <p className="mt-1">Sign in With Goggle</p>
+      <p className="mt-1">Login With Google</p>
     </button>
   );
 }

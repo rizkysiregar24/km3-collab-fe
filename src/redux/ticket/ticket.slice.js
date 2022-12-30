@@ -1,21 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  code: "",
-  airlineName: "",
-  departureAirport: "",
-  departure: "",
-  arrivalAirport: "",
-  arrival: "",
-  date: "",
-  departureTime: "",
-  arrivalTime: "",
-  price: +"",
-  allTickets: null,
+  code: '',
+  airlineName: '',
+  departureAirport: '',
+  departure: '',
+  arrivalAirport: '',
+  arrival: '',
+  date: '',
+  departureTime: '',
+  arrivalTime: '',
+  price: +'',
+  allTickets: {
+    data: null,
+    error: null
+  }
 };
 
 const ticketSlice = createSlice({
-  name: "ticket",
+  name: 'ticket',
   initialState,
   reducers: {
     _setTicketData: (state, action) => {
@@ -29,7 +32,7 @@ const ticketSlice = createSlice({
         date,
         departureTime,
         arrivalTime,
-        price,
+        price
       } = action.payload;
       state.code = code;
       state.airlineName = airlineName;
@@ -43,24 +46,25 @@ const ticketSlice = createSlice({
       state.price = price;
     },
     _resetData: (state) => {
-      state.code = "";
-      state.airlineName = "";
-      state.departureAirport = "";
-      state.departure = "";
-      state.arrivalAirport = "";
-      state.arrival = "";
-      state.date = "";
-      state.departureTime = "";
-      state.arrivalTime = "";
-      state.price = "";
+      state.code = '';
+      state.airlineName = '';
+      state.departureAirport = '';
+      state.departure = '';
+      state.arrivalAirport = '';
+      state.arrival = '';
+      state.date = '';
+      state.departureTime = '';
+      state.arrivalTime = '';
+      state.price = '';
     },
     _getAllTickets: (state, action) => {
-      state.allTickets = action.payload;
-    },
-  },
+      const { data, error } = action.payload;
+      state.allTickets.data = data;
+      state.allTickets.error = error;
+    }
+  }
 });
 
-export const { _setTicketData, _resetData, _getAllTickets } =
-  ticketSlice.actions;
+export const { _setTicketData, _resetData, _getAllTickets } = ticketSlice.actions;
 
 export default ticketSlice.reducer;

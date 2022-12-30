@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { setCurrentTicket } from '../../redux/user/user.actions';
 
 export function ExpediaCard({
   id,
   airlineName,
+  logo,
   departureAirport,
   arrivalAirport,
   departureIata,
@@ -16,31 +14,10 @@ export function ExpediaCard({
   sc,
   price,
   tripType,
-  passengers,
   query
 }) {
-  const dispatch = useDispatch();
-
   return (
     <Link
-      onClick={() => {
-        dispatch(
-          setCurrentTicket({
-            id,
-            airlineName,
-            departureAirport,
-            arrivalAirport,
-            departureIata,
-            arrivalIata,
-            departureTime,
-            arrivalTime,
-            sc,
-            price,
-            tripType,
-            passengers
-          })
-        );
-      }}
       to={`/booking/${id}?${query}`}
       // set current ticket to localStorage or Redux store for booking information
       className="flex flex-col justify-center w-full bg-brand-lighter-100 p-4 rounded-lg cursor-pointer">
@@ -48,7 +25,8 @@ export function ExpediaCard({
         {/* left content, e.g time, destination, airline name */}
         <div className="text-start flex flex-col gap-2 mb-3">
           <h4 className="font-bold text-lg">
-            {departureTime} - {arrivalTime}
+            {departureTime && departureTime.substring(0, 5)} -{' '}
+            {arrivalTime && arrivalTime.substring(0, 5)}
           </h4>
           <p className="text-sm max-w-[170px] md:max-w-none">
             {departureAirport} ({departureIata}) - {arrivalAirport} ({arrivalIata})
@@ -57,11 +35,7 @@ export function ExpediaCard({
             <p className="text-sm">24h 50m (Direct)</p>
           </div>
           <div className="flex gap-2 items-center">
-            <img
-              src="https://hangnadim.bpbatam.go.id/wp-content/uploads/2021/07/tenant-citilink.png"
-              alt="Airplane logo"
-              className="rounded-full h-4 w-4"
-            />
+            <img src={logo ?? ''} alt="Airplane logo" className="rounded-full h-4" />
             <p className="text-base font-bold">{airlineName}</p>
           </div>
         </div>
