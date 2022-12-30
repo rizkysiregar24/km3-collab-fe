@@ -23,6 +23,7 @@ export default function Pageuser() {
     axios(config)
       .then((resp) => {
         setUser(resp.data.data.rows);
+
         setTotalPage(resp.data.data.totalPage);
       })
       .catch((err) => {
@@ -61,8 +62,12 @@ export default function Pageuser() {
 
     axios(config)
       .then((response) => {
-        navigate(`/detail-user/${id}`);
-        toast(response.data.message);
+        if (response.data.data.detail_user === null) {
+          toast('Data Not Found');
+        } else {
+          navigate(`/detail-user/${id}`);
+          toast(response.data.message);
+        }
       })
       .catch((error) => error);
   };
