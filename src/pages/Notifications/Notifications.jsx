@@ -33,7 +33,7 @@ export function Notifications() {
 
   const handleReadallnotif = () => {
     const config = {
-      method: 'post',
+      method: 'patch',
       url: `${API_URL}/notification/readall`,
       headers: {
         Authorization: localStorage.getItem('token')
@@ -52,7 +52,7 @@ export function Notifications() {
 
   const handleReadbyid = (id) => {
     const config = {
-      method: 'post',
+      method: 'patch',
       url: `${API_URL}/notification/read/${id}`,
       headers: {
         Authorization: localStorage.getItem('token')
