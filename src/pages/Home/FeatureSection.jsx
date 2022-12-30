@@ -1,23 +1,21 @@
-import React from "react";
+import React from 'react';
 
 const FEATURES_DATA = [
   {
     icon: <WalletIcon />,
-    title: "Various Payment Methods",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, adipisci!",
+    title: 'Various Payment Methods',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, adipisci!'
   },
   {
     icon: <DollarIcon />,
-    title: "No Hidden Fee",
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing.",
+    title: 'No Hidden Fee',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing.'
   },
   {
     icon: <RefundIcon />,
-    title: "Refundable",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis molestiae.",
-  },
+    title: 'Refundable',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis molestiae.'
+  }
 ];
 
 function FeatureSection() {
@@ -27,8 +25,8 @@ function FeatureSection() {
         <div className="mb-8 text-center mx-4">
           <h2 className="text-3xl font-bold my-8">Why Terbang Tinggi?</h2>
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consequatur quaerat quod sed, aliquam sapiente at.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur quaerat quod sed,
+            aliquam sapiente at.
           </p>
         </div>
         <div className="flex justify-center xl:justify-between mx-4 flex-wrap items-center gap-4 flex-col xl:flex-row">
@@ -56,8 +54,7 @@ export function WalletIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="dodgerblue"
-      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
-    >
+      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -75,8 +72,7 @@ export function DollarIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="orange"
-      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
-    >
+      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -94,8 +90,7 @@ export function RefundIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="limegreen"
-      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400"
-    >
+      className="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -109,9 +104,7 @@ export function FeatureCard({ icon, title, content }) {
   return (
     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md shadow-indigo-100">
       {icon}
-      <h3 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900">
-        {title}
-      </h3>
+      <h3 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{title}</h3>
       <p className="mb-3 font-normal text-gray-500">{content}</p>
     </div>
   );

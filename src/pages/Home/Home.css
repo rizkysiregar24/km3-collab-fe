@@ -1,10 +1,17 @@
 /* hide calendar icon on chrome */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
   opacity: 0;
-  padding: 3px 40px;
+  padding: 3px 30px;
   width: 28px;
   cursor: pointer;
+}
+
+@media screen and(min-width: 768px) {
+  input[type='date']::-webkit-inner-spin-button,
+  input[type='date']::-webkit-calendar-picker-indicator {
+    padding: 3px 44px;
+  }
 }
 
 /* custom styles for react-daterange-picker */

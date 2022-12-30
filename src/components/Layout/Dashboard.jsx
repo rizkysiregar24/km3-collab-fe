@@ -55,7 +55,7 @@ export function Dashboard({ children }) {
                   to="/create-ticket"
                   className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-300 hover:drop-shadow-xl ">
                   <RiTicket2Line className="w-6 h-6 " />
-                  <span className="flex-1 ml-3 whitespace-nowrap ">Create Ticket</span>
+                  <span className="flex-1 ml-3 whitespace-nowrap ">Create Flight</span>
                 </Link>
               </li>
               <li className="py-2">
@@ -63,7 +63,7 @@ export function Dashboard({ children }) {
                   to="/ticket"
                   className="flex items-center p-2 px-10 text-base font-normal rounded-lg hover:bg-slate-300 hover:drop-shadow-xl ">
                   <HiOutlineClipboardDocumentList className="w-6 h-6 " />
-                  <span className="flex-1 ml-3 whitespace-nowrap ">List Ticket</span>
+                  <span className="flex-1 ml-3 whitespace-nowrap ">List Flights</span>
                 </Link>
               </li>
             </ul>
