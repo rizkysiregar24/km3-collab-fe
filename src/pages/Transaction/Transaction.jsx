@@ -26,6 +26,7 @@ export default function Transaction() {
 
   console.log(token);
   console.log(data);
+
   return (
     <>
       <div>
@@ -91,7 +92,15 @@ export default function Transaction() {
                     <div>Triptype</div>
                     <div>Aircraft</div>
                     <div>Cabin</div>
-                    <div>Detail</div>
+                    <button
+                      type="button"
+                      href="/#"
+                      className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                      onClick={() => {
+                        handleDetail(x.id);
+                      }}>
+                      Detail
+                    </button>
                   </div>
                   <div className="w-40 text-left">
                     <div>{x.detail_transaction[0].flight.tripType}</div>
