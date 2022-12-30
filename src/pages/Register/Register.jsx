@@ -50,115 +50,113 @@ export function Register() {
   };
 
   return (
-    <section className="bg-gray-400 min-h-screen flex items-center justify-center">
-      <div className="bg-white flex rounded-2xl shadow-lg  px-0 ">
-        <div className=" sm:w-9/12 p-20 rounded-2xl">
-          <Link to="/">
-            <h1 className="font-bold text-2xl">Register</h1>
-          </Link>
+    <div className="flex h-screen ">
+      <div className="  w-6/12 mx-5 my-28 lg:px-44">
+        <Link to="/">
+          <h1 className="font-bold text-2xl">Register</h1>
+        </Link>
 
-          <p className="text-sm mt-5  ">Get Started! Please enter your details</p>
+        <p className="text-sm mt-5  ">Get Started! Please enter your details</p>
 
-          <form className="flex flex-col w-80" onSubmit={handleSubmit(handleRegister)}>
-            <div className="mt-3">Username</div>
+        <form className="flex flex-col w-80" onSubmit={handleSubmit(handleRegister)}>
+          <div className="mt-3">Username</div>
+          <input
+            type="text"
+            className={`focus:outline-0 border border-brand px-9 rounded-md pl-5 h-10 placeholder:text-sm ${
+              errors.username && 'border-error'
+            }`}
+            placeholder="Enter your Username"
+            {...register('username', { required: true })}
+          />
+          <small className={`text-error mt-1 ${errors.username ? 'block' : 'invisible'}`}>
+            {errors.username?.message}
+          </small>
+
+          <div className="mt-2">Email</div>
+          <input
+            type="email"
+            className={`focus:outline-0 border  border-brand px-9 rounded-md h-10 pl-5 placeholder:text-sm ${
+              errors.email && 'border-error'
+            }`}
+            placeholder="Enter your Email"
+            {...register('email', { required: true })}
+          />
+          <small className={`text-error mt-1 ${errors.email ? 'block' : 'invisible'}`}>
+            {errors.email?.message}
+          </small>
+
+          <div className="mt-2">Password</div>
+          <div className="flex">
             <input
-              type="text"
-              className={`focus:outline-0 border border-brand px-9 rounded-md pl-5 h-10 placeholder:text-sm ${
-                errors.username && 'border-error'
+              className={`w-full focus:outline-0 border px-9 border-brand h-10 pl-5 rounded-md placeholder:text-sm ${
+                errors.password && 'border-error'
               }`}
-              placeholder="Enter your Username"
-              {...register('username', { required: true })}
+              type={passwordEye === false ? 'password' : 'text'}
+              placeholder="Enter your Password"
+              {...register('password', { required: true })}
             />
-            <small className={`text-error mt-1 ${errors.username ? 'block' : 'invisible'}`}>
-              {errors.username?.message}
-            </small>
+            <span className="absolute ml-72 my-3">
+              {passwordEye === false ? (
+                <FaEyeSlash onClick={handleToogle} />
+              ) : (
+                <FaEye onClick={handleToogle} />
+              )}
+            </span>
+          </div>
+          <small className={`text-error mt-1 ${errors.password ? 'block' : 'invisible'}`}>
+            {errors.password?.message}
+          </small>
 
-            <div className="mt-2">Email</div>
+          <div className="mt-2">Password Confirmation</div>
+          <div className="flex">
             <input
-              type="email"
-              className={`focus:outline-0 border  border-brand px-9 rounded-md h-10 pl-5 placeholder:text-sm ${
-                errors.email && 'border-error'
+              className={`w-full focus:outline-0 border border-brand px-9 pl-5 rounded-md h-10 placeholder:text-sm ${
+                errors.confirmPassword && 'border-error'
               }`}
-              placeholder="Enter your Email"
-              {...register('email', { required: true })}
+              type={confirmPasswordEye === false ? 'password' : 'text'}
+              {...register('confirmPassword', { required: true })}
+              placeholder="Enter your Password Confirmation"
             />
-            <small className={`text-error mt-1 ${errors.email ? 'block' : 'invisible'}`}>
-              {errors.email?.message}
-            </small>
+            <span className="absolute ml-72 my-3">
+              {confirmPasswordEye === false ? (
+                <FaEyeSlash onClick={handleConfirmToogle} />
+              ) : (
+                <FaEye onClick={handleConfirmToogle} />
+              )}
+            </span>
+          </div>
+          <small className={`text-error mt-1 ${errors.confirmPassword ? 'block' : 'invisible'}`}>
+            {errors.confirmPassword?.message}
+          </small>
 
-            <div className="mt-2">Password</div>
-            <div className="flex">
-              <input
-                className={`w-full focus:outline-0 border px-9 border-brand h-10 pl-5 rounded-md placeholder:text-sm ${
-                  errors.password && 'border-error'
-                }`}
-                type={passwordEye === false ? 'password' : 'text'}
-                placeholder="Enter your Password"
-                {...register('password', { required: true })}
-              />
-              <span className="absolute ml-72 my-3">
-                {passwordEye === false ? (
-                  <FaEyeSlash onClick={handleToogle} />
-                ) : (
-                  <FaEye onClick={handleToogle} />
-                )}
-              </span>
-            </div>
-            <small className={`text-error mt-1 ${errors.password ? 'block' : 'invisible'}`}>
-              {errors.password?.message}
-            </small>
+          <button
+            className="bg-brand rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+            disabled={isSubmitting}
+            type="submit">
+            {isSubmitting ? 'Registering' : 'Register'}
+          </button>
 
-            <div className="mt-2">Password Confirmation</div>
-            <div className="flex">
-              <input
-                className={`w-full focus:outline-0 border border-brand px-9 pl-5 rounded-md h-10 placeholder:text-sm ${
-                  errors.confirmPassword && 'border-error'
-                }`}
-                type={confirmPasswordEye === false ? 'password' : 'text'}
-                {...register('confirmPassword', { required: true })}
-                placeholder="Enter your Password Confirmation"
-              />
-              <span className="absolute ml-72 my-3">
-                {confirmPasswordEye === false ? (
-                  <FaEyeSlash onClick={handleConfirmToogle} />
-                ) : (
-                  <FaEye onClick={handleConfirmToogle} />
-                )}
-              </span>
-            </div>
-            <small className={`text-error mt-1 ${errors.confirmPassword ? 'block' : 'invisible'}`}>
-              {errors.confirmPassword?.message}
-            </small>
-
-            <button
-              className="bg-brand rounded-md mt-5 text-white text-sm h-8 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
-              disabled={isSubmitting}
-              type="submit">
-              {isSubmitting ? 'Registering' : 'Register'}
-            </button>
-
-            <div className=" text-sm text-center mt-3">
-              Already Have An Account?{' '}
-              <Link to="/login">
-                <button className="mt-2 text-brand" type="button">
-                  Login
-                </button>
-              </Link>
-            </div>
-          </form>
-        </div>
-        <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic ">
-          {' '}
-          <MdFlightLand
-            className="hover:cursor-pointer text-brand  mt-20"
-            size={200}
-            onClick={() => {
-              navigate('/');
-            }}
-          />{' '}
-          Terbang Tinggi App
-        </div>
+          <div className=" text-sm text-center mt-3">
+            Already Have An Account?{' '}
+            <Link to="/login">
+              <button className="mt-2 text-brand" type="button">
+                Login
+              </button>
+            </Link>
+          </div>
+        </form>
       </div>
-    </section>
+      <div className=" sm:block hidden w-9/12 rounded-r-2xl bg-gray-100 p-28 px-28 decoration-purple-500 font-bold text-purple-500 font-sans text-center italic">
+        {' '}
+        <MdFlightLand
+          className="hover:cursor-pointer text-[#7E56DA] ml-28 mt-32"
+          size={200}
+          onClick={() => {
+            navigate('/');
+          }}
+        />{' '}
+        Terbang Tinggi App
+      </div>
+    </div>
   );
 }
