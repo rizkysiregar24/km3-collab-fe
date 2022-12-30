@@ -63,7 +63,7 @@ export default function Transaction() {
               </div>
               <div className="flex ml-2">
                 <CalendarIcon />
-                <h2 className="ml-1">Saturday 22 September 2022</h2>
+                <h2 className="ml-1">{x.detail_transaction[0].flight.date}</h2>
               </div>
 
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-3  mt-5">
@@ -71,33 +71,33 @@ export default function Transaction() {
                   <div className="flex">
                     <MdFlightTakeoff size={30} className="mt-4" />
                     <div className="ml-4">
-                      <div>{x.detail_transaction[0].flight.arrivalTime}</div>
-                      <div>{x.detail_transaction[0].flight.arrivalAirport}</div>
-                      <div>Terminal 3</div>
+                      <div>{x.detail_transaction[0].flight.departureTime}</div>
+                      <div>{x.detail_transaction[0].flight.departureAirport}</div>
+                      <div>{x.detail_transaction[0].flight.departure}</div>
                     </div>
                   </div>
 
                   <div className="mt-5 flex">
                     <MdOutlineFlightLand size={30} className="mt-4" />
                     <div className="ml-4">
-                      <div>08.35 Balikpapan</div>
-                      <div>Sepinggan</div>
-                      <div>Terminal 2</div>
+                      <div>{x.detail_transaction[0].flight.arrivalTime}</div>
+                      <div>{x.detail_transaction[0].flight.arrivalAirport}</div>
+                      <div>{x.detail_transaction[0].flight.arrival}</div>
                     </div>
                   </div>
                 </div>
                 <div className="grid text-center min-[100px]:ml-5   gap-6 sm:grid-cols-3 py-7 border-l-4 border-black px-5">
                   <div className=" min-[100px]:text-left">
-                    <div>Duration</div>
+                    <div>Triptype</div>
                     <div>Airline</div>
                     <div>Aircraft</div>
                     <div>Cabin</div>
                   </div>
                   <div className="w-40 text-left">
-                    <div>02h15m</div>
+                    <div>{x.detail_transaction[0].flight.tripType}</div>
                     <div>Garuda Indonesia </div>
-                    <div>Boeing 737-800</div>
-                    <div>Economy Restirected</div>
+                    <div>{x.detail_transaction[0].flight.code}</div>
+                    <div>{x.detail_transaction[0].flight.sc}</div>
                   </div>
                 </div>
               </div>
