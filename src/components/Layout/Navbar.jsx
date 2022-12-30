@@ -12,6 +12,7 @@ import CustomModal from '../Modal/CustomModal';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -41,6 +42,7 @@ function Navbar() {
       type: 'info'
     });
   };
+
   const handleProfile = () => {
     navigate('/user');
     window.location.reload();
@@ -61,7 +63,8 @@ function Navbar() {
       .catch((error) => {
         toast(error);
       });
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
 
   return (
     <nav className="bg-white text-black shadow-md print:hidden">
@@ -257,10 +260,17 @@ export function AuthRightElementNavbar({
             {isUser ? (
               <Link to="/notifications">
                 <div className="inline-flex relative items-center  ">
-                  Notifications{' '}
-                  <div className="  inline-flex absolute -top-4 -right-7 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900">
-                    {notif.length}
-                  </div>
+                  Notifications
+                  {notif?.map((x) => (
+                    <div
+                      key={x.id}
+                      className={`${
+                        x.is_read
+                          ? 'bg-white hidden'
+                          : 'inline-flex absolute -top-3 -right-5 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'
+                      }`}
+                    />
+                  ))}
                 </div>
               </Link>
             ) : null}
