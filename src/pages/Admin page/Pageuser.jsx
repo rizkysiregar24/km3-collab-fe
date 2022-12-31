@@ -10,6 +10,7 @@ export default function Pageuser() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const config = {
@@ -29,7 +30,8 @@ export default function Pageuser() {
       .catch((err) => {
         toast(err.response.data.message);
       });
-  }, [page]);
+    setRefresh(false);
+  }, [page, refresh]);
 
   const handleDelete = (id) => {
     const config = {
@@ -43,6 +45,7 @@ export default function Pageuser() {
     axios(config)
       .then((response) => {
         toast(response.data.message);
+        setRefresh(true);
       })
       .catch((error) => error);
   };
@@ -110,8 +113,8 @@ export default function Pageuser() {
                 </th>
 
                 <td className="py-4 px-6">{x.email}</td>
-                <td className="py-4 px-6">{x.createdAt}</td>
-                <td className="py-4 px-6">{x.updatedAt}</td>
+                <td className="py-4 px-6">{new Date(x.createdAt).toDateString()}</td>
+                <td className="py-4 px-6">{new Date(x.updatedAt).toDateString()}</td>
                 <td className="py-4 px-6 text-right">
                   <button
                     type="button"
@@ -130,7 +133,6 @@ export default function Pageuser() {
                     className="font-medium bg-red-500 px-5 py-2 rounded-lg text-white  hover:underline"
                     onClick={() => {
                       handleDelete(x.id);
-                      navigate('/user-page');
                     }}>
                     Delete
                   </button>

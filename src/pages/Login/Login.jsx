@@ -41,7 +41,7 @@ export function Login() {
               navigate(`/${redirect}/${id}?passengers=${passengers}`);
               return;
             }
-            if (status === 200 && role === 'admin') {
+            if (status === 200 && role === 'Admin') {
               navigate('/admin-page');
               toast('Succsessfully logged in as admin', {
                 type: 'success'
