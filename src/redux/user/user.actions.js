@@ -38,7 +38,7 @@ export const login =
           })
         );
         localStorage.setItem('user', JSON.stringify(verifiedToken.data));
-        callback(verifiedStatus);
+        callback(verifiedStatus, verifiedToken.data.role);
       }
     } catch (error) {
       setError({ error: error.response.data.message });
