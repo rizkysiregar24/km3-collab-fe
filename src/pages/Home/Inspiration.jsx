@@ -47,8 +47,12 @@ function Inspiration() {
   const departure = historyDeparture?.value ?? 'CGK';
 
   return (
-    <section className="bg-slate-100 p-8 ">
+    <section className="bg-slate-100 px-8 pt-16 pb-24">
       <h2 className="text-3xl font-bold text-center my-8">Fly to these popular destinations</h2>
+      <p className="text-center my-8">
+        Need some inspiration where to go? This is some of the most popular destinations in
+        Indonesia
+      </p>
       <div className="flex flex-wrap justify-center items-center gap-4">
         {DESTINATIONS.map((place) => (
           <Link

@@ -98,7 +98,7 @@ export function Home() {
   };
 
   return (
-    <Layout footer="white">
+    <Layout>
       <div className="flex flex-col items-center md:py-20 py-8" style={bgStyles}>
         <div className="flex flex-col items-center">
           <h1 className="font-bold mx-4 text-4xl lg:text-5xl text-white bg-clip-text bg-gradient-to-tr from-[#0b6cff] to-[#512bd4] p-2">
@@ -259,9 +259,9 @@ export function Home() {
         </div>
       </div>
 
-      <FeatureSection />
-
       <Inspiration />
+
+      <FeatureSection />
     </Layout>
   );
 }

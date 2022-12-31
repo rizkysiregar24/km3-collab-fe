@@ -47,7 +47,7 @@ export function ExpediaCard({
         {/* end of total time travel */}
         {/* right content, price and info roundtrip or oneway */}
         <div className="text-end">
-          <h3 className="font-bold text-xl md:text-2xl">
+          <h3 className="font-bold text-lg md:text-2xl">
             Rp. {new Intl.NumberFormat('ID-id').format(price)}
           </h3>
           <p className="text-xs md:text-sm capitalize">{tripType} per traveler</p>

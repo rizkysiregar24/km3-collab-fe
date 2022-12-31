@@ -4,17 +4,17 @@ const FEATURES_DATA = [
   {
     icon: <WalletIcon />,
     title: 'Various Payment Methods',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, adipisci!'
+    content: 'We accept wide range payment methods world wide.'
   },
   {
     icon: <DollarIcon />,
     title: 'No Hidden Fee',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing.'
+    content: 'Book with no worries. No hidden fee is added to your order.'
   },
   {
     icon: <RefundIcon />,
     title: 'Refundable',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis molestiae.'
+    content: "Suddenly can't fly? Don't worry, some of our tickets is Refundable."
   }
 ];
 
@@ -24,10 +24,7 @@ function FeatureSection() {
       <div className="xl:h-[700px] flex flex-col justify-center">
         <div className="mb-8 text-center mx-4">
           <h2 className="text-3xl font-bold my-8">Why Terbang Tinggi?</h2>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur quaerat quod sed,
-            aliquam sapiente at.
-          </p>
+          <p>Why choose with Terbang Tinggi? These are the features that we offer</p>
         </div>
         <div className="flex justify-center xl:justify-between mx-4 flex-wrap items-center gap-4 flex-col xl:flex-row">
           {FEATURES_DATA.map((item) => (

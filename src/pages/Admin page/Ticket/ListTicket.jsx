@@ -39,6 +39,12 @@ function ListTicket() {
     });
   };
 
+  const handleAmountPage = (amount) => {
+    setSearchParams({
+      page: amount
+    });
+  };
+
   const handleDeleteTicket = async (id) => {
     const responseDelete = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
       headers: { Authorization: token }
@@ -161,7 +167,14 @@ function ListTicket() {
               className="btn"
               disabled={page <= 1}
               onClick={handleDecrementPage}>
-              {+page === 1 ? '' : +page - 1}
+              Prev
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={page >= totalPages}
+              onClick={handleIncrementPage}>
+              {+page === totalPages ? '' : +page + 1}
             </button>
             <button type="button" className="btn btn-active">
               {page}
@@ -171,7 +184,21 @@ function ListTicket() {
               className="btn"
               disabled={page >= totalPages}
               onClick={handleIncrementPage}>
-              {+page === totalPages ? '' : +page + 1}
+              ...
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={page >= totalPages}
+              onClick={() => handleAmountPage(Number(totalPages))}>
+              {totalPages}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              disabled={page >= totalPages}
+              onClick={handleIncrementPage}>
+              Next
             </button>
           </div>
         </div>

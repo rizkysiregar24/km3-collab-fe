@@ -28,6 +28,7 @@ import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
 import { Dashboard } from './pages/Dashboard';
 import { Reset } from './pages/Reset';
+import { AboutUs } from './pages/AboutUs';
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           <Route path="/detail-user/:id" element={<Detail />} />
           <Route path="/eticket/:paymentId" element={<ETicket />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<AboutUs />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/reset" element={<Reset />} />

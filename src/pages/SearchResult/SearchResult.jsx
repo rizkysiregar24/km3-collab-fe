@@ -70,8 +70,18 @@ export function SearchResult() {
   if (error) {
     return (
       <Layout>
-        <section className="h-[calc(100vh-250px)] flex flex-col justify-center items-center">
-          <p className="capitalize mb-4">{error?.response?.data?.message}</p>
+        <section className="min-h-screen md:h-[calc(100vh-250px)] flex flex-col justify-center items-center mx-8">
+          <img
+            className="h-48"
+            src="https://res.cloudinary.com/dmgrxm78p/image/upload/v1672468918/terbangtinggi/undraw_Lost_re_xqjt_i075rg.png"
+            alt="Lost illustration"
+          />
+          <h2 className="capitalize mb-2 font-semibold text-xl">
+            {error?.response?.data?.message}
+          </h2>
+          <p className="text-center mb-2">
+            Tip: Modify your search with a different date or cabin class.
+          </p>
           <button className="btn btn-primary bg-brand" onClick={openModal} type="button">
             Change search
           </button>
@@ -94,17 +104,22 @@ export function SearchResult() {
 
   return (
     <Layout>
-      <div className="w-full mx-auto">
-        <div className="flex gap-4 justify-center py-4 items-center bg-slate-200 px-4">
-          <p className="capitalize">
-            {departureParams} &rarr; {arrivalParams} &bull; {new Date(fromDate).toDateString()}{' '}
-            &bull; {passengers} passengers &bull; {seatClassParams}
-          </p>
-          &bull;
-          <button className="btn btn-sm btn-info" type="button" onClick={openModal}>
-            Change Search
-          </button>
-        </div>
+      <div className="w-full mx-auto min-h-screen">
+        {resultData ? (
+          <div className="flex gap-4 justify-center py-4 items-center bg-slate-200 px-4">
+            <p className="capitalize">
+              {departureParams} &rarr; {arrivalParams} &bull; {new Date(fromDate).toDateString()}{' '}
+              &bull; {passengers} passengers &bull; {seatClassParams}
+            </p>
+            &bull;
+            <button className="btn btn-sm btn-info" type="button" onClick={openModal}>
+              Change Search
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
+
         <div className="flex justify-center my-8">
           <div className="flex justify-center items-center max-w-3xl flex-col gap-4 mx-4">
             {resultData ? (
