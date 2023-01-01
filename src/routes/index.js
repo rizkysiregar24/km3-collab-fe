@@ -3,6 +3,7 @@ import { Booking } from '../pages/Booking';
 import Cart from '../pages/Booking/Cart';
 import CreateTicket from '../pages/Admin page/Ticket/CreateTicket';
 import Detail from '../pages/detail/Detail';
+import DetailTransaction from '../pages/Transaction/DetailTransaction';
 import Error from '../pages/Error';
 import ETicket from '../pages/Booking/ETicket';
 import { ForgotPassword } from '../pages/ForgotPassword';
@@ -17,7 +18,7 @@ import { Register } from '../pages/Register';
 import { Reset } from '../pages/Reset';
 import { ResetPassword } from '../pages/ResetPassword';
 import { SearchResult } from '../pages/SearchResult';
-import Transaction from '../pages/transaction page/Transaction';
+import Transaction from '../pages/Transaction/Transaction';
 import UpdateTicket from '../pages/Admin page/Ticket/UpdateTicket';
 import Userpage from '../pages/Admin page/Userpage';
 import Verifiedemail from '../pages/Authentication/Verifiedemail';
@@ -52,7 +53,11 @@ const routes = [
     component: Verifiedemail
   },
   {
-    path: '/transactions',
+    path: '/transaction/:id',
+    component: DetailTransaction
+  },
+  {
+    path: '/transaction',
     component: Transaction
   },
   {

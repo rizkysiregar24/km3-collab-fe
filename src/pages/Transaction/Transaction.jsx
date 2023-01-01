@@ -3,14 +3,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MdFlightTakeoff, MdOutlineFlightLand } from 'react-icons/md';
+
 import CalendarIcon from '../../components/Icons/CalendarIcon';
-import Navbar from '../../components/Layout/Navbar';
+import { Layout } from '../../components/Layout';
 
 export default function Transaction() {
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const API_URL = process.env.REACT_APP_AUTH_API;
+
+  const paid = data?.filter((x) => x.isPaid) ?? [];
 
   useEffect(() => {
     async function fetchData() {
@@ -28,14 +31,11 @@ export default function Transaction() {
   };
 
   return (
-    <>
-      <div>
-        <Navbar />
-      </div>
-      <div className="  bg-slate-100 ">
+    <Layout title="Transactions">
+      <div className="bg-slate-100 ">
         <div className=" min-[400px]:px-32  py-10 ">
           <h1 className="text-3xl font-bold text-center">Transaction History </h1>
-          {data?.map((x) => (
+          {paid?.map((x) => (
             <div
               key={x.id}
               className="border-2 rounded-lg  drop-shadow-2xl md:drop-shadow-xl bg-white px-5 py-5 mt-5">
@@ -113,6 +113,6 @@ export default function Transaction() {
           ))}
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
