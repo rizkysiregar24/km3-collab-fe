@@ -29,6 +29,8 @@ export function SearchResult() {
   const fromDate = searchParams.get('date');
   const returnDateParams = searchParams.get('returnDate');
 
+  const isPast = new Date(fromDate) < new Date().setHours(0, 0, 0, 0);
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -66,6 +68,37 @@ export function SearchResult() {
     }
     setRefresh(false);
   }, [refresh]);
+
+  if (isPast) {
+    return (
+      <Layout>
+        <section className="min-h-screen md:h-[calc(100vh-250px)] flex flex-col justify-center items-center mx-8">
+          <img
+            className="h-48"
+            src="https://res.cloudinary.com/dmgrxm78p/image/upload/v1672595705/terbangtinggi/undraw_Booked_re_vtod_virqiq.png"
+            alt="Date has passed"
+          />
+          <h2 className="capitalize mb-2 font-semibold text-xl">Departure date has passed</h2>
+          <p className="text-center mb-2">Please search for flights on other dates.</p>
+          <button className="btn btn-primary bg-brand" onClick={openModal} type="button">
+            Change Date
+          </button>
+          <CustomModal
+            isOpen={isOpen}
+            closeModal={closeModal}
+            label="Change search destination"
+            className="w-11/12 max-w-4xl">
+            <SearchFormBox setRefresh={setRefresh} setIsOpen={setIsOpen} />
+            <div className="-mt-14 mx-8 block md:hidden">
+              <button className="btn btn-outline w-full" onClick={closeModal} type="button">
+                Cancel
+              </button>
+            </div>
+          </CustomModal>
+        </section>
+      </Layout>
+    );
+  }
 
   if (error) {
     return (
