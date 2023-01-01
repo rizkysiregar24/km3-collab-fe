@@ -7,7 +7,6 @@ import DetailTransaction from '../pages/Transaction/DetailTransaction';
 import Error from '../pages/Error';
 import ETicket from '../pages/Booking/ETicket';
 import { ForgotPassword } from '../pages/ForgotPassword';
-import { History } from '../pages/History';
 import ListTicket from '../pages/Admin page/Ticket/ListTicket';
 import { Login } from '../pages/Login';
 import { Notifications } from '../pages/Notifications';
@@ -87,10 +86,6 @@ const routes = [
   {
     path: '/payment/:paymentId',
     component: Payment
-  },
-  {
-    path: '/history',
-    component: History
   },
   {
     path: '/detail-user/:id',
