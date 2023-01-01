@@ -46,7 +46,7 @@ function Navbar() {
 
   const handleProfile = () => {
     navigate('/user');
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {
