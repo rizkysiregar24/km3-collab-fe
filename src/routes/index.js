@@ -56,11 +56,11 @@ const routes = [
     component: Transaction
   },
   {
-    path: '/admin-page',
+    path: '/dashboard',
     component: Pageadmin
   },
   {
-    path: '/user-page',
+    path: '/users',
     component: Userpage
   },
   {

@@ -137,7 +137,7 @@ function ListTicket() {
                               price: ticket.price
                             })
                           );
-                          navigate(`/ticket/${ticket.id}`);
+                          navigate(`/flights/${ticket.id}`);
                         }}
                         type="button">
                         Update
