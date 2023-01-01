@@ -16,7 +16,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import Userpage from './pages/Admin page/Userpage';
 import Pageadmin from './pages/Admin page/Pageadmin';
-import Transaction from './pages/transaction page/Transaction';
+import Transaction from './pages/Transaction/Transaction';
 import CreateTicket from './pages/Admin page/Ticket/CreateTicket';
 import ListTicket from './pages/Admin page/Ticket/ListTicket';
 import UpdateTicket from './pages/Admin page/Ticket/UpdateTicket';
@@ -28,6 +28,7 @@ import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
 import { Dashboard } from './pages/Dashboard';
 import { Reset } from './pages/Reset';
+import DetailTransaction from './pages/Transaction/DetailTransaction';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/verified-email" element={<Verifiedemail />} />
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transaction/:id" element={<DetailTransaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
           <Route path="/create-ticket" element={<CreateTicket />} />

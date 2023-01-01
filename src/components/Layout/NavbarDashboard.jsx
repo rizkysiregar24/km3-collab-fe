@@ -214,9 +214,7 @@ export function AuthRightElementNavbar({
           {/* <li>
             <Link to="/user">Profile</Link>
           </li> */}
-          <li>
-            <Link to="/transactions">Transactions</Link>
-          </li>
+
           <li>
             <button type="button" onClick={openModal}>
               Logout
