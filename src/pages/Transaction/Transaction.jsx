@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MdFlightTakeoff, MdOutlineFlightLand } from 'react-icons/md';
 import CalendarIcon from '../../components/Icons/CalendarIcon';
@@ -7,25 +8,24 @@ import Navbar from '../../components/Layout/Navbar';
 
 export default function Transaction() {
   const { token } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const API_URL = process.env.REACT_APP_AUTH_API;
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(
-        'https://terbangtinggi-api-staging.km3ggwp.com/transaction',
-        {
-          headers: { Authorization: token }
-        }
-      );
+      const response = await axios.get(`${API_URL}/transaction`, {
+        headers: { Authorization: token }
+      });
       setData(response.data.data);
     }
 
     fetchData();
   }, []);
 
-  console.log(token);
-  console.log(data);
+  const handleDetail = (id) => {
+    navigate(`/transaction/${id}`);
+  };
 
   return (
     <>
@@ -95,7 +95,7 @@ export default function Transaction() {
                     <button
                       type="button"
                       href="/#"
-                      className="font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
+                      className=" mt-5 font-medium bg-green-500 px-5 py-2 rounded-lg text-white  hover:underline"
                       onClick={() => {
                         handleDetail(x.id);
                       }}>

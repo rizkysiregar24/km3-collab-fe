@@ -28,6 +28,7 @@ import Cart from './pages/Booking/Cart';
 import ETicket from './pages/Booking/ETicket';
 import { Dashboard } from './pages/Dashboard';
 import { Reset } from './pages/Reset';
+import DetailTransaction from './pages/Transaction/DetailTransaction';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/verified-email" element={<Verifiedemail />} />
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transaction/:id" element={<DetailTransaction />} />
           <Route path="/admin-page" element={<Pageadmin />} />
           <Route path="/user-page" element={<Userpage />} />
           <Route path="/create-ticket" element={<CreateTicket />} />
