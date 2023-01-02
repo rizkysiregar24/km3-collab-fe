@@ -17,6 +17,7 @@ function Navbar() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { name, role } = useSelector((state) => state.user);
+  const { unpaid } = useSelector((state) => state.transactions);
 
   const [notif, setNotif] = useState([]);
 
@@ -45,7 +46,7 @@ function Navbar() {
 
   const handleProfile = () => {
     navigate('/user');
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {
@@ -92,6 +93,7 @@ function Navbar() {
                 isOpen={modalOpen}
                 notif={notif}
                 handleProfile={handleProfile}
+                unpaid={unpaid}
               />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
@@ -123,6 +125,7 @@ function Navbar() {
                 isOpen={modalOpen}
                 notif={notif}
                 handleProfile={handleProfile}
+                unpaid={unpaid}
               />
             </div>
           ) : (
@@ -206,7 +209,8 @@ export function AuthRightElementNavbar({
   closeModal,
   notif,
   isUser,
-  handleProfile
+  handleProfile,
+  unpaid
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -226,7 +230,11 @@ export function AuthRightElementNavbar({
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
-            <span className="badge badge-xs badge-primary indicator-item" />
+            {unpaid.length > 0 ? (
+              <span className="badge badge-xs badge-primary indicator-item" />
+            ) : (
+              ''
+            )}
           </div>
         </button>
       </Link>
@@ -243,7 +251,7 @@ export function AuthRightElementNavbar({
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           {isAdmin ? (
             <li>
-              <Link to="/admin-page">Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </li>
           ) : null}
           <li>

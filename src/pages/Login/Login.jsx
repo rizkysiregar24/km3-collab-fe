@@ -42,7 +42,7 @@ export function Login() {
               return;
             }
             if (status === 200 && role === 'Admin') {
-              navigate('/admin-page');
+              navigate('/dashboard');
               toast('Succsessfully logged in as admin', {
                 type: 'success'
               });

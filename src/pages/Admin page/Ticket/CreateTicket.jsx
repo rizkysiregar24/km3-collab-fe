@@ -101,7 +101,7 @@ export default function CreateTicket() {
   return (
     <Dashboard>
       <div className="p-8">
-        <h1 className="text-3xl">Add Ticket</h1>
+        <h1 className="text-3xl">Create Flight</h1>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="flex gap-4 flex-wrap mx-4">
             <div className="flex flex-wrap gap-4">
@@ -115,7 +115,7 @@ export default function CreateTicket() {
                     <Input
                       variant="primary"
                       type="text"
-                      placeholder="Code"
+                      placeholder="312"
                       name="code"
                       className="max-w-[250px]"
                       onChange={handleChange}

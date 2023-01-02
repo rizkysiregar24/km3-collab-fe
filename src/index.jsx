@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { Windmill } from '@windmill/react-ui';
 
 import './index.css';
 import App from './App';
@@ -11,9 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Windmill usePreferences>
-        <App />
-      </Windmill>
+      <App />
     </Provider>
   </React.StrictMode>
 );
