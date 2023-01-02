@@ -129,7 +129,7 @@ export default function Detail() {
         </div>
       </div>
       <div className="text-right mr-20">
-        <Link to="/user-page">
+        <Link to="/users">
           <button
             type="button"
             className=" text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex  dark:focus:ring-[#3b5998]/55 mb-2">

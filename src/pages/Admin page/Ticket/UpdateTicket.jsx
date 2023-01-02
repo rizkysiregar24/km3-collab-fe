@@ -196,7 +196,7 @@ export default function UpdateTicket() {
                 type="button"
                 className="btn btn-primary btn-outline"
                 onClick={() => {
-                  navigate('/ticket');
+                  navigate('/flights');
                 }}>
                 Cancel
               </button>

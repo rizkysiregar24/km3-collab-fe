@@ -42,7 +42,7 @@ export default function Cart() {
             className={`tab ${tabActive === 'experied' ? 'tab-active' : null}`}
             type="button"
             onClick={handleExperiedTab}>
-            Experied
+            Expired
           </button>
         </div>
         <div className="flex flex-col flex-wrap gap-4">
