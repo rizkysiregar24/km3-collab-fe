@@ -51,6 +51,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>John Tri Putra Sihombing &bull; Backend</figcaption>
                   </figure>
@@ -63,6 +64,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>Muhammad Umar Mansyur&bull; Backend</figcaption>
                   </figure>
@@ -75,6 +77,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>Achmad Fadilla &bull; Backend</figcaption>
                   </figure>
@@ -87,6 +90,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>Aroyan Bakti S &bull; Frontend</figcaption>
                   </figure>
@@ -99,6 +103,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>Frans Glendly Manuel S. &bull; Frontend</figcaption>
                   </figure>
@@ -111,6 +116,7 @@ export function AboutUs() {
                       className="rounded-lg w-64 h-64 object-cover object-top"
                       height={256}
                       width={256}
+                      loading="lazy"
                     />
                     <figcaption>Muhammad Rizky P.S &bull; Frontend</figcaption>
                   </figure>
