@@ -4,16 +4,20 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { IoWarningOutline } from 'react-icons/io5';
 
 import { Dashboard } from '../../../components/Layout';
 import { setTicketData, resetData, getAllTickets } from '../../../redux/ticket/ticket.actions';
 import TableSkeleton from '../../../components/Layout/Skeleton';
+import CustomModal from '../../../components/Modal/CustomModal';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 const token = localStorage.getItem('token');
 
 function ListTicket() {
   const [refetch, setRefetch] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentTicket, setCurrentTicket] = useState({});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,6 +56,15 @@ function ListTicket() {
     const responseDeleteData = await responseDelete.data;
     toast(responseDeleteData.message);
     setRefetch(true);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setCurrentTicket({});
   };
 
   useEffect(() => {
@@ -145,7 +158,8 @@ function ListTicket() {
                       <button
                         className="btn btn-error btn-xs"
                         onClick={() => {
-                          handleDeleteTicket(ticket.id);
+                          openModal();
+                          setCurrentTicket(ticket);
                         }}
                         type="button">
                         Delete
@@ -203,6 +217,32 @@ function ListTicket() {
           </div>
         </div>
       </section>
+      <CustomModal isOpen={isOpen} closeModal={closeModal} label="Delete flight">
+        <div className="flex flex-wrap gap-4 flex-col">
+          <IoWarningOutline size={32} />
+          <h2 className="text-2xl font-bold">Delete flight {currentTicket.code}?</h2>
+          <p>
+            From {currentTicket.departureAirport} To {currentTicket.arrivalAirport}
+          </p>
+          <p>
+            {currentTicket.airlineName} &bull; {new Date(currentTicket.date).toDateString()}
+          </p>
+          <div className="w-full flex justify-end gap-4">
+            <button type="button" onClick={closeModal} className="btn btn-outline btn-primary">
+              Cancel
+            </button>
+            <button
+              className="btn btn-error"
+              onClick={() => {
+                handleDeleteTicket(currentTicket.id);
+                closeModal();
+              }}
+              type="button">
+              Delete
+            </button>
+          </div>
+        </div>
+      </CustomModal>
     </Dashboard>
   );
 }
