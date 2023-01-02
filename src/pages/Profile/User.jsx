@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { FaCity } from 'react-icons/fa';
 import { BsFillPinMapFill } from 'react-icons/bs';
-
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import { myProfile } from '../../redux/user/user.actions';
 
-import Navbar from '../../components/Layout/Navbar';
+import { myProfile } from '../../redux/user/user.actions';
+import { Layout } from '../../components/Layout';
 
 function User() {
   const dispatch = useDispatch();
@@ -91,8 +90,7 @@ function User() {
   }, [username, email, thumbnail, fullName, gender, country, province, city, address, nomorhp]);
 
   return (
-    <div className="mx-auto ">
-      <Navbar />
+    <Layout>
       <div className="max-w-4xl mx-auto">
         <div className="flex flex-col items-center  md:py-10  px-5">
           <form className="w-full">
@@ -276,7 +274,7 @@ function User() {
           </form>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
