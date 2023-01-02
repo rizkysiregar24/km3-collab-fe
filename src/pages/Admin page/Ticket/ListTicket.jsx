@@ -172,9 +172,9 @@ function ListTicket() {
             <button
               type="button"
               className="btn"
-              disabled={page >= totalPages}
-              onClick={handleIncrementPage}>
-              {+page === totalPages ? '' : +page + 1}
+              disabled={page <= 1}
+              onClick={handleDecrementPage}>
+              {page - 1}
             </button>
             <button type="button" className="btn btn-active">
               {page}
@@ -184,7 +184,7 @@ function ListTicket() {
               className="btn"
               disabled={page >= totalPages}
               onClick={handleIncrementPage}>
-              ...
+              {Number(page) + 1}
             </button>
             <button
               type="button"

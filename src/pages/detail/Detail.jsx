@@ -37,66 +37,66 @@ export default function Detail() {
       <h1 className="text-2xl text-center mt-5 font-serif	">Detail User</h1>
       <div className="px-20 py-5 drop-shadow-xl ">
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg drop-shadow-md">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500">
             <tbody>
-              <tr className="border-b border-gray-200 dark:border-gray-700 ">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className=" flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className=" flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <IoCreate size={20} className="mr-2 text-blue-500" />
                   Created
                 </th>
                 <td className="py-4 px-6">{detail.createdAt}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700 ">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className=" flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className=" flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <MdUpdate size={20} className="mr-2 text-green-500" />
                   Updated
                 </th>
                 <td className="py-4 px-6">{detail.updatedAt}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex  py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex  py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <FiMapPin size={20} className="mr-2 text-red-500" />
                   Address
                 </th>
                 <td className="py-4  px-6">{detail.address}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <FcGlobe size={20} className="mr-2" />
                   Country
                 </th>
                 <td className="py-4 px-6">{detail.country}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <FaCity size={20} className="mr-2 text-emerald-900" />
                   City
                 </th>
                 <td className="py-4 px-6">{detail.city}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <BsFillPinMapFill size={20} className="text-indigo-500 mr-2" />
                   Province
                 </th>
                 <td className="py-4 px-6">{detail.province}</td>
               </tr>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex py-4 px-5 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex py-4 px-5 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20pt"
@@ -115,10 +115,10 @@ export default function Detail() {
                 <td className="py-4 px-6">{detail.gender}</td>
               </tr>
 
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="border-b border-gray-200">
                 <th
                   scope="row"
-                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  className="flex py-4 px-6 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                   <BsTelephonePlusFill size={20} className="mr-2 text-teal-500" />
                   Phone
                 </th>
@@ -132,7 +132,7 @@ export default function Detail() {
         <Link to="/users">
           <button
             type="button"
-            className=" text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex  dark:focus:ring-[#3b5998]/55 mb-2">
+            className=" text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex mb-2">
             <TiArrowBack />
             Back
           </button>

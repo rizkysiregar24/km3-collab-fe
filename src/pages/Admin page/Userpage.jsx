@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import Pageuser from "./Pageuser";
-import { Dashboard } from "../../components/Layout";
+import Pageuser from './Pageuser';
+import { Dashboard } from '../../components/Layout';
 
 export default function Adminpage() {
   return (
