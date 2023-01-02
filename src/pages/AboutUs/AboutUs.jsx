@@ -1,6 +1,11 @@
 import React from 'react';
 
 import { Layout } from '../../components/Layout';
+import profile1 from '../../components/img/1.jpg';
+import profile2 from '../../components/img/2.jpg';
+import profile3 from '../../components/img/3.jpeg';
+import profile5 from '../../components/img/5.jpg';
+import profile6 from '../../components/img/6.jpg';
 
 export function AboutUs() {
   return (
@@ -40,62 +45,42 @@ export function AboutUs() {
               <div className="flex flex-wrap items-center justify-between gap-8">
                 <div>
                   <figure>
-                    <img
-                      src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
-                    />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
+                    <img src={profile1} alt="profile" className="rounded-lg w-64 h-64" />
+                    <figcaption>John Tri Putra Sihombing &bull; Backend</figcaption>
+                  </figure>
+                </div>
+                <div>
+                  <figure>
+                    <img src={profile2} alt="profile" className="rounded-lg w-64 h-64" />
+                    <figcaption>Muhammad Umar Mansyur&bull; Backend</figcaption>
+                  </figure>
+                </div>
+                <div>
+                  <figure>
+                    <img src={profile3} alt="profile" className="rounded-lg w-64 h-64" />
+                    <figcaption>Achmad Fadilla &bull; Backend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
                     <img
                       src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
-                    />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
-                  </figure>
-                </div>{' '}
-                <div>
-                  <figure>
-                    <img
-                      src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
+                      alt="profile"
+                      className="rounded-lg w-64 h-64"
                     />
                     <figcaption>Aroyan &bull; Frontend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img
-                      src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
-                    />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
+                    <img src={profile5} alt="profile" className="rounded-lg w-64 h-64" />
+                    <figcaption>Frans Glendly Manuel S. &bull; Frontend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img
-                      src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
-                    />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
-                  </figure>
-                </div>{' '}
-                <div>
-                  <figure>
-                    <img
-                      src="https://placekitten.com/250/250"
-                      alt="Kitten 1"
-                      className="rounded-lg"
-                    />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
+                    <img src={profile6} alt="profile" className="rounded-lg w-64 h-64" />
+                    <figcaption>Muhammad Rizky P.S &bull; Frontend</figcaption>
                   </figure>
                 </div>
               </div>

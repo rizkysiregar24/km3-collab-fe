@@ -48,7 +48,9 @@ function User() {
         gender: formData.gender,
         country: formData.country,
         address: formData.address,
-        phone: formData.phone
+        phone: formData.phone,
+        province: formData.province,
+        city: formData.city
       },
       headers: {
         Authorization: localStorage.getItem('token'),
