@@ -11,19 +11,26 @@ import { setTicketData, resetData, getAllTickets } from '../../../redux/ticket/t
 import TableSkeleton from '../../../components/Layout/Skeleton';
 import CustomModal from '../../../components/Modal/CustomModal';
 import Spinner from '../../../components/Layout/Spinner';
+import { FormControl, Label } from '../../../components/Input';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
-const token = localStorage.getItem('token');
 
 function ListTicket() {
   const [refetch, setRefetch] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentTicket, setCurrentTicket] = useState({});
+  const [limit, setLimit] = useState('10');
+  const [query, setQuery] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data, error } = useSelector((state) => state.ticket.allTickets);
+
+  const filterData = (q = '') =>
+    data
+      ? data?.rows?.filter((x) => Object.values(x).join().toLowerCase().includes(q.toLowerCase()))
+      : {};
 
   const [searchParams, setSearchParams] = useSearchParams({
     page: 1
@@ -53,7 +60,7 @@ function ListTicket() {
   const handleDeleteTicket = async (id) => {
     try {
       const { status } = await axios.delete(`${BASE_URL}/flight/data/${id}`, {
-        headers: { Authorization: token }
+        headers: { Authorization: localStorage.getItem('token') }
       });
       if (status === 200 || status === 201) {
         toast('Ticket is deleted', { type: 'success' });
@@ -73,11 +80,15 @@ function ListTicket() {
     setCurrentTicket({});
   };
 
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+  };
+
   useEffect(() => {
     dispatch(resetData());
-    dispatch(getAllTickets(Number(page)));
+    dispatch(getAllTickets(Number(page), Number(limit)));
     setRefetch(false);
-  }, [refetch, page]);
+  }, [refetch, page, limit]);
 
   if (error) {
     return (
@@ -96,7 +107,34 @@ function ListTicket() {
   return (
     <Dashboard>
       <section className="my-4 mx-2">
-        <h1 className="text-2xl mb-4">List of all Flights</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl mb-4 hidden md:block">List all Flights</h1>
+          <div className="form-control">
+            <FormControl>
+              <Label> </Label>
+              <input
+                type="text"
+                placeholder="Search…"
+                className="input input-bordered input-sm md:input-md"
+                value={query}
+                onChange={handleSearch}
+              />
+            </FormControl>
+          </div>
+          <FormControl className="my-2">
+            <Label>Items per page</Label>
+            <select
+              name="limit"
+              id="limit"
+              value={limit}
+              onChange={(e) => setLimit(e.target.value)}
+              className="select select-bordered select-sm">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </FormControl>
+        </div>
         {data ? (
           <>
             <div className="overflow-x-auto">
@@ -122,7 +160,7 @@ function ListTicket() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.rows?.map((ticket, index) => (
+                    {filterData(query)?.map((ticket, index) => (
                       <tr key={index} className="py-2">
                         <td className="uppercase">{ticket.code}</td>
                         <td className="capitalize">{ticket.airlineName}</td>
