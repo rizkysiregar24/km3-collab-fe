@@ -16,6 +16,7 @@ import { loginSchema } from '../../utils/schemas';
 export function Login() {
   const [type, setType] = useState('password');
   const [icon, setIcon] = useState(FaEyeSlash);
+
   const [searchParams] = useSearchParams();
 
   const redirect = searchParams.get('redirect');
