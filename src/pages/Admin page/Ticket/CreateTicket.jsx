@@ -30,8 +30,6 @@ const initialData = {
   price: +''
 };
 
-const token = localStorage.getItem('token');
-
 export default function CreateTicket() {
   const [data, setData] = useState(initialData);
   const [departure, setDeparture] = useState(null);
@@ -87,7 +85,7 @@ export default function CreateTicket() {
         },
         {
           headers: {
-            Authorization: token
+            Authorization: localStorage.getItem('token')
           }
         }
       );

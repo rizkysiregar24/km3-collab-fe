@@ -24,6 +24,7 @@ export function Booking() {
 
   const [searchParams] = useSearchParams();
   const passengers = searchParams.get('passengers');
+  const date = searchParams.get('date');
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -126,6 +127,23 @@ export function Booking() {
       }
     }
   }, [passengers]);
+
+  if (date && new Date(date) < new Date().setHours(0, 0, 0, 0)) {
+    return (
+      <Layout>
+        <main className="min-h-screen flex items-center justify-center flex-col">
+          <img
+            src="https://res.cloudinary.com/dmgrxm78p/image/upload/v1672468918/terbangtinggi/undraw_Lost_re_xqjt_i075rg.png"
+            alt="Not found"
+            loading="lazy"
+            height={240}
+            width={240}
+          />
+          <h1 className="text-2xl font-bold">Cannot book past flight</h1>
+        </main>
+      </Layout>
+    );
+  }
 
   return (
     <Layout title="Booking" className="bg-slate-100">
