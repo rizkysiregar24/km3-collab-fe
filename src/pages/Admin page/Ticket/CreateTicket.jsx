@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 import { Dashboard } from '../../../components/Layout';
 import {
@@ -29,8 +30,6 @@ const initialData = {
   price: +''
 };
 
-const token = localStorage.getItem('token');
-
 export default function CreateTicket() {
   const [data, setData] = useState(initialData);
   const [departure, setDeparture] = useState(null);
@@ -41,6 +40,8 @@ export default function CreateTicket() {
   const [capacity, setCapacity] = useState(1);
 
   const airlineParsed = JSON.parse(airline);
+
+  const navigate = useNavigate();
 
   const reqBody = {
     code: airlineParsed.iata + data.code,
@@ -84,7 +85,7 @@ export default function CreateTicket() {
         },
         {
           headers: {
-            Authorization: token
+            Authorization: localStorage.getItem('token')
           }
         }
       );
@@ -246,10 +247,18 @@ export default function CreateTicket() {
                 />
               </FormControl>
             </VStack>
-            <div className="flex items-center mt-6">
-              <button type="button" className="btn btn-primary" onClick={handleAddTicket}>
-                Add
-              </button>
+            <div className="w-full">
+              <div className="flex items-center mt-6 justify-end gap-4">
+                <button type="button" className="btn btn-primary w-32" onClick={handleAddTicket}>
+                  Add
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-outline w-32"
+                  onClick={() => navigate('/flights')}>
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </form>

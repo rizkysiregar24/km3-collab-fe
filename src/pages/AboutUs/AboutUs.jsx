@@ -45,41 +45,79 @@ export function AboutUs() {
               <div className="flex flex-wrap items-center justify-between gap-8">
                 <div>
                   <figure>
-                    <img src={profile1} alt="profile" className="rounded-lg w-64 h-64" />
+                    <img
+                      src={profile1}
+                      alt="John Tri Putra Sihombing Backend"
+                      className="rounded-lg w-64 h-64 object-cover"
+                      height={256}
+                      width={256}
+                      loading="lazy"
+                    />
                     <figcaption>John Tri Putra Sihombing &bull; Backend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img src={profile2} alt="profile" className="rounded-lg w-64 h-64" />
+                    <img
+                      src={profile2}
+                      alt="Muhammad Umar Mansyur Backend"
+                      className="rounded-lg w-64 h-64 object-cover"
+                      height={256}
+                      width={256}
+                      loading="lazy"
+                    />
                     <figcaption>Muhammad Umar Mansyur&bull; Backend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img src={profile3} alt="profile" className="rounded-lg w-64 h-64" />
+                    <img
+                      src={profile3}
+                      alt="Achmad Fadilla Backend"
+                      className="rounded-lg w-64 h-64 object-cover"
+                      height={256}
+                      width={256}
+                      loading="lazy"
+                    />
                     <figcaption>Achmad Fadilla &bull; Backend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
                     <img
-                      src="https://placekitten.com/250/250"
-                      alt="profile"
-                      className="rounded-lg w-64 h-64"
+                      src="https://res.cloudinary.com/dmgrxm78p/image/upload/v1672659371/terbangtinggi/aroyan_iitxzz.jpg"
+                      alt="Aroyan Bakti S Frontend"
+                      className="rounded-lg w-64 h-64 object-cover"
+                      height={256}
+                      width={256}
+                      loading="lazy"
                     />
-                    <figcaption>Aroyan &bull; Frontend</figcaption>
+                    <figcaption>Aroyan Bakti S &bull; Frontend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img src={profile5} alt="profile" className="rounded-lg w-64 h-64" />
+                    <img
+                      src={profile5}
+                      alt="Frans Glendly Manuel S. Frontend"
+                      className="rounded-lg w-64 h-64 object-cover"
+                      height={256}
+                      width={256}
+                      loading="lazy"
+                    />
                     <figcaption>Frans Glendly Manuel S. &bull; Frontend</figcaption>
                   </figure>
                 </div>
                 <div>
                   <figure>
-                    <img src={profile6} alt="profile" className="rounded-lg w-64 h-64" />
+                    <img
+                      src={profile6}
+                      alt="Muhammad Rizky P.S Frontend"
+                      className="rounded-lg w-64 h-64 object-cover object-top"
+                      height={256}
+                      width={256}
+                      loading="lazy"
+                    />
                     <figcaption>Muhammad Rizky P.S &bull; Frontend</figcaption>
                   </figure>
                 </div>
