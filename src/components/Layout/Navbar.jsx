@@ -24,6 +24,7 @@ function Navbar() {
   const isAdmin = role === 'Admin';
   const isUser = role === 'User';
   const API_URL = process.env.REACT_APP_AUTH_API;
+  const belumBaca = notif?.filter((notifs) => !notifs.is_read);
 
   const dispatch = useDispatch();
   const isValidUser = useValidUser();
@@ -91,7 +92,7 @@ function Navbar() {
                 openModal={openModal}
                 closeModal={closeModal}
                 isOpen={modalOpen}
-                notif={notif}
+                belumBaca={belumBaca}
                 handleProfile={handleProfile}
                 unpaid={unpaid}
               />
@@ -123,7 +124,7 @@ function Navbar() {
                 openModal={openModal}
                 closeModal={closeModal}
                 isOpen={modalOpen}
-                notif={notif}
+                belumBaca={belumBaca}
                 handleProfile={handleProfile}
                 unpaid={unpaid}
               />
@@ -207,7 +208,7 @@ export function AuthRightElementNavbar({
   openModal,
   isOpen,
   closeModal,
-  notif,
+  belumBaca,
   isUser,
   handleProfile,
   unpaid
@@ -269,16 +270,13 @@ export function AuthRightElementNavbar({
               <Link to="/notifications">
                 <div className="inline-flex relative items-center  ">
                   Notifications
-                  {notif?.map((x) => (
-                    <div
-                      key={x.id}
-                      className={`${
-                        x.is_read
-                          ? 'bg-white hidden'
-                          : 'inline-flex absolute -top-3 -right-5 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'
-                      }`}
-                    />
-                  ))}
+                  <div
+                    className={`${
+                      belumBaca.length > 0
+                        ? 'inline-flex absolute -top-3 -right-5 justify-center items-center w-3 h-3 text-xs font-bold text-white bg-red-500 rounded-full '
+                        : 'inline-flex absolute -top-3 -right-5 justify-center items-center w-3 h-3 text-xs font-bold text-white bg-white-500 rounded-full '
+                    }`}
+                  />
                 </div>
               </Link>
             ) : null}

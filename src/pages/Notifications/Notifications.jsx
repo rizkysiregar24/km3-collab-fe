@@ -105,15 +105,21 @@ export function Notifications() {
       });
   };
 
+  const belumBaca = notif?.filter((notifs) => !notifs.is_read);
+
   return (
     <div className="w-full">
       <Navbar />
       <div className="text-2xl font-bold mt-5 ">
         <div className="flex ml-2 lg:ml-28">
           Notifications
-          {notif?.map((x) => (
-            <span key={x.id} className={`${x.is_read ? '' : 'bg-red-500 w-3 h-3 rounded-full'}`} />
-          ))}
+          <div
+            className={`${
+              belumBaca.length > 0
+                ? 'bg-red-500 w-3 h-3 rounded-lg'
+                : 'bg-white rounded-lg w-3 h-3 '
+            }`}
+          />
           <div className="ml-auto lg:mr-32">
             <button
               type="button"
