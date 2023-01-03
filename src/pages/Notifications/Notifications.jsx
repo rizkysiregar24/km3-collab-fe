@@ -123,6 +123,7 @@ export function Notifications() {
       </Layout>
     );
   }
+  const notRead = notif?.filter((notifs) => !notifs.is_read);
 
   return (
     <Protected>
@@ -135,12 +136,11 @@ export function Notifications() {
                   <div className="flex ml-2 lg:ml-28">
                     Notifications
                     {notif ? (
-                      notif?.map((x) => (
-                        <span
-                          key={x.id}
-                          className={`${x.is_read ? '' : 'bg-red-500 w-3 h-3 rounded-full'}`}
-                        />
-                      ))
+                      <span
+                        className={`${
+                          notRead.length > 0 ? 'bg-red-500 w-3 h-3 rounded-full' : 'bg-white'
+                        }`}
+                      />
                     ) : (
                       <Spinner />
                     )}
