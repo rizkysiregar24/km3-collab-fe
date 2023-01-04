@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { IoMdSwap } from 'react-icons/io';
 
-import '../Home/Home.css';
 import SEAT_CLASS from '../../utils/seatClass';
 import { defaultAirportSelected } from '../../utils/airports';
 import {

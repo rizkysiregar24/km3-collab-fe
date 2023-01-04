@@ -11,12 +11,17 @@ export const dayAfterTomorrow = new Date(_today.getTime() + 2 * 24 * 60 * 60 * 1
   .toISOString()
   .split('T')[0];
 
-export const historyStartDate = localStorage.getItem('historyStartDate');
+const historySearch = JSON.parse(localStorage.getItem('historySearch'));
 
-export const returnDate = localStorage.getItem('historyReturnDate');
+export const { startDate: historyDate, returnDate: historyReturnDate } = historySearch ?? {
+  startDate: new Date().toISOString().substring(0, 10),
+  returnDate: new Date().toISOString().substring(0, 10)
+};
 
 export const isLessThanToday = (date) => {
-  const history = localStorage.getItem('historyStartDate');
+  const history =
+    JSON.parse(localStorage.getItem('historySearch'))?.startDate ??
+    new Date().toISOString().substring(0, 10);
   const start = new Date(date).getTime();
   const end = new Date().getTime();
   if (start < end) {
@@ -25,4 +30,4 @@ export const isLessThanToday = (date) => {
   return history;
 };
 
-export const startDateFromHistory = isLessThanToday(historyStartDate);
+export const startDateFromHistory = isLessThanToday(historyDate);

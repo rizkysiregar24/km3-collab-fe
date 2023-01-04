@@ -11,16 +11,16 @@ export const getTransactionsData = () => async (dispatch) => {
     }
   });
 
-  const unpaidAll = data.data.filter((x) => !x.isPaid);
+  const unpaidAll = data?.data?.filter((x) => !x.isPaid);
 
-  const paid = data.data.filter((x) => x.isPaid);
+  const paid = data?.data?.filter((x) => x.isPaid);
 
   const unpaid = unpaidAll?.filter(
-    (x) => new Date(x.detail_transaction[0].flight.date) > new Date().setHours(0, 0, 0, 0)
+    (x) => new Date(x?.detail_transaction[0]?.flight?.date) > new Date().setHours(0, 0, 0, 0)
   );
 
   const experied = unpaidAll?.filter(
-    (x) => new Date(x.detail_transaction[0].flight.date) < new Date().setHours(0, 0, 0, 0)
+    (x) => new Date(x?.detail_transaction[0]?.flight?.date) < new Date().setHours(0, 0, 0, 0)
   );
 
   dispatch(_getTransactionsData({ data: data.data, paid, unpaid, experied }));

@@ -40,7 +40,7 @@ function Payment() {
 
   const handlePayment = async () => {
     try {
-      const { status } = await axios.post(
+      const { status, data } = await axios.post(
         `${API_URL}/ticket/${paymentId}`,
         {},
         {
@@ -54,7 +54,7 @@ function Payment() {
         toast('Payment successfull, grab your ticket now', {
           type: 'success'
         });
-        navigate(`/eticket/${paymentId}`);
+        navigate(`/eticket/${paymentId}?id=${data.data.detail_transaction[0].transaction_id}`);
       }
     } catch (error) {
       toast(error.message, { type: 'error' });
