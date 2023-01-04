@@ -22,6 +22,8 @@ function Navbar() {
 
   const [notif, setNotif] = useState([]);
 
+  const unreadNotif = notif.filter((x) => !x.is_read);
+
   const isAdmin = role === 'Admin';
   const isUser = role === 'User';
   const API_URL = process.env.REACT_APP_AUTH_API;
@@ -100,6 +102,7 @@ function Navbar() {
                 notif={notif}
                 handleProfile={handleProfile}
                 unpaid={unpaid}
+                unreadNotif={unreadNotif}
               />
             ) : (
               <div className="ml-10 flex items-baseline space-x-4">
@@ -132,6 +135,7 @@ function Navbar() {
                 notif={notif}
                 handleProfile={handleProfile}
                 unpaid={unpaid}
+                unreadNotif={unreadNotif}
               />
             </div>
           ) : (
@@ -213,37 +217,63 @@ export function AuthRightElementNavbar({
   openModal,
   isOpen,
   closeModal,
-  notif,
   isUser,
   handleProfile,
-  unpaid
+  unpaid,
+  unreadNotif
 }) {
   return (
-    <div className="flex items-center gap-2">
-      <Link to="/cart">
-        <button className="btn btn-ghost btn-circle" type="button" title="Cart">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            {unpaid.length > 0 ? (
-              <span className="badge badge-xs badge-primary indicator-item" />
-            ) : (
-              ''
-            )}
-          </div>
-        </button>
-      </Link>
+    <div className="flex items-center justify-between gap-2">
+      <div>
+        <Link to="/cart">
+          <button className="btn btn-ghost btn-square" type="button" title="Cart">
+            <div className="indicator">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              {unpaid.length > 0 ? (
+                <span className="badge badge-xs badge-primary indicator-item" />
+              ) : (
+                ''
+              )}
+            </div>
+          </button>
+        </Link>
+        <Link to="/notifications">
+          <button className="btn btn-ghost btn-square" type="button">
+            <div className="indicator">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
+              {unreadNotif.length > 0 ? (
+                <span className="badge badge-xs badge-primary indicator-item" />
+              ) : (
+                ''
+              )}
+            </div>
+          </button>
+        </Link>
+      </div>
 
       <div className="dropdown dropdown-end">
         <label
@@ -269,25 +299,6 @@ export function AuthRightElementNavbar({
           </li>
           <li>
             <Link to="/transaction">Transactions</Link>
-          </li>
-          <li>
-            {isUser ? (
-              <Link to="/notifications">
-                <div className="inline-flex relative items-center  ">
-                  Notifications
-                  {notif?.map((x) => (
-                    <div
-                      key={x.id}
-                      className={`${
-                        x.is_read
-                          ? 'bg-white hidden'
-                          : 'inline-flex absolute -top-3 -right-5 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </Link>
-            ) : null}
           </li>
           <li>
             <button type="button" onClick={openModal}>

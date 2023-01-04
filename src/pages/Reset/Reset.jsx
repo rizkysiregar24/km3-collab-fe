@@ -17,6 +17,7 @@ export function Reset() {
     localStorage.removeItem('historyStartDate');
     localStorage.removeItem('historyTripType');
     localStorage.removeItem('historyStartDate');
+    localStorage.removeItem('historySearch');
     setTimeout(() => {
       setIsLoading(false);
       toast('Cache is cleared', { type: 'success' });

@@ -20,7 +20,7 @@ export function Booking() {
   const [isOpen, setIsOpen] = useState(false);
 
   const valiadteForms =
-    data?.filter((x) => x?.email && x?.firstName && x?.phone)?.length === data?.length;
+    data?.filter((x) => x?.firstName && x?.travelDocument)?.length === data?.length;
 
   const [searchParams] = useSearchParams();
   const passengers = searchParams.get('passengers');
@@ -113,8 +113,9 @@ export function Booking() {
         email: '',
         firstName: '',
         lastName: '',
-        phone: '',
-        type: 'adult'
+        phone: '6281',
+        type: 'adult',
+        travelDocument: ''
       };
       const passengersData = [];
       Array.from({ length: passengers }, () => {
@@ -170,26 +171,11 @@ export function Booking() {
                 </h2>
                 <form onSubmit={handleTransaction} disabled={!valiadteForms}>
                   <FormControl>
-                    <Label>Email</Label>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="johndoe@mail.com"
-                      className="input input-primary w-full"
-                      onChange={(e) => {
-                        handleChange(i, e.target.name, e.target.value);
-                      }}
-                      value={data[i]?.email}
-                      required
-                    />
-                  </FormControl>
-
-                  <FormControl>
                     <Label>First Name</Label>
                     <input
                       type="text"
                       name="firstName"
-                      placeholder="First Name"
+                      placeholder="John"
                       className="input input-primary "
                       onChange={(e) => {
                         handleChange(i, e.target.name, e.target.value);
@@ -204,7 +190,7 @@ export function Booking() {
                     <input
                       type="text"
                       name="lastName"
-                      placeholder="Last Name"
+                      placeholder="Doe"
                       className="input input-primary "
                       onChange={(e) => {
                         handleChange(i, e.target.name, e.target.value);
@@ -215,17 +201,17 @@ export function Booking() {
                   </FormControl>
 
                   <FormControl>
-                    <Label>Phone number</Label>
+                    <Label>Nationality ID</Label>
                     <input
                       type="tel"
-                      name="phone"
+                      name="travelDocument"
                       id="phone"
-                      placeholder="081221334556"
+                      placeholder="123456789"
                       className="input input-primary "
                       onChange={(e) => {
                         handleChange(i, e.target.name, e.target.value);
                       }}
-                      value={data[i]?.phone}
+                      value={data[i]?.travelDocument}
                       required
                     />
                   </FormControl>

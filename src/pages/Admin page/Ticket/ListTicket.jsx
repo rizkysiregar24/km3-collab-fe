@@ -93,13 +93,15 @@ function ListTicket() {
   if (error) {
     return (
       <Dashboard>
-        <h1 className="text-2xl mb-4">List of all available tickets</h1>
-        <p>
-          {error}, create one{' '}
-          <Link className="underline" to="/create-ticket">
-            here
-          </Link>
-        </p>
+        <section className="min-h-screen">
+          <h1 className="text-2xl mb-4">List of all available tickets</h1>
+          <p>
+            {error}, create one{' '}
+            <Link className="underline" to="/create-ticket">
+              here
+            </Link>
+          </p>
+        </section>
       </Dashboard>
     );
   }

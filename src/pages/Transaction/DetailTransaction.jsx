@@ -32,67 +32,57 @@ export default function DetailTransaction() {
   return (
     <Protected>
       <Layout>
-        {detail ? (
-          <>
-            <h1 className="text-2xl text-center py-5 font-serif">Detail History Transaction</h1>
-            <table className="w-full  text-sm text-left  text-gray-500 dark:text-gray-400 ">
-              <tbody className="grid place-content-center">
-                {detail.passenger?.map((x) => (
-                  <div className="my-5 ">
-                    <tr className="bg-white dark:bg-gray-800 ">
-                      <th
-                        scope="row"
-                        className="py-4 px-6 flex font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <p className="mt-1">Email</p>
-                      </th>
-                      <td className="py-4 px-6">{x.email}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        First Name
-                      </th>
-                      <td className="py-4 px-6">{x.firstName}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Last Name
-                      </th>
-                      <td className="py-4 px-6">{x.lastName}</td>
-                    </tr>
-                    <tr className="bg-white  dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="py-4 px-6 flex font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Phone Number
-                      </th>
-                      <td className=" py-4 px-6">{x.phone}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Type
-                      </th>
-                      <td className="py-4 px-6">{x.type}</td>
-                    </tr>
-                    <br />
-                    <a href={detail?.tiket[0]?.ticket_pdf} className="ml-5">
-                      <span className="font-medium bg-green-500 px-5 text-center py-2 w-40 rounded-lg text-white  hover:underline">
-                        Download Tiket
-                      </span>
-                    </a>
-                  </div>
-                ))}
-              </tbody>
-            </table>
-          </>
-        ) : (
-          <Spinner textContent="Getting your transaction" />
-        )}
+        <main className="min-h-screen my-4">
+          {detail ? (
+            <>
+              <h1 className="text-2xl text-center py-5 font-serif">Detail History Transaction</h1>
+              <table className="w-full  text-sm text-left  text-gray-500 dark:text-gray-400 ">
+                <tbody className="grid place-content-center">
+                  {detail.passenger?.map((x) => (
+                    <div className="my-5" key={x.firstName}>
+                      <tr className="bg-white dark:bg-gray-800">
+                        <th
+                          scope="row"
+                          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          Full Name
+                        </th>
+                        <td className="py-4 px-6">
+                          {x.firstName} {x.lastName}
+                        </td>
+                      </tr>
+                      <tr className="bg-white  dark:bg-gray-800">
+                        <th
+                          scope="row"
+                          className="py-4 px-6 flex font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          Nationality ID
+                        </th>
+                        <td className=" py-4 px-6">{x.travelDocument}</td>
+                      </tr>
+                      <tr className="bg-white dark:bg-gray-800">
+                        <th
+                          scope="row"
+                          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          Type
+                        </th>
+                        <td className="py-4 px-6">{x.type}</td>
+                      </tr>
+                      <br />
+                    </div>
+                  ))}
+                </tbody>
+              </table>
+              <div className="w-full flex justify-center items-center">
+                <a href={detail?.tiket[0]?.ticket_pdf} className="mx-auto">
+                  <span className="font-medium bg-green-500 px-5 text-center py-2 w-40 rounded-lg text-white  hover:underline">
+                    Download Tiket
+                  </span>
+                </a>
+              </div>
+            </>
+          ) : (
+            <Spinner textContent="Getting your transaction" />
+          )}
+        </main>
       </Layout>
     </Protected>
   );

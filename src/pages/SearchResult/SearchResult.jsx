@@ -7,7 +7,7 @@ import { ExpediaCard } from '../../components/Cards';
 import Spinner from '../../components/Layout/Spinner';
 import { getSortedTicket } from '../../utils/tickets';
 import CustomModal from '../../components/Modal/CustomModal';
-import SearchFormBox from './SearchFormBox';
+import SearchFlightsForm from '../../components/Input/SearchFlightsForm';
 
 const BASE_URL = process.env.REACT_APP_AUTH_API;
 
@@ -87,7 +87,7 @@ export function SearchResult() {
             closeModal={closeModal}
             label="Change search destination"
             className="w-11/12 max-w-4xl">
-            <SearchFormBox setRefresh={setRefresh} setIsOpen={setIsOpen} />
+            <SearchFlightsForm setRefresh={setRefresh} setIsOpen={setIsOpen} />
             <div className="-mt-14 mx-8 block md:hidden">
               <button className="btn btn-outline w-full" onClick={closeModal} type="button">
                 Cancel
@@ -122,7 +122,7 @@ export function SearchResult() {
             closeModal={closeModal}
             label="Change search destination"
             className="w-11/12 max-w-4xl">
-            <SearchFormBox setRefresh={setRefresh} setIsOpen={setIsOpen} />
+            <SearchFlightsForm setRefresh={setRefresh} setIsOpen={setIsOpen} />
             <div className="-mt-14 mx-8 block md:hidden">
               <button className="btn btn-outline w-full" onClick={closeModal} type="button">
                 Cancel
@@ -202,7 +202,7 @@ export function SearchResult() {
         closeModal={closeModal}
         label="Change search destination"
         className="w-11/12 max-w-4xl">
-        <SearchFormBox setRefresh={setRefresh} setIsOpen={setIsOpen} />
+        <SearchFlightsForm setRefresh={setRefresh} setIsOpen={setIsOpen} />
         <div className="-mt-14 mx-8 block md:hidden">
           <button className="btn btn-outline w-full" onClick={closeModal} type="button">
             Cancel

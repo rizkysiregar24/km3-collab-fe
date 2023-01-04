@@ -14,6 +14,8 @@ export function Notifications() {
   const API_URL = process.env.REACT_APP_AUTH_API;
   const [refresh, setRefresh] = useState(false);
 
+  const unread = notif && notif.filter((x) => !x.is_read);
+
   useEffect(() => {
     const config = {
       method: 'get',
@@ -128,22 +130,17 @@ export function Notifications() {
     <Protected>
       {notif ? (
         <Layout>
-          <main className="min-h-screen">
+          <main className="min-h-screen my-8 mx-4">
             {notif ? (
               <>
                 <div className="text-2xl font-bold mt-5 ">
                   <div className="flex ml-2 lg:ml-28">
                     Notifications
-                    {notif ? (
-                      notif?.map((x) => (
-                        <span
-                          key={x.id}
-                          className={`${x.is_read ? '' : 'bg-red-500 w-3 h-3 rounded-full'}`}
-                        />
-                      ))
-                    ) : (
-                      <Spinner />
-                    )}
+                    <span
+                      className={`${
+                        unread && unread.length > 0 ? 'bg-primary w-3 h-3 rounded-full' : ''
+                      }`}
+                    />
                     <div className="ml-auto lg:mr-32">
                       <button
                         type="button"

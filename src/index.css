@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* hide calendar icon on chrome */
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  padding: 3px 30px;
+  width: 28px;
+  cursor: pointer;
+}
+
+@media screen and(min-width: 768px) {
+  input[type='date']::-webkit-inner-spin-button,
+  input[type='date']::-webkit-calendar-picker-indicator {
+    padding: 3px 44px;
+  }
+}
+
+/* custom styles for react-daterange-picker */
+.react-daterange-picker__wrapper {
+  border: none;
+}
+
+.react-daterange-picker__calendar {
+  margin-left: -34px;
+}
+
+.react-calendar {
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.react-daterange-picker__range-divider {
+  margin: 0 8px;
+}
