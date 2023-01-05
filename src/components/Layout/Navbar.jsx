@@ -60,20 +60,22 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    const config = {
-      method: 'get',
-      url: `${API_URL}/notification/user/data`,
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    };
-    axios(config)
-      .then((response) => {
-        setNotif(response.data.data);
-      })
-      .catch((error) => {
-        toast(error);
-      });
+    if (isValidUser) {
+      const config = {
+        method: 'get',
+        url: `${API_URL}/notification/user/data`,
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      };
+      axios(config)
+        .then((response) => {
+          setNotif(response.data.data);
+        })
+        .catch((error) => {
+          toast(error);
+        });
+    }
     setRefresh(false);
   }, [refresh]);
 
