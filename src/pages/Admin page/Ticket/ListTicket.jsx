@@ -129,7 +129,12 @@ function ListTicket() {
               name="limit"
               id="limit"
               value={limit}
-              onChange={(e) => setLimit(e.target.value)}
+              onChange={(e) => {
+                setLimit(e.target.value);
+                setSearchParams({
+                  page: 1
+                });
+              }}
               className="select select-bordered select-sm">
               <option value="10">10</option>
               <option value="25">25</option>
@@ -226,14 +231,23 @@ function ListTicket() {
               <div className="btn-group">
                 <button
                   type="button"
-                  className="btn"
+                  className={`btn ${page <= 1 ? 'hidden' : 'block'}`}
                   disabled={page <= 1}
                   onClick={handleDecrementPage}>
                   Prev
                 </button>
                 <button
                   type="button"
-                  className="btn"
+                  className={`btn ${
+                    !Number(page <= 1) || !Number(page - 1) <= 1 ? 'hidden' : 'block'
+                  }`}
+                  disabled={page <= 1}
+                  onClick={handleDecrementPage}>
+                  1l
+                </button>
+                <button
+                  type="button"
+                  className={`btn ${page <= 1 ? 'hidden' : 'block'}`}
                   disabled={page <= 1}
                   onClick={handleDecrementPage}>
                   {page - 1}
@@ -243,21 +257,25 @@ function ListTicket() {
                 </button>
                 <button
                   type="button"
-                  className="btn"
+                  className={`btn ${Number(page) === Number(totalPages) ? 'hidden' : 'block'}`}
                   disabled={page >= totalPages}
                   onClick={handleIncrementPage}>
                   {Number(page) + 1}
                 </button>
                 <button
                   type="button"
-                  className="btn"
+                  className={`btn ${
+                    Number(page) === Number(totalPages) || Number(totalPages - 1) === Number(page)
+                      ? 'hidden'
+                      : 'block'
+                  }`}
                   disabled={page >= totalPages}
                   onClick={() => handleAmountPage(Number(totalPages))}>
                   {totalPages}
                 </button>
                 <button
                   type="button"
-                  className="btn"
+                  className={`btn ${Number(page) === Number(totalPages) ? 'hidden' : 'block'}`}
                   disabled={page >= totalPages}
                   onClick={handleIncrementPage}>
                   Next
