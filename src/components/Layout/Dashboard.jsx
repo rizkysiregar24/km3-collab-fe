@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { TbList, TbPlaylistAdd, TbUsers, TbLogout, TbHome } from 'react-icons/tb';
+import { IoWarningOutline } from 'react-icons/io5';
 
 import useValidUser from '../../hooks/useValidUser';
 import Protected from '../Routes/Protected';
@@ -62,13 +63,19 @@ export function Dashboard({ children }) {
               <ul className="menu menu-horizontal">
                 {/* Navbar menu content here */}
                 <li>
-                  <Link to="/users">Users List</Link>
+                  <Link to="/users">
+                    <TbUsers size={18} /> Users List
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/flights">Flights List</Link>
+                  <Link to="/flights">
+                    <TbList size={18} /> Flights List
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/create-flight">Create Flight</Link>
+                  <Link to="/create-flight">
+                    <TbPlaylistAdd size={18} /> Create Flight
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -90,14 +97,28 @@ export function Dashboard({ children }) {
           <label htmlFor="my-drawer-3" className="drawer-overlay" />
           <ul className="menu p-4 w-80 bg-base-100">
             {/* Sidebar content here  */}
-            <li>
-              <Link to="/users">Users List</Link>
+            <li className="select-none hover:bg-none">
+              <h2 className="font-semibold text-xl select-none hover:bg-none">Menu</h2>
             </li>
             <li>
-              <Link to="/flights">Flights List</Link>
+              <Link to="/dashboard">
+                <TbHome size={18} /> Dashboard
+              </Link>
             </li>
             <li>
-              <Link to="/create-flight">Create Flight</Link>
+              <Link to="/users">
+                <TbUsers size={18} /> Users List
+              </Link>
+            </li>
+            <li>
+              <Link to="/flights">
+                <TbList size={18} /> Flights List
+              </Link>
+            </li>
+            <li>
+              <Link to="/create-flight">
+                <TbPlaylistAdd size={18} /> Create Flight
+              </Link>
             </li>
           </ul>
         </div>
@@ -120,18 +141,21 @@ export function AuthRightElementNavbar({ handleLogout, username, openModal, isOp
           tabIndex={0}
           className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li>
-            <Link to="/dashboard">Back to Home</Link>
+            <Link to="/dashboard">
+              <TbHome /> Back to Home
+            </Link>
           </li>
 
           <li>
             <button type="button" onClick={openModal}>
-              Logout
+              <TbLogout /> Logout
             </button>
             <CustomModal
               isOpen={isOpen}
               closeModal={closeModal}
               className="max-w-xs"
               label="Logout warning">
+              <IoWarningOutline className="mb-2" size={32} />
               <h2 className="text-lg font-semibold">Are you sure you want to logout?</h2>
               <div className="flex gap-4 mt-4 justify-between">
                 <button
@@ -141,7 +165,7 @@ export function AuthRightElementNavbar({ handleLogout, username, openModal, isOp
                   Cancel
                 </button>
                 <button type="button" className="btn btn-error w-28 sm:w-32" onClick={handleLogout}>
-                  Logout
+                  <TbLogout className="mr-2" /> Logout
                 </button>
               </div>
             </CustomModal>

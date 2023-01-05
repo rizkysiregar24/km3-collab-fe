@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { today } from '../../utils/dates';
+import useHistorySearch from '../../hooks/useHistorySearch';
 
 const DESTINATIONS = [
   {
@@ -43,7 +44,8 @@ const DESTINATIONS = [
 ];
 
 function Inspiration() {
-  const historyDeparture = JSON.parse(localStorage.getItem('historyDeparture'));
+  const { departure: historyDeparture, startDate } = useHistorySearch();
+
   const departure = historyDeparture?.value ?? 'CGK';
 
   return (
@@ -58,7 +60,9 @@ function Inspiration() {
           <Link
             className="card w-96 bg-base-100 shadow-xl image-full"
             key={place.name}
-            to={`/search?departure=${departure}&arrival=${place.iata}&passengers=1&tripType=one_way&sc=economy&date=${today}`}>
+            to={`/search?departure=${departure}&arrival=${
+              place.iata
+            }&passengers=1&tripType=one_way&sc=economy&date=${startDate ?? today}`}>
             <figure>
               <img src={place.image} alt={place.name} />
             </figure>
