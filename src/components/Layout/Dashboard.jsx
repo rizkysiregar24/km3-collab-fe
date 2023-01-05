@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TbList, TbPlaylistAdd, TbUsers, TbLogout, TbHome } from 'react-icons/tb';
+import { IoWarningOutline } from 'react-icons/io5';
 
 import useValidUser from '../../hooks/useValidUser';
 import Protected from '../Routes/Protected';
@@ -154,6 +155,7 @@ export function AuthRightElementNavbar({ handleLogout, username, openModal, isOp
               closeModal={closeModal}
               className="max-w-xs"
               label="Logout warning">
+              <IoWarningOutline className="mb-2" size={32} />
               <h2 className="text-lg font-semibold">Are you sure you want to logout?</h2>
               <div className="flex gap-4 mt-4 justify-between">
                 <button

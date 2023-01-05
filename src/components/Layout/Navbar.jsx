@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { TbLogout, TbUser, TbHistory } from 'react-icons/tb';
+import { IoWarningOutline } from 'react-icons/io5';
 
 import useValidUser from '../../hooks/useValidUser';
 import { logout } from '../../redux/user/user.actions';
@@ -293,22 +295,25 @@ export function AuthRightElementNavbar({
           <li>
             {isUser ? (
               <button type="button" onClick={handleProfile}>
-                Profile
+                <TbUser /> Profile
               </button>
             ) : null}
           </li>
           <li>
-            <Link to="/transaction">Transactions</Link>
+            <Link to="/transaction">
+              <TbHistory /> Transactions
+            </Link>
           </li>
           <li>
             <button type="button" onClick={openModal}>
-              Logout
+              <TbLogout /> Logout
             </button>
             <CustomModal
               isOpen={isOpen}
               closeModal={closeModal}
               className="max-w-xs"
               label="Logout warning">
+              <IoWarningOutline className="mb-2" size={32} />
               <h2 className="text-lg font-semibold">Are you sure you want to logout?</h2>
               <div className="flex gap-4 mt-4 justify-between">
                 <button
@@ -318,7 +323,7 @@ export function AuthRightElementNavbar({
                   Cancel
                 </button>
                 <button type="button" className="btn btn-error w-28 sm:w-32" onClick={handleLogout}>
-                  Logout
+                  <TbLogout className="mr-2" /> Logout
                 </button>
               </div>
             </CustomModal>
