@@ -1,3 +1,7 @@
+/**
+ * `useHistorySearch` hook is a hook to get previous user search data from `localStorage` if it's not exist it'll use the default value instead as defined.
+ * @returns {object} an object with these keys: `adult`, `arrival`, `departure`, `returnDate`, `seatClass`, `startDate`, `tripType`
+ */
 const useHistorySearch = () => {
   const historySearch = JSON.parse(localStorage.getItem('historySearch'));
 
